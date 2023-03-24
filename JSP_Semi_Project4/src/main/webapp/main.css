@@ -1,0 +1,93 @@
+@charset "UTF-8";
+
+	body{
+		background-color: #DCE2F0;
+	}
+
+
+	/* 상단 메뉴바 */
+    nav{
+    	font-size: 12pt;
+    	font-family: 'PT Sans', Arial, Sans-serif;
+    	position: relative;
+    }
+    nav ul{
+    	padding: 0;
+    	margin: 0 auto;
+    	width: auto;
+    }
+    nav li{
+    }
+    nav a{
+		line-height: 50px;
+ 	 	height: 50px;
+    }
+    nav li a{
+    	box-sizing: border-box;
+    	-moz-box-sizing: border-box;
+    	-webkit-box-sizing: border-box;
+    }
+    nav li:last-child a{
+    	border-right: 0;
+        }
+    nav a:hover, nav a:active{
+    }
+      html {
+      -webkit-touch-callout:none;
+      -webkit-user-select:none;
+      -webkit-tap-highlight-color:#50586C(0, 0, 0, 0);
+      }
+
+      ul{
+        /*list-style-type: none;*/
+        margin: 0;
+        padding: 0;
+        background-color: #50586C;
+        text-align: center;
+      }
+      li{
+        /*position: relative;*/
+        display: inline-block;
+      }
+      li a{
+        color: #DCE2F0;
+        padding: 14.5px 16px;
+        text-decoration: none;
+      }
+      li a:hover{
+        /*color: #597812;*/
+        color: #FFD400;
+        font-weight:normal;
+      }
+      .top {
+       width: 5000px;
+       height: 50px;
+       max-width: 100%;
+       background-position: center;
+       background-size: cover;
+       background-color: #50586C;color: #DCE2F0;
+       position: absolute;z-index: 1;
+     }
+ 
+     .clearfix1{
+     	color:#DCE2F0;
+     	float: left;
+     }
+     
+     .clearfix2 {
+     	float: right;
+     }
+     
+     	/* 가운데 메인 슬라이드 */
+     	.carousel-inner{
+     		width: 700px;
+     		height: 450px;
+     	}
+     	
+     /* 하단 미니 재생플레이어 */
+     .music-player-section{
+     	text-align: center;
+     }
+	     
+	     
+	     
