@@ -78,10 +78,14 @@ public class UserDAO {
 	}
 
 	public boolean registerUser(UserVO vo) {
-		connect();
-		String sql = "insert into user values(?,?,?,?,?,?,?)";
+
 		try {
+
+			connect();
+			String sql = "insert into user values(?,?,?,?,?,?,?)";
+
 			pstmt = con.prepareStatement(sql);
+
 			pstmt.setString(1, vo.getUser_id());
 			pstmt.setString(2, vo.getUser_pwd());
 			pstmt.setString(3, vo.getUser_name());
@@ -91,56 +95,116 @@ public class UserDAO {
 			pstmt.setString(7, vo.getUser_pic());
 
 			pstmt.executeUpdate();
-			
+
 		} catch (SQLException e) {
+			
 			e.printStackTrace();
+			
 			return false;
+			
 		} finally {
+			
 			disconnect(rs, pstmt, con);
+			
 		}
-		return true;
-	}
-	
-	public String logincheck(String id, String pwd) {
 		
-		String user_name = null;
+		return true;
+		
+	}
+
+	public int logincheck(String id, String pwd) {
 		
 		connect();
 		
-		sql = "select user_name from user where user_id = ? and user_pwd = ?";
+		String dbPwd = "";
+		
+		String dbNickname = "";
+		
+		UserVO vo = new UserVO();
+		
+		int check = -1;
+		
+		this.sql = "SELECT USER_PWD, USER_NICKNAME FROM USER WHERE USER_ID = ?";
 		
 		try {
-			pstmt = con.prepareStatement(sql);
 			
-			pstmt.setString(1, id);
-			pstmt.setString(2, pwd);
+			this.pstmt = this.con.prepareStatement(this.sql);
 			
-			rs = pstmt.executeQuery();
+			this.pstmt.setString(1, id);
 			
-			if(rs.next()) {
-				user_name = rs.getString(1);
+			this.rs = this.pstmt.executeQuery();
+			
+			if (this.rs.next()) {
+				
+				dbPwd = this.rs.getString("user_pwd");
+				
+				dbNickname = this.rs.getString("user_nickname");
+				
+				vo.setUser_nickname(dbNickname);
+				
+				if (dbPwd.equals(pwd)) {
+					
+					check = 1;
+					
+				} else {
+					
+					check = 0;
+					
+				}
+				
+			} else {
+				
+				check = -1;
+				
 			}
+			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
+			
 		} finally {
-			disconnect(rs, pstmt, con);
+			
+			disconnect(this.rs, this.pstmt, this.con);
+			
 		}
-		return user_name;
+		return check;
 	}
-	
+
+	public String getUserNickname(String id) {
+		connect();
+		
+		String user_nickname = "";
+		
+		UserVO vo = new UserVO();
+		
+		try {
+			
+			sql = "SELECT USER_NICKNAME FROM USER WHERE USER_ID = ?";
+			
+			this.pstmt = this.con.prepareStatement(this.sql);
+			
+			this.pstmt.setString(1, id);
+			
+			this.rs = this.pstmt.executeQuery();
+			
+			if (this.rs.next()) {
+				
+				user_nickname = this.rs.getString("user_nickname");
+				
+				vo.setUser_nickname(user_nickname);
+				
+			}
+			
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+			
+		} finally {
+			
+			disconnect(rs, pstmt, con);
+			
+		}
+		return user_nickname;
+	}
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -11,7 +11,6 @@
 </head>
 <body>
 	<header> User register success </header>
-	<p id=sect><%=request.getAttribute("greetings")%><br>
 	<div>
 		<%
 		UserVO user = (UserVO) request.getAttribute("user");
@@ -46,17 +45,23 @@
 			</tr>
 
 			<tr>
-				<th>사진</th>
+				<th>profile image</th>
 				<th><%=user.getUser_pic()%></th>
 			</tr>
+
+
+
 		</table>
 	</div>
 	<div>
-		<p>
-			<br> <a
-				href="http://localhost:8787/JSP_Semi_Project/UserServlet?cmd=list"
-				target="_self"> <strong>전체 회원 목록 보기 </strong></a>
+		<img
+			src="<%=request.getContextPath() + "/profileUpload" + user.getUser_pic()%>">
+	</div>
+	<div>
 
+		<p>
+			<input type="button" value="메인페이지로"
+				onclick="location.href='/main.jsp'">
 		</p>
 	</div>
 
