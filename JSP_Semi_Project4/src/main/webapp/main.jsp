@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%
+String result = (String) session.getAttribute("sessionNickName");
+%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -23,7 +27,24 @@
 				<li class="pay"><a href="http://www._____.com/Travel">이용권</a></li>
 				<li class="profile_top">
 					<ul class="profile_inner">
+
+
+
+
+						<%
+						if (session.getAttribute("sessionNickName") != null) {
+						%>
+						<a href="/JSP_Semi_Project4/Register.jsp"><%=result%>님 환영합니다</a>
+						
+						<%
+						} else {
+						%>
+						<%-- 로그인되지 않았을 때 --%>
 						<a href="/JSP_Semi_Project4/Register.jsp">프로필</a>
+						<%
+						}
+						%>
+
 						<li><a href="http://www._____.com/MyPage">마이페이지</a></li>
 						<li><a href="http://www._____.com/LIkeList">좋아요<br>플레이리스트
 						</a></li>

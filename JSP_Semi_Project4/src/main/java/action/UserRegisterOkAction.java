@@ -8,6 +8,7 @@ import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
@@ -28,7 +29,7 @@ public class UserRegisterOkAction implements Action {
 
 		// 파일 업로드 시에는 설정해야 할 내용이 있음.
 		// 1. 첨부 파일 저장 경로 지정.
-		String saveFolder = "C:\\Users\\jjyou\\OneDrive\\바탕 화면\\web\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp1\\wtpwebapps\\JSP_Semi_Project4\\profileUpload";
+		String saveFolder = "C:\\Users\\user\\eclipse-workspace\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp2\\wtpwebapps\\JSP_Semi_Project4\\profileUpload";
 
 		// 2. 첨부 파일 크기 지정.
 		int fileSize = 10 * 1024 * 1024; // 10MB
@@ -103,11 +104,15 @@ public class UserRegisterOkAction implements Action {
 		dao.registerUser(userVO);
 
 		request.setAttribute("user", userVO);
-
+		HttpSession session = request.getSession();
+		session.setAttribute("sessionNickName", userVO.getUser_nickname());
+		
+		
 		ActionForward forward = new ActionForward();
 		PrintWriter out = response.getWriter();
 		forward.setRedirect(false);
-		forward.setPath("user/result.jsp");
+		
+		forward.setPath("main.jsp");
 
 		return forward;
 

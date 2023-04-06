@@ -82,7 +82,7 @@ public class UserDAO {
 		try {
 
 			connect();
-			String sql = "insert into user values(?,?,?,?,?,?,?)";
+			String sql = "insert into user values(?,?,?,?,?,?,?,default)";
 
 			pstmt = con.prepareStatement(sql);
 
