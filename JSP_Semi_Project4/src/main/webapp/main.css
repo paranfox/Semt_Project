@@ -1,93 +1,218 @@
 @charset "UTF-8";
-
-	body{
-		background-color: #DCE2F0;
+	
+	header {
+		margin: 0px;
 	}
 
-
-	/* 상단 메뉴바 */
-    nav{
-    	font-size: 12pt;
-    	font-family: 'PT Sans', Arial, Sans-serif;
-    	position: relative;
-    }
-    nav ul{
-    	padding: 0;
-    	margin: 0 auto;
-    	width: auto;
-    }
-    nav li{
-    }
-    nav a{
-		line-height: 50px;
- 	 	height: 50px;
-    }
-    nav li a{
-    	box-sizing: border-box;
-    	-moz-box-sizing: border-box;
-    	-webkit-box-sizing: border-box;
-    }
-    nav li:last-child a{
-    	border-right: 0;
-        }
-    nav a:hover, nav a:active{
-    }
-      html {
-      -webkit-touch-callout:none;
-      -webkit-user-select:none;
-      -webkit-tap-highlight-color:#50586C(0, 0, 0, 0);
-      }
-
-      ul{
-        /*list-style-type: none;*/
-        margin: 0;
-        padding: 0;
-        background-color: #50586C;
-        text-align: center;
-      }
-      li{
-        /*position: relative;*/
-        display: inline-block;
-      }
-      li a{
-        color: #DCE2F0;
-        padding: 14.5px 16px;
-        text-decoration: none;
-      }
-      li a:hover{
-        /*color: #597812;*/
-        color: #FFD400;
-        font-weight:normal;
-      }
-      .top {
-       width: 5000px;
-       height: 50px;
-       max-width: 100%;
-       background-position: center;
-       background-size: cover;
-       background-color: #50586C;color: #DCE2F0;
-       position: absolute;z-index: 1;
-     }
- 
-     .clearfix1{
-     	color:#DCE2F0;
-     	float: left;
-     }
-     
-     .clearfix2 {
-     	float: right;
-     }
-     
-     	/* 가운데 메인 슬라이드 */
-     	.carousel-inner{
-     		width: 700px;
-     		height: 450px;
-     	}
-     	
-     /* 하단 미니 재생플레이어 */
-     .music-player-section{
-     	text-align: center;
-     }
-	     
-	     
-	     
+	#top {
+		/* 메뉴바를 상단에 고정 */
+		position: fixed;
+		
+		/* 다른 것과 겹쳤을때 메뉴바가 제일 위로 오도록. */
+		z-index: 1;
+		
+		/* 메뉴바가 위쪽 공간이 떠있지 않도록 */
+		margin: -1%;
+		margin-top: -2.2%;
+		
+		padding-top: 2%;
+		padding-bottom: 10px;
+		
+/* 		background-color: #E6E7FB; */
+		background-color: #ffffff;
+		
+		/* 오른쪽 왼쪽 여백이 생기지 않도록 */
+		width: 100%;
+	}
+	
+	.top a {
+		color: black;
+	}
+	
+	.top li a, .profile_inner li a {
+		/* 클릭 시에도 밑줄이 들어가지 않도록 */
+		text-decoration: none;
+	}
+	
+	.top .profile_inner li {
+	/* 프로필에 하위 메뉴들이 들어가도록 */
+		display: none;
+	}
+	
+	.top .profile_inner:hover li {
+	/* 프로필에 마우스 오버 시 하위메뉴가 나타나도록 */
+		display: block; 
+	}
+	
+	.top ul li {
+		/* 메뉴바 일렬로 정렬 */
+		display:inline-block;
+		float:none;
+		padding:0px;
+	}
+	
+	.home, .search, .pay {
+		margin-right: 4.5%;
+	}
+	
+	.feed {
+		margin-right: 31%;
+	}
+	
+	.top {
+		font-size: 25px;
+	}
+	
+	.home{
+		font-size: 35px;
+		font-weight: bold;
+	}
+	
+	.profile_top {
+		position:absolute;
+		margin-top: 10px;
+	}
+	
+	.profile_inner li {
+		width: 175px;
+		font-size: 18px;
+		margin-top : 25%;
+		text-align: left;
+	}
+	
+	.search-txt {
+		border-radius: 0.8em;
+		width: 200px;
+		height: 30px;
+	}
+	
+	.search-btn {
+		font-weight: bolder;
+	}
+	
+/*  ***********  슬라이드 시작   ***********   */
+	
+	* {box-sizing: border-box}
+	body {font-family: Verdana, sans-serif; margin:0}
+	.mySlides {display: none}
+	img {vertical-align: middle;}
+	
+	/* Slideshow container */
+	.slideshow-container {
+	  width: 65%;
+	  position: relative;
+	  margin: auto;
+	  margin-top: 5%;
+	}
+	
+	.imgs {
+		width: 100%;
+		height: 300px;
+		margin: auto;
+		padding:  -10px;
+		display: block;
+		border-radius: 0.8em;
+	}
+	
+	.mySlides fade{
+		position: relative;
+	}
+	
+	.pic {
+		width: 200px;
+		position: absolute;
+		top:  23%;
+		left: 70%;
+	}
+	
+	
+	/* Next & previous buttons */
+	.prev, .next {
+	  cursor: pointer;
+	  position: absolute;
+	  top: 50%;
+/* 	  width: auto; */
+	  padding: 16px;
+	  margin-top: -22px;
+	  color: 000000;
+	  font-weight: bold;
+	  font-size: 18px;
+	  transition: 0.6s ease;
+	  text-decoration: none;
+	}
+	
+	/* Position the "next button" to the right */
+	.prev {
+	  right: 101%;
+	}
+	.next {
+	  right: -5%;
+	  border-radius: 3px 0 0 3px;
+	}
+	
+	/* On hover, add a black background color with a little bit see-through */
+	.prev:hover, .next:hover {
+	  background-color: lightgray;
+	}
+	
+	.prev:active, .next:active {
+	  text-decoration: none;
+	}
+	
+	.singer {
+	  color: #000000;
+	  font-size: 20px;
+	  padding: 10% 10%;
+	  top: 2%;
+	  position: absolute;
+	  width: 100%;
+	}
+	
+	.genre {
+	  color: #ffffff;
+	  font-size: 18px;
+	  padding: 5% 10%;
+	  position: absolute;
+	  font-style: italic;
+	  top: 0;
+	}
+	
+	
+	/* The dots/bullets/indicators */
+	.dot {
+	  cursor: pointer;
+	  height: 15px;
+	  width: 15px;
+	  margin: 0 2px;
+	  background-color: #bbb;
+	  border-radius: 50%;
+	  display: inline-block;
+	  transition: background-color 0.6s ease;
+	}
+	
+	.active, .dot:hover {
+	  background-color: #717171;
+	}
+	
+	/* Fading animation */
+	.fade {
+	  -webkit-animation-name: fade;
+	  -webkit-animation-duration: 1.5s;
+	  animation-name: fade;
+	  animation-duration: 1.5s;
+	}
+	
+	@-webkit-keyframes fade {
+	  from {opacity: .4} 
+	  to {opacity: 1}
+	}
+	
+	@keyframes fade {
+	  from {opacity: .4} 
+	  to {opacity: 1}
+	}
+	
+	/* On smaller screens, decrease text size */
+	@media only screen and (max-width: 300px) {
+	  .prev, .next,.text {font-size: 11px}
+	}

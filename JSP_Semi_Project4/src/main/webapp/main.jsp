@@ -1,76 +1,143 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>main</title>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js" integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="main.css">
 </head>
+
 <body>
 
-<div class="top" >
-	<nav class="clearfix1">
-		<ul class="clearfix1">
-			<li class="logo"><a href="http://www._____.com">LOGO</a></li>
-			<li class="feed"><a href="http://www._____.com/About">피드</a></li> <!--""<-여기 부분에 URL 작성하면 됨-->
-		</ul>
-	</nav>
-	
-	<nav class="clearfix2">
-		<ul class="clearfix2">
-			<li class="find"><a href="http://www._____.com/Project">검색창</a></li>
-			<li class="pay"><a href="http://www._____.com/Travel">이용권</a></li>
-			<li class="profile"><a href="http://www._____.com/Contact">프로필</a></li>
-		</ul>
-	</nav>
-</div>
+	<header id="top">
+		<div class="top">
+			<ul>
+				<li class="home"><a href="http://www._____.com">4운드 클라우드</a></li>
+				<li class="feed"><a href="http://www._____.com/About">feed</a></li>
 
-<br> <br> <br> <br> <br> 
+				<li class="search"><a href="http://www._____.com/Project">
+						<input class="search-txt" type="text" placeholder=" 검색어를 입력해 주세요">&nbsp;
+						<button class="search-btn" type="submit">검색</button>
+				</a></li>
+				<li class="pay"><a href="http://www._____.com/Travel">이용권</a></li>
+				<li class="profile_top">
+					<ul class="profile_inner">
+						<a href="/JSP_Semi_Project4/Register.jsp">프로필</a>
+						<li><a href="http://www._____.com/MyPage">마이페이지</a></li>
+						<li><a href="http://www._____.com/LIkeList">좋아요<br>플레이리스트
+						</a></li>
+						<li><a href="http://www._____.com/HateList">싫어요<br>플레이리스트
+						</a></li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+	</header>
 
-<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel"   align="center">
-	<ol class="carousel-indicators">
-		<li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-		<li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-		<li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-	</ol>
-	<div class="carousel-inner">
-		<div class="carousel-item active">
-			<img src="img/store1.jpg" class="d-block w-100" alt="...">
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+
+
+	<div class="slideshow-container">
+
+		<div class="mySlides fade">
+			<a href="http://www._____.com/slideshow-container">
+				<div class="genre">발라드</div>
+				<div class="singer">가수</div> <img class="imgs" src="img/img1.png">
+				<img class="pic" src="img/pic_1.png">
+			</a>
 		</div>
-		<div class="carousel-item">
-			<img src="img/store2.jpg" class="d-block w-100" alt="...">
+
+		<div class="mySlides fade">
+			<a href="http://www._____.com/slideshow-container">
+				<div class="genre">발라드</div>
+				<div class="singer">가수</div> <img class="imgs" src="img/img2.png">
+				<img class="pic" src="img/pic_1.png">
+			</a>
 		</div>
-		<div class="carousel-item">
-			<img src="img/store3.jpg" class="d-block w-100" alt="...">
+
+		<div class="mySlides fade">
+			<a href="http://www._____.com/slideshow-container">
+				<div class="genre">발라드</div>
+				<div class="singer">가수</div> <img class="imgs" src="img/img3.png">
+				<img class="pic" src="img/pic_1.png">
+			</a>
 		</div>
+
+		<a class="prev" onclick="plusSlides(-1)">&#10094;</a> <a class="next"
+			onclick="plusSlides(1)">&#10095;</a>
+
 	</div>
-	<button class="carousel-control-prev" type="button" data-target="#carouselExampleIndicators" data-slide="prev">
-		<span class="carousel-control-prev-icon" aria-hidden="true"></span>
-		<span class="sr-only">Previous</span>
-	</button>
-	<button class="carousel-control-next" type="button" data-target="#carouselExampleIndicators" data-slide="next">
-		<span class="carousel-control-next-icon" aria-hidden="true"></span>
-		<span class="sr-only">Next</span>
-	</button>
-</div>
+	<br>
 
-<br> <br> <br> <br> <br> 
+	<div style="text-align: center">
+		<span class="dot" onclick="currentSlide(1)"></span> <span class="dot"
+			onclick="currentSlide(2)"></span> <span class="dot"
+			onclick="currentSlide(3)"></span>
+	</div>
 
-<div>
-	<section class="music-player-section">
-		<audio src="sound.mp3" autoplay loop controls id="myAudio">오디오 지원되지 않는 브라우저</audio>
-		
-	</section>
-</div>
-
-
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
 
 
 </body>
-</html>l>
+<script type="text/javascript">
+	var slideIndex = 1;
+	showSlides(slideIndex);
+
+	function plusSlides(n) {
+		showSlides(slideIndex += n);
+	}
+
+	function currentSlide(n) {
+		showSlides(slideIndex = n);
+	}
+
+	function showSlides(n) {
+		var i;
+		var slides = document.getElementsByClassName("mySlides");
+		var dots = document.getElementsByClassName("dot");
+		if (n > slides.length) {
+			slideIndex = 1
+		}
+		if (n < 1) {
+			slideIndex = slides.length
+		}
+		for (i = 0; i < slides.length; i++) {
+			slides[i].style.display = "none";
+		}
+		for (i = 0; i < dots.length; i++) {
+			dots[i].className = dots[i].className.replace(" active", "");
+		}
+		slides[slideIndex - 1].style.display = "block";
+		dots[slideIndex - 1].className += " active";
+	}
+</script>
+</html>
