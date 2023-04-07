@@ -207,4 +207,9 @@ public class UserDAO {
 		return user_nickname;
 	}
 
+	public void getMyProfile(String user_nick) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

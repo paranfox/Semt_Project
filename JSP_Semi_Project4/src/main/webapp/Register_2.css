@@ -1,0 +1,43 @@
+@charset "UTF-8";
+
+body {
+	background-color: #ffffff;
+}
+
+p {
+	text-align: center;
+	margin-top: 6%;
+	color: #9D7FD9;
+	font-size: 45px;
+	font-weight: bold;
+}
+
+.total {
+	margin-left: 35%;
+	margin-top: 2%;
+	width: 40%;
+	height: 700px;
+	margin-top: 2%;
+}
+
+.td_1 {
+	font-size: 20px;
+	width: 150px;
+	font-weight: bolder;
+}
+
+.td_2 input {
+	width: 70%;
+	padding-top: 4%;
+}
+
+.imgfile{
+	margin-top: 3%;
+
+}
+
+.register input {
+	margin-bottom: 10%;
+	margin-left: -40%;
+	padding: 3%;
+}

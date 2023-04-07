@@ -8,6 +8,7 @@ import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
@@ -102,12 +103,14 @@ public class UserRegisterOkAction implements Action {
 		UserDAO dao = UserDAO.getInstance();
 		dao.registerUser(userVO);
 
+		HttpSession session = request.getSession();
+		session.setAttribute("sessionNickName", userVO.getUser_nickname());
 		request.setAttribute("user", userVO);
 
 		ActionForward forward = new ActionForward();
 		PrintWriter out = response.getWriter();
 		forward.setRedirect(false);
-		forward.setPath("user/result.jsp");
+		forward.setPath("main.jsp");
 
 		return forward;
 

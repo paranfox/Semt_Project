@@ -1,11 +1,23 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+
+<%
+String result = (String) session.getAttribute("sessionNickName");
+%>
+
+
 <!DOCTYPE html>
+
 <html>
+
 <head>
+
 <meta charset="UTF-8">
+
 <title>main</title>
+
 <link rel="stylesheet" href="main.css">
+
 </head>
 
 <body>
@@ -23,11 +35,37 @@
 				<li class="pay"><a href="http://www._____.com/Travel">이용권</a></li>
 				<li class="profile_top">
 					<ul class="profile_inner">
+
+
+
+
+						<%
+						if (session.getAttribute("sessionNickName") != null) {
+						%>
+						<a href="/JSP_Semi_Project4/Register.jsp"><%=result%>님 환영합니다</a>
+
+						<%
+						} else {
+						%>
+
+						<%-- 로그인되지 않았을 때 --%>
+
 						<a href="/JSP_Semi_Project4/Register.jsp">프로필</a>
-						<li><a href="http://www._____.com/MyPage">마이페이지</a></li>
+
+						<%
+						}
+						%>
+
+						<li><a
+							href="<%=request.getContextPath()%>/my_content.do?nick=<%=result%>">마이
+								페이지</a></li>
+
 						<li><a href="http://www._____.com/LIkeList">좋아요<br>플레이리스트
+
 						</a></li>
+
 						<li><a href="http://www._____.com/HateList">싫어요<br>플레이리스트
+
 						</a></li>
 					</ul>
 				</li>
@@ -61,17 +99,22 @@
 		</div>
 
 		<div class="mySlides fade">
+
 			<a href="http://www._____.com/slideshow-container">
+
 				<div class="genre">발라드</div>
 				<div class="singer">가수</div> <img class="imgs" src="img/img3.png">
 				<img class="pic" src="img/pic_1.png">
+
 			</a>
+
 		</div>
 
 		<a class="prev" onclick="plusSlides(-1)">&#10094;</a> <a class="next"
 			onclick="plusSlides(1)">&#10095;</a>
 
 	</div>
+
 	<br>
 
 	<div style="text-align: center">

@@ -6,67 +6,100 @@
 <html>
 <head>
 <meta charset="UTF-8">
-
 <title>회원 가입</title>
+<link rel="stylesheet" href="Register.css">
+<link rel="stylesheet" href="Register_2.css">
+
 </head>
 <body>
-	<form action="<%=request.getContextPath() %>/result.do" method="post"
+	<form action="<%=request.getContextPath()%>/result.do" method="post"
 		enctype="multipart/form-data" onsubmit="validateForm()">
-		<table border="1px solid black">
-			<tr>
-				<td>ID</td>
-				<td><input type="text" name="user_id" class="input_id">
-					<font id="checkId" size="2"></font></td>
-			</tr>
-			<tr>
 
-				<td>PW</td>
-				<td><input type="password" name="user_pwd" class="pw"
-					id="password_1"></td>
+		<h1>4운드 클라우드</h1>
+		<div class="total">
+			<div class="id">
+				<strong class="td_1">ID</strong>
+				<div class="td_2">
+					<input type="text" name="user_id" class="input_id"><br><font
+						id="checkId" size="2"></font>
+				</div>
+			</div>
 
-			</tr>
+			<br> <br>
 
-			<tr>
-				<td>PW 확인</td>
-				<td colspan="2"><input type="password" name="user_pwd2"
-					class="pw" id="password_2"> <font id="checkPw" size="2"></font>
-				</td>
-			</tr>
+			<div class="pw">
+				<strong class="td_1">PW</strong>
+				<div class="td_2">
+					<input type="password" name="user_pwd" class="pw" id="password_1">
+				</div>
+			</div>
 
-			<tr>
-				<td>이름</td>
-				<td><input type="text" name="user_name"></td>
-			</tr>
+			<br> <br>
 
-			<tr>
-				<td>닉네임</td>
-				<td><input type="text" name="user_nickname"
-					class="input_nickname"> <font id="checkNickname" size="2"></font>
-				</td>
-			</tr>
+			<div class="pw_check">
+				<strong class="td_1">PW 확인</strong>
+				<div class="td_2" colspan="2">
+					<input type="password" name="user_pwd2" class="pw" id="password_2">
+					<font id="checkPw" size="2"></font>
+				</div>
+			</div>
 
-			<tr>
-				<td>전화번호</td>
-				<td><input type="text" name="user_phone"></td>
-			</tr>
+			<br> <br>
 
-			<tr>
-				<td>이메일</td>
-				<td><input type="text" name="user_email"></td>
-			</tr>
+			<div class="name">
+				<strong class="td_1">이름</strong>
+				<div class="td_2">
+					<input type="text" name="user_name">
+				</div>
+			</div>
 
-			<tr>
-				<td>프로필 사진</td>
-				<td><input type="file" name="user_pic"></td>
-			</tr>
+			<br> <br>
 
-			<tr>
-				<td colspan="2" align="center"><input type="submit"
-					value="Register" onsubmit="return checkForm()"></td>
-			</tr>
+			<div class="nickName">
+				<strong class="td_1">닉네임</strong>
+				<div class="td_2">
+					<input type="text" name="user_nickname" class="input_nickname">
+					<font id="checkNickname" size="2"></font>
+				</div>
+			</div>
 
-		</table>
+			<br> <br>
+
+			<div class="phone">
+				<strong class="td_1">전화번호</strong>
+				<div class="td_2">
+					<input type="text" name="user_phone">
+				</div>
+			</div>
+
+			<br> <br>
+
+			<div class="email">
+				<strong class="td_1">이메일</strong>
+				<div class="td_2">
+					<input type="text" name="user_email">
+				</div>
+			</div>
+
+			<br> <br>
+
+			<div class="pic">
+				<strong class="td_1">프로필 사진</strong>
+				<div class="td_2">
+					<input type="file" name="user_pic">
+				</div>
+			</div>
+
+			<br> <br>
+
+			<div class="register">
+				<div colspan="2" align="center">
+					<input type="submit" value="Register" onsubmit="return checkForm()">
+				</div>
+			</div>
+		</div>
 	</form>
+	<br><br><br><br> 
 
 	<script src="https://code.jquery.com/jquery-3.6.3.js"></script>
 	<script type="text/javascript">
