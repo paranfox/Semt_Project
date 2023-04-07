@@ -10,7 +10,7 @@
 <title>회원 가입</title>
 </head>
 <body>
-	<form action="<%=request.getContextPath() %>/result.do" method="post"
+	<form action="<%=request.getContextPath() %>/register.do" method="post"
 		enctype="multipart/form-data" onsubmit="validateForm()">
 		<table border="1px solid black">
 			<tr>

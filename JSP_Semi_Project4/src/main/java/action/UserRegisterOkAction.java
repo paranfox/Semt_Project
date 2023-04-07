@@ -29,7 +29,7 @@ public class UserRegisterOkAction implements Action {
 
 		// 파일 업로드 시에는 설정해야 할 내용이 있음.
 		// 1. 첨부 파일 저장 경로 지정.
-		String saveFolder = "C:\\Users\\user\\eclipse-workspace\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp2\\wtpwebapps\\JSP_Semi_Project4\\profileUpload";
+		String saveFolder = "D:\\work\\workspace\\semi_prj\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\profileUpload";
 
 		// 2. 첨부 파일 크기 지정.
 		int fileSize = 10 * 1024 * 1024; // 10MB
