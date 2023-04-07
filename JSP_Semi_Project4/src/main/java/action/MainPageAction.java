@@ -7,16 +7,12 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.*;
 import model.*;
 import persistence.*;
-
-public class UserMyProfileAction implements Action {
+public class MainPageAction implements Action {
 
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		
 		
-	String user_nick = request.getParameter(
-			"nick");
-		UserDAO dao = UserDAO.getInstance();
 		
 		return null;
 	}

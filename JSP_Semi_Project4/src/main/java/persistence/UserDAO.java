@@ -113,63 +113,73 @@ public class UserDAO {
 	}
 
 	public int logincheck(String id, String pwd) {
-		
 		connect();
-		
 		String dbPwd = "";
-		
-		String dbNickname = "";
-		
-		UserVO vo = new UserVO();
-		
 		int check = -1;
-		
-		this.sql = "SELECT USER_PWD, USER_NICKNAME FROM USER WHERE USER_ID = ?";
-		
+		sql = "SELECT USER_PWD FROM USER WHERE USER_ID = ?";
 		try {
-			
-			this.pstmt = this.con.prepareStatement(this.sql);
-			
-			this.pstmt.setString(1, id);
-			
-			this.rs = this.pstmt.executeQuery();
-			
-			if (this.rs.next()) {
-				
-				dbPwd = this.rs.getString("user_pwd");
-				
-				dbNickname = this.rs.getString("user_nickname");
-				
-				vo.setUser_nickname(dbNickname);
-				
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, id);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				dbPwd = rs.getString("user_pwd");
 				if (dbPwd.equals(pwd)) {
-					
 					check = 1;
-					
 				} else {
-					
 					check = 0;
-					
 				}
-				
 			} else {
-				
 				check = -1;
-				
 			}
-			
 		} catch (SQLException e) {
-			
 			e.printStackTrace();
-			
 		} finally {
-			
-			disconnect(this.rs, this.pstmt, this.con);
-			
+			disconnect(rs, pstmt, con);
 		}
 		return check;
 	}
 
+	
+	public UserVO userContent(String id) {
+		UserVO vo = null;
+
+		connect();
+
+		sql = "SELECT * FROM USER WHERE USER_ID = ?";
+
+		try {
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, id);
+
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+
+				vo = new UserVO();
+
+				vo.setUser_id(rs.getString("user_id"));
+				vo.setUser_pwd(rs.getString("user_pwd"));
+				vo.setUser_name(rs.getString("user_name"));
+				vo.setUser_nickname(rs.getString("user_nickname"));
+				vo.setUser_email(rs.getString("user_email"));
+				vo.setUser_phone(rs.getString("user_phone"));
+				vo.setUser_pic(rs.getString("user_pic"));
+
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			disconnect(rs, pstmt, con);
+		}
+
+		return vo;
+	}
+
+
+	
+	
 	public String getUserNickname(String id) {
 		connect();
 		

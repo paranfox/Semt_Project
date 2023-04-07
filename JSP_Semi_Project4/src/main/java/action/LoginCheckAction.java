@@ -13,61 +13,44 @@ import persistence.UserDAO;
 public class LoginCheckAction implements Action {
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
-		String id = request.getParameter("id");
-		String pwd = request.getParameter("pwd");
-		if (id.equals("admin") && pwd.equals("admin")) {
-			UserDAO dao = UserDAO.getInstance();
-			int check = dao.logincheck(id, pwd);
-			ActionForward forward = new ActionForward();
-			PrintWriter out = response.getWriter();
-			if (check == 1) {
-				String user_nickname = dao.getUserNickname(id);
-				HttpSession session = request.getSession();
-				out.println("<script>");
-				out.println("alert('[[관리자로 로그인]]')");
-				out.println("</script>");
-				forward.setRedirect(false);
-				forward.setPath("/admin/AdminLoginOk.jsp");
-				session.setAttribute("sessionId", id);
-				session.setAttribute("user_nickname", user_nickname);
-			}
-		}
-
-		UserDAO dao = UserDAO.getInstance();
-		int check = dao.logincheck(id, pwd);
 		ActionForward forward = new ActionForward();
 		PrintWriter out = response.getWriter();
 
+		String id = request.getParameter("id");
+		String pwd = request.getParameter("pwd");
+
+		UserDAO dao = UserDAO.getInstance();
+
+		int check = dao.logincheck(id, pwd);
+		UserVO vo = dao.userContent(id);
+		
+		
 		if (check == 1) {
-			String user_nickname = dao.getUserNickname(id);
 			HttpSession session = request.getSession();
+			session.setAttribute("sessionId", id);
+			session.setAttribute("sessionUserVO", vo);
 			out.println("<script>");
 			out.println("alert('로그인 성공')");
+			out.println("location.href='main.jsp'");
 			out.println("</script>");
-//	    	out.println("location.href('LoginOk.jsp')");
-			forward.setRedirect(false);
-			forward.setPath("LoginOk.jsp");
-			session.setAttribute("sessionId", id);
-			session.setAttribute("user_nickname", user_nickname);
+			
+//	    	forward.setRedirect(false);
+//	        forward.setPath("LoginOk.jsp");
 		} else if (check == 0) {
 			out.println("<script>");
 			out.println("alert('비밀번호를 확인해주세요')");
 			out.println("history.back()");
 			out.println("</script>");
-//	    	forward.setRedirect(false);
-//	    	forward.setPath("LoginMain.jsp");
 
 		} else {
 			out.println("<script>");
 			out.println("alert('없는 아이디 입니다.')");
 			out.println("history.back()");
 			out.println("</script>");
-//	    	forward.setRedirect(false);
-//	    	forward.setPath("LoginMain.jsp");
 
 		}
 
-		return forward;
+		return null;
 	}
 
 }

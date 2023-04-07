@@ -1,10 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<<<<<<< HEAD
 
 <%
 String result = (String) session.getAttribute("sessionNickName");
 %>
 
+=======
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%
+String result = (String) session.getAttribute("sessionNickName");
+%>
+>>>>>>> branch 'master' of https://github.com/eownrrnf/semi_project.git
 
 <!DOCTYPE html>
 
@@ -38,6 +45,7 @@ String result = (String) session.getAttribute("sessionNickName");
 
 
 
+<<<<<<< HEAD
 
 						<%
 						if (session.getAttribute("sessionNickName") != null) {
@@ -67,6 +75,30 @@ String result = (String) session.getAttribute("sessionNickName");
 						<li><a href="http://www._____.com/HateList">싫어요<br>플레이리스트
 
 						</a></li>
+=======
+						<c:set value="${sessionUserVO }" var="vo"></c:set>
+						<c:if test="${!empty vo }">
+						
+						<a>${vo.getUser_nickname() }님 환영합니다</a>
+						<li><a href="<%=request.getContextPath()%>/logout_check.do">로그아웃</a></li>
+						<li><a href="http://www._____.com/MyPage">마이페이지</a></li>
+						<li><a href="http://www._____.com/LIkeList">좋아요<br>플레이리스트</a></li>
+						<li><a href="http://www._____.com/HateList">싫어요<br>플레이리스트</a></li>
+						
+						</c:if>
+						
+						<c:if test="${empty vo }">
+						
+						<%-- 로그인되지 않았을 때 --%>
+						<a>프로필</a>
+						<li><a href="login.jsp">로그인</a></li>
+						<li><a href="RegisterChoice.jsp">회원가입</a></li>
+						<li><a href="http://www._____.com/LIkeList">좋아요<br>플레이리스트</a></li>
+						<li><a href="http://www._____.com/HateList">싫어요<br>플레이리스트</a></li>
+						
+						</c:if>
+
+>>>>>>> branch 'master' of https://github.com/eownrrnf/semi_project.git
 					</ul>
 				</li>
 			</ul>

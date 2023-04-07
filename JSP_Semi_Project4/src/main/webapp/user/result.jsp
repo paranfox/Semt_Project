@@ -56,13 +56,12 @@
 	</div>
 	<div>
 		<img
-			src="<%=request.getContextPath() + "/profileUpload" + user.getUser_pic()%>">
+			src="<%=request.getContextPath() + "/profileUpload" + user.getUser_pic()%>" width="100" height="100" >
 	</div>
 	<div>
-
 		<p>
 			<input type="button" value="메인페이지로"
-				onclick="location.href='/main.jsp'">
+				onclick="<%=request.getContextPath() %>/main.do">
 		</p>
 	</div>
 

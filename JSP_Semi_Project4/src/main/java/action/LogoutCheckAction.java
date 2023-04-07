@@ -15,7 +15,7 @@ public class LogoutCheckAction implements Action {
 		session.invalidate();
 		PrintWriter out = response.getWriter();
 		forward.setRedirect(false);
-		forward.setPath("LoginMain.jsp");
+		forward.setPath("main.jsp");
 		return forward;
 	}
 }

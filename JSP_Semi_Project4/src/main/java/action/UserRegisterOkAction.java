@@ -29,7 +29,7 @@ public class UserRegisterOkAction implements Action {
 
 		// 파일 업로드 시에는 설정해야 할 내용이 있음.
 		// 1. 첨부 파일 저장 경로 지정.
-		String saveFolder = "C:\\Users\\jjyou\\OneDrive\\바탕 화면\\web\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp1\\wtpwebapps\\JSP_Semi_Project4\\profileUpload";
+		String saveFolder = "D:\\work\\workspace\\semi_prj\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\profileUpload";
 
 		// 2. 첨부 파일 크기 지정.
 		int fileSize = 10 * 1024 * 1024; // 10MB
@@ -106,10 +106,17 @@ public class UserRegisterOkAction implements Action {
 		HttpSession session = request.getSession();
 		session.setAttribute("sessionNickName", userVO.getUser_nickname());
 		request.setAttribute("user", userVO);
-
+		HttpSession session = request.getSession();
+		session.setAttribute("sessionNickName", userVO.getUser_nickname());
+		
+		
 		ActionForward forward = new ActionForward();
 		PrintWriter out = response.getWriter();
 		forward.setRedirect(false);
+<<<<<<< HEAD
+=======
+		
+>>>>>>> branch 'master' of https://github.com/eownrrnf/semi_project.git
 		forward.setPath("main.jsp");
 
 		return forward;
