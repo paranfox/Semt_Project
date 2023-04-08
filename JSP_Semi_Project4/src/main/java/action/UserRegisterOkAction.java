@@ -105,18 +105,15 @@ public class UserRegisterOkAction implements Action {
 
 		HttpSession session = request.getSession();
 		session.setAttribute("sessionNickName", userVO.getUser_nickname());
+		
 		request.setAttribute("user", userVO);
-		HttpSession session = request.getSession();
+		session = request.getSession();
 		session.setAttribute("sessionNickName", userVO.getUser_nickname());
 		
 		
 		ActionForward forward = new ActionForward();
 		PrintWriter out = response.getWriter();
 		forward.setRedirect(false);
-<<<<<<< HEAD
-=======
-		
->>>>>>> branch 'master' of https://github.com/eownrrnf/semi_project.git
 		forward.setPath("main.jsp");
 
 		return forward;
