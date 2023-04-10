@@ -46,8 +46,8 @@ String result = (String) session.getAttribute("sessionNickName");
 							<li><a href="uploadsample.jsp"> 뮤직업로드 </a></li>
 							<li><a href="http://www._____.com/LIkeList">좋아요<br>플레이리스트
 							</a></li>
-							<li><a href="http://www._____.com/HateList">싫어요<br>플레이리스트
-							</a></li>
+							<li><a href="<%=request.getContextPath()%>/upload_music.do">앨범
+									등록</a></li>
 
 						</c:if>
 
@@ -80,57 +80,57 @@ String result = (String) session.getAttribute("sessionNickName");
 	<div class="slideshow-container">
 
 		<div class="mySlides fade">
-				<div class="genre">${list.getMusic_id() }</div>
-				<div class="singer">가수</div> <img class="imgs" src="img/img1.png">
-				<img class="pic"
+			<div class="genre">${list.getMusic_id() }</div>
+			<div class="singer">가수</div>
+			<img class="imgs" src="img/img1.png"> <img class="pic"
 				src="<%=request.getContextPath() %>/fileupload/${list.getMusic_pic() }">
 
-				<div id="boombox">
-					<div class="boombox-handle"></div>
+			<div id="boombox">
+				<div class="boombox-handle"></div>
 
-					<div class="boombox-body">
-						<section class="master-controls">
-							<input type="range" id="volume" class="control-volume" min="0"
-								max="2" value="1" list="gain-vals" step="0.01"
-								data-action="volume" />
-							<datalist id="gain-vals">
-								<option value="0" label="min"></option>
-								<option value="2" label="max"></option>
-							</datalist>
+				<div class="boombox-body">
+					<section class="master-controls">
+						<input type="range" id="volume" class="control-volume" min="0"
+							max="2" value="1" list="gain-vals" step="0.01"
+							data-action="volume" />
+						<datalist id="gain-vals">
+							<option value="0" label="min"></option>
+							<option value="2" label="max"></option>
+						</datalist>
 
-							<label for="volume">VOL</label> <input type="range" id="panner"
-								class="control-panner" list="pan-vals" min="-1" max="1"
-								value="0" step="0.01" data-action="panner" />
-							<datalist id="pan-vals">
-								<option value="-1" label="left"></option>
-								<option value="1" label="right"></option>
-							</datalist>
+						<label for="volume">VOL</label> <input type="range" id="panner"
+							class="control-panner" list="pan-vals" min="-1" max="1" value="0"
+							step="0.01" data-action="panner" />
+						<datalist id="pan-vals">
+							<option value="-1" label="left"></option>
+							<option value="1" label="right"></option>
+						</datalist>
 
-							<label for="panner">PAN</label>
+						<label for="panner">PAN</label>
 
-							<button class="control-power" role="switch" aria-checked="false"
-								data-power="on">
-								<span>On/Off</span>
-							</button>
-						</section>
+						<button class="control-power" role="switch" aria-checked="false"
+							data-power="on">
+							<span>On/Off</span>
+						</button>
+					</section>
 
-						
 
-						<section class="tape">
-							<audio
-								src="<%=request.getContextPath() %>/fileupload/${list.getMusic_mp3() }"
-								crossorigin="anonymous"></audio>
 
-							<!-- 			type="audio/mpeg" -->
+					<section class="tape">
+						<audio
+							src="<%=request.getContextPath() %>/fileupload/${list.getMusic_mp3() }"
+							crossorigin="anonymous"></audio>
 
-							<button data-playing="false" class="tape-controls-play"
-								role="switch" aria-checked="false">
-								<span>Play/Pause</span>
-							</button>
-						</section>
-					</div>
-					<!-- boombox-body -->
+						<!-- 			type="audio/mpeg" -->
+
+						<button data-playing="false" class="tape-controls-play"
+							role="switch" aria-checked="false">
+							<span>Play/Pause</span>
+						</button>
+					</section>
 				</div>
+				<!-- boombox-body -->
+			</div>
 
 		</div>
 

@@ -15,37 +15,38 @@
 		<hr width="50%" color="marmoon">
 		<br>
 	</div>
-	
-	<form action="<%=request.getContextPath()%>/user_file.do"
-		method="post" enctype="multipart/form-data" onsubmit="validateForm()">
-		
+
+	<form action="<%=request.getContextPath()%>/user_file.do" method="post"
+		enctype="multipart/form-data">
+
 		<div class="wrapper">
 			<div class="content">
 				<h3>파일을 넣어주세요</h3>
 				<div class="file">
-					<label for="file">음원파일</label>  
-					<input type="file" id="file" name="music_mp3">
-					
-					<br><br>
+					<label for="file">음원파일</label> <input type="file" id="file"
+						name="music_mp3"> <br>
+					<br>
 					<table>
 						<tr>
 							<td>앨범 이름</td>
-							<td> <input type="text" name="music_id" class="input_id"> </td>
+							<td><input type="text" name="music_id" class="input_id">
+							</td>
 						</tr>
 
 						<tr>
 							<td>앨범 사진</td>
-							<td><label for="music_pic">앨범사진</label>   <input id="music_pic" type="file" name="music_pic"></td>
+							<td><label for="music_pic">앨범사진</label> <input
+								id="music_pic" type="file" name="music_pic"></td>
 						</tr>
 
 						<tr>
 							<td>음원 제목</td>
-							<td> <input type="text" name="music_title"></td>
+							<td><input type="text" name="music_title"></td>
 						</tr>
 
 						<tr>
 							<td>음원 설명</td>
-							<td> <textarea rows="7" cols="25" name="music_contents"></textarea>
+							<td><textarea rows="7" cols="25" name="music_contents"></textarea>
 							</td>
 						</tr>
 
