@@ -1,4 +1,4 @@
-package action;
+package actionMusic;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletResponse;
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
+import action.Action;
+import action.ActionForward;
 import model.MusicVO;
 import persistence.MusicDAO;
 
@@ -25,7 +27,7 @@ public class UserFileAction implements Action {
 
 		// 파일 업로드 시에는 설정해야 할 내용이 있음.
 		// 1. 첨부 파일 저장 경로 지정.
-		String saveFolder = "C:\\Users\\user\\eclipse-workspace\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp2\\wtpwebapps\\JSP_Semi_Project4\\fileupload";
+		String saveFolder = "D:\\work\\workspace\\semi_prj\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\profileUpload";
 
 		// 2. 첨부 파일 크기 지정.
 		int fileSize = 100 * 1024 * 1024; // 100MB

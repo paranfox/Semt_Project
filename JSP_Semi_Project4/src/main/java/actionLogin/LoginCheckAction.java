@@ -1,4 +1,4 @@
-package action;
+package actionLogin;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import action.Action;
+import action.ActionForward;
 import model.UserVO;
 import persistence.UserDAO;
 
@@ -35,7 +37,7 @@ public class LoginCheckAction implements Action {
 			out.println("</script>");
 			
 //	    	forward.setRedirect(false);
-//	        forward.setPath("LoginOk.jsp");
+//	        forward.setPath("../login/LoginOk.jsp");
 		} else if (check == 0) {
 			out.println("<script>");
 			out.println("alert('비밀번호를 확인해주세요')");

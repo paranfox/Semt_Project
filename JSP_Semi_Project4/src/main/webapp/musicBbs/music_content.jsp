@@ -138,7 +138,8 @@
 										function() {
 											let commentContent = $('#comment')
 													.val();
-											$.ajax({
+											$
+													.ajax({
 														url : 'comment_write.do',
 														type : 'POST',
 														data : {

@@ -1,32 +1,36 @@
-package action;
+package actionMusic;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.*;
 import persistence.*;
+import action.Action;
+import action.ActionForward;
+import persistence.MusicDAO;
+import model.MusicVO;
 
-public class MusicContentAction implements Action {
+public class MusicListAction implements Action {
 
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
-		int album_id = Integer.parseInt(request.getParameter("id"));
-
 		MusicDAO dao = MusicDAO.getInstance();
 
-		MusicVO vo = dao.contentMusic(album_id);
+		List<MusicVO> list = dao.getMusicList();
 
-		request.setAttribute("musicCont", vo);
+		request.setAttribute("musicList", list);
 
 		ActionForward forward = new ActionForward();
 
 		forward.setRedirect(false);
 
-		forward.setPath("user/music_content.jsp");
+		forward.setPath("../musicBbs/music_list.jsp");
 
 		return forward;
+
 	}
 
 }

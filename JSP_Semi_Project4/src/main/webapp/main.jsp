@@ -15,7 +15,7 @@ String result = (String) session.getAttribute("sessionNickName");
 
 <title>main</title>
 
-<link rel="stylesheet" href="main.css">
+<link rel="stylesheet" href="css/main.css">
 
 </head>
 
@@ -55,8 +55,8 @@ String result = (String) session.getAttribute("sessionNickName");
 
 							<%-- 로그인되지 않았을 때 --%>
 							<a>프로필</a>
-							<li><a href="login.jsp">로그인</a></li>
-							<li><a href="RegisterChoice.jsp">회원가입</a></li>
+							<li><a href="login/login.jsp">로그인</a></li>
+							<li><a href="register/RegisterChoice.jsp">회원가입</a></li>
 							<li><a href="http://www._____.com/LIkeList">좋아요<br>플레이리스트
 							</a></li>
 							<li><a href="http://www._____.com/HateList">싫어요<br>플레이리스트
