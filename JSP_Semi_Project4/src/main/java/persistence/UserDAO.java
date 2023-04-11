@@ -221,5 +221,128 @@ public class UserDAO {
 		// TODO Auto-generated method stub
 		
 	}
+	
+	
 
+	public int checkNameToEmail(String name, String email) {
+
+		int result = 0;
+		String db_name = "";
+
+		connect();
+
+		sql = "SELECT USER_NAME FROM USER WHERE USER_EMAIL = ?";
+
+		try {
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, email);
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+				db_name = rs.getString(1);
+			}
+
+			if (name.equals(db_name)) {
+				result = 1;
+			} else if (!name.equals(db_name) && !db_name.equals("")) {
+				// 이름이 다른 경우
+				result = -1;
+			} else if (db_name.equals("")) {
+				result = 0;// 이메일이 다른 경우 result = 0;
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return result;
+	} // checkNameAndId end
+
+	public String findUserId(String email) {
+		String user_id = "";
+		
+		connect();
+		
+		sql = "SELECT USER_ID FROM USER WHERE USER_EMAIL = ?";
+		
+		try {
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, email);
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				user_id = rs.getString(1);
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return user_id;
+	} // findUserId end
+	
+	
+	public int checkIdToEmail(String id, String email) {
+		int result = 0;
+		String db_id = "";
+
+		connect();
+
+		sql = "SELECT USER_ID FROM USER WHERE USER_EMAIL = ?";
+
+		try {
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, email);
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+				db_id = rs.getString(1);
+			}
+
+			if (id.equals(db_id)) {
+				result = 1;
+			} else if (!id.equals(db_id) && !db_id.equals("")) {
+				// 아이디가 다른 경우
+				result = -1;
+			} else if (db_id.equals("")) {
+				result = 0;// 이메일이 다른 경우 result = 0;
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return result;
+	}	// checkIdToEmail end
+
+	public int modifyPwd(String user_id, String user_pwd) {
+		
+		int result = 0;
+		
+		connect();
+		
+		try {
+			
+			sql = "UPDATE USER SET USER_PWD = ? WHERE USER_ID = ?";
+			
+			pstmt = con.prepareStatement(sql);
+			
+			pstmt.setString(1, user_pwd);
+			pstmt.setString(2, user_id);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			disconnect(rs, pstmt, con);
+		}
+		
+		return result;
+		
+	}	// modifyPwd end
+	
 }

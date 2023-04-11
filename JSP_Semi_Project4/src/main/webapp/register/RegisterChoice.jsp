@@ -25,14 +25,14 @@
 
 	<div>
 		<a onclick="registerKakao();" style="cursor: pointer"> <img
-				src="img/kakao_login_medium_wide.png" alt="카카오 로그인"></img>
+				src="../img/kakao_login_medium_wide.png" alt="카카오 로그인"></img>
 		</a>
 		
 		<div id="buttonDiv"></div> 
 		
 		<br>
 		
-		<button class="api-btn" onclick="location.href='RegisterHome.jsp'">4운드 회원가입</button>
+		<button class="api-btn" onclick="location.href='../Register.jsp'">4운드 회원가입</button>
 	</div>
 
 </body>

@@ -77,10 +77,21 @@
 			<div class="email">
 				<strong class="td_1">이메일</strong>
 				<div class="td_2">
-					<input type="text" name="user_email">
+					<input type="text" name="user_email" class="input_email">
+			 		<button type="button" onclick="sendEmail()">인증코드 전송</button><br>
+					<font id="checkEmail" size="2"></font>
 				</div>
 			</div>
-
+			 <br>
+			 
+				<div class="td_2">
+					<input type="text" name="email_code" class="email_code">
+			 		<button type="button" onclick="checkCode()">인증코드 확인</button><br>
+					<font id="checkCode" size="2"></font>
+					<font id="checkCode2" size="2"></font>
+				</div>
+			 
+			
 			<br> <br>
 
 			<div class="pic">
@@ -106,7 +117,7 @@
 		$('.input_id').focusout(function() {
 			let userId = $('.input_id').val();
 			$.ajax({
-				url : "ajax.IdCheckService",
+				url : "IdCheckService",
 				type : "post",
 				data : {
 					userId : userId
@@ -122,7 +133,7 @@
 					}
 				},
 				error : function() {
-					alert("서버요청실패");
+					alert("서버요청실패1");
 				}
 			})
 		})
@@ -146,7 +157,7 @@
 					}
 				},
 				error : function() {
-					alert("서버요청실패");
+					alert("서버요청실패2");
 				}
 			})
 		})
@@ -165,6 +176,63 @@
 				}
 			}
 		})
+		
+		
+		let code;
+		// 이메일 전송
+		function sendEmail() {
+			let userEmail = $('.input_email').val();
+			
+			$.ajax({
+				url : "register_send_email.do",
+				type : "POST",
+				data : {
+					userEmail : userEmail
+					},
+					success : function(result) {
+						code = result; // 전역 변수에 코드 저장.
+						alert(code);
+						$("#checkEmail").html('인증코드가 전송되었습니다. 이메일을 확인하세요.');
+						$("#checkEmail").attr('color', 'green');
+					},
+					error : function(){
+						alert("이메일 주소를 확인하세요.");
+					}
+			});
+		}
+		
+	 	/* function checkCode() {
+			let email_code = $(".email_code").val();
+			let email_code2 = $("#checkCode").html(code);
+				
+					if(email_code.equals(email_code2)){
+						$("#checkCode2").html('사용할 수 있는 코드입니다.');
+						$("#checkCode2").attr('color', 'green');
+						
+					}else{
+							alert("인증번호가 틀립니다.");
+					} 
+
+		} */  
+	
+
+	
+/* 		$(document).ready(function() {
+			$("#check_code").click(function() {
+				const userInput = $("#input_code").val();
+				
+					if (userInput.equals(code)) {
+						$("#checkCode").html('인증코드가 일치 합니다.');
+						$("#checkCode").attr('color', 'green');
+					} else if (userInput != code) {
+						$("#checkCode").html('인증코드가 불일치 합니다.');
+						$("#checkCode").attr('color', 'red');
+					}
+				
+			});
+		}); */
+		
+		
 	</script>
 
 

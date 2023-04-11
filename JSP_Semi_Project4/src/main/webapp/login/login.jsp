@@ -34,7 +34,7 @@
 
 	<div>
 		<a onclick="loginKakao();"> 
-			<img src="img/kakao_login_medium_wide.png" alt="카카오 로그인"></img>
+			<img src="../img/kakao_login_medium_wide.png" alt="카카오 로그인"></img>
 		</a>
 	</div>
 
@@ -54,25 +54,28 @@
 				</tr>
 				<tr>
 					<th>PWD</th>
-					<td><input name="pwd"></td>
+					<td><input type="password" name="pwd"></td>
 				</tr>
 				<tr>
 					<td colspan="2">
 						<input type="submit" value="로그인">
-						<input	type="button" value="회원가입" onclick="location.href='RegisterChoice.jsp'">
+						<input	type="button" value="회원가입" onclick="location.href='../register/RegisterChoice.jsp'">
 					</td>
 				</tr>
 
 			</table>
 		</form>
-		<input type="button" value="내 정보" onclick="location.href='main.jsp'">
+		<input type="button" value="아이디 찾기" onclick="location.href='../forget/forgetId.jsp'">
+		<input type="button" value="비밀번호 찾기" onclick="location.href='../forget/forgetPwd.jsp'">
 	</div>
 
 
 </body>
 
 <script type='text/javascript'>
-
+	
+	
+	// 카카오 로그인 api
 	function loginKakao() {
 		//1. 로그인 시도
 		Kakao.Auth.login({
@@ -120,46 +123,8 @@
 		});
 	};
 	
-
-	<%--
-	function loginGoogle() {
-	    google.accounts.id.initialize({
-	        client_id: "1041087198718-inbdu2ft7ri1j36l72g3sojpumk19tea.apps.googleusercontent.com",
-	        callback: handleCredentialResponse
-	    });
-	    google.accounts.id.prompt();
-	}
-
-	function handleCredentialResponse(response) {
-	    var profile = jwt_decode(response.credential);
-		
-	    console.log(profile);
-	    const google_id = response.id;
-		const google_email = profile.email;
-		  
-		alert(google_id);
-		alert(google_email);
-		/* 
-		// profile.sub 구글 primary key 의 값이 20자리 이상 => pwd로 설정. 다른 정보들은 중복 가능성이 있기 때문에 일단 아이디는 이메일로 대체
-		const form = document.createElement('form');        // form 태그 생성 
-		let objs = document.createElement('input');             // 값을 넣을 input 생성 
-		objs.setAttribute('type', 'hidden');                                  // 값의 type
-		objs.setAttribute('name', "id");                  // 값을 담을 변수 이름 : 인증 성공 시 서버에서 받아서 셋팅 
-		objs.setAttribute('value', google_email);          // 값 : 인증 성공시 서버에서 받아서 셋팅 
-		form.appendChild(objs);
-		let objs2 = document.createElement('input');             // 값을 넣을 input 생성 
-		objs2.setAttribute('type', 'hidden');                                  // 값의 type
-		objs2.setAttribute('name', "pwd");                  // 값을 담을 변수 이름 : 인증 성공 시 서버에서 받아서 셋팅 
-		objs2.setAttribute('value', google_id);          // 값 : 인증 성공시 서버에서 받아서 셋팅 
-		form.appendChild(objs2);
-		form.setAttribute('method', 'post');                            //get,post 가능
-		form.setAttribute('action', "login_check.do");         // 호출할 url : 인증 성공시 서버에서 받아서 셋팅 
-		document.body.appendChild(form);
-		form.submit(); */
-		
-	}
-	--%>
-	
+	// 구글 로그인 api
+	// 로그인 버튼 표시
 	function handleCredentialResponse(response) {
     	const responsePayload = parseJwt(response.credential);
     	console.log("ID: " + responsePayload.sub);
@@ -190,6 +155,7 @@
         
     }
 	
+	// 구글 로그인 정보가져오기
     function parseJwt (token) {
         var base64Url = token.split('.')[1];
         var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');

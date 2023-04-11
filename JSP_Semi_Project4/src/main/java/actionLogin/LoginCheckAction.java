@@ -33,7 +33,7 @@ public class LoginCheckAction implements Action {
 			session.setAttribute("sessionUserVO", vo);
 			out.println("<script>");
 			out.println("alert('로그인 성공')");
-			out.println("location.href='main.jsp'");
+			out.println("location.href='../main.jsp'");
 			out.println("</script>");
 			
 //	    	forward.setRedirect(false);
