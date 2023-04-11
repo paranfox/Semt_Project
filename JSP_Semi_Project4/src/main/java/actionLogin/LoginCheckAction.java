@@ -25,19 +25,21 @@ public class LoginCheckAction implements Action {
 
 		int check = dao.logincheck(id, pwd);
 		UserVO vo = dao.userContent(id);
-		
-		
+		UserVO vo1 = dao.getProfile_pic(id);
+		String profile_pic = vo1.getUser_pic();
+		System.out.println("유저 사진  >>>>  " + profile_pic);
 		if (check == 1) {
 			HttpSession session = request.getSession();
 			session.setAttribute("sessionId", id);
 			session.setAttribute("sessionUserVO", vo);
+			session.setAttribute("profile_pic", profile_pic);
 			out.println("<script>");
 			out.println("alert('로그인 성공')");
-			out.println("location.href='main.jsp'");
+			out.println("location.href='../main.jsp'");
 			out.println("</script>");
-			
+
 //	    	forward.setRedirect(false);
-//	        forward.setPath("../login/LoginOk.jsp");
+//	        forward.setPath("LoginOk.jsp");
 		} else if (check == 0) {
 			out.println("<script>");
 			out.println("alert('비밀번호를 확인해주세요')");

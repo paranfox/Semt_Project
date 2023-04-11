@@ -27,7 +27,7 @@ public class UserFileAction implements Action {
 
 		// 파일 업로드 시에는 설정해야 할 내용이 있음.
 		// 1. 첨부 파일 저장 경로 지정.
-		String saveFolder = "D:\\work\\workspace\\semi_prj\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\profileUpload";
+		String saveFolder = "C:\\Users\\user\\eclipse-workspace\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp2\\wtpwebapps\\JSP_Semi_Project4\\fileUpload";
 
 		// 2. 첨부 파일 크기 지정.
 		int fileSize = 100 * 1024 * 1024; // 100MB
@@ -62,12 +62,12 @@ public class UserFileAction implements Action {
 
 		if (check > 0) {
 			out.println("<script>");
-			out.println("alert('상품 코드 등록 성공!!!')");
+			out.println("alert('[앨범 등록 성공]')");
 			out.println("location.href='user_music_list.do'");
 			out.println("</script>");
 		} else {
 			out.println("<script>");
-			out.println("alert('상품 등록 실패')");
+			out.println("alert('[앨범 등록 실패]')");
 			out.println("history.back()");
 			out.println("</script>");
 		}

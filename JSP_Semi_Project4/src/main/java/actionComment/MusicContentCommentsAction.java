@@ -26,13 +26,14 @@ public class MusicContentCommentsAction implements Action {
 		// 세션에서 사용자 정보를 가져와 user_id를 설정합니다.
 		HttpSession session = request.getSession();
 //		User user = (User) session.getAttribute("user");
-		String user_id = "rbgks2222";
-
+		String user_id = (String) session.getAttribute("sessionId");
+		String profile_pic = (String) session.getAttribute("profile_pic");
 		// Comment 객체를 생성하고 값을 설정합니다.
 		CommentVO comment = new CommentVO();
 		comment.setAlbum_id(album_id);
 		comment.setUser_id(user_id);
 		comment.setContent(content);
+		comment.setUser_pic(profile_pic);
 
 		// CommentDAO 객체를 생성하고 댓글을 데이터베이스에 저장합니다.
 		CommentDAO dao = CommentDAO.getInstance();

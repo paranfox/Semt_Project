@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <!DOCTYPE html>
@@ -57,10 +56,6 @@
 				</c:if>
 			</tr>
 
-
-
-
-			<%-- 데이터가 없는 경우 --%>
 			<c:if test="${empty vo }">
 				<tr>
 					<td colspan="2" align="center">
@@ -79,89 +74,74 @@
 			onclick="location.href='upload_list.do'">
 
 	</div>
-	<!-- 댓글 입력 -->
-	<div id="commentForm">
-		<label for="comment">댓글:</label> <input type="text" id="comment"
-			name="comment">
-		<button type="button" id="submitComment">댓글 작성</button>
-	</div>
-	<br>
-	<!-- 댓글 목록 -->
-	<div id="commentList">
-		<h3>댓글 목록</h3>
-		<ul id="commentListContainer">
-		</ul>
-	</div>
+	 <!-- 댓글 작성 폼 -->
+    <div id="commentForm">
+        <h3>댓글 작성</h3>
+        <textarea id="commentContent" rows="5" cols="30"></textarea>
+        <button id="submitComment">댓글 작성</button>
+    </div>
+
+    <!-- 댓글 목록 -->
+    <div id="commentList">
+        <h3>댓글 목록</h3>
+        <ul id="commentListContainer">
+        </ul>
+    </div>
 </body>
 <script>
-	$(document)
-			.ready(
-					function() {
-						// 댓글 불러오기
-						function loadComments() {
-							$
-									.ajax({
-										url : 'comment_list.do?album_id=${vo.getMusic_id()}',
-										dataType : 'json',
-										success : function(data) {
-											let commentListContainer = $('#commentListContainer');
-											commentListContainer.empty();
+    $(document).ready(function() {
+        // 댓글 목록을 가져와 출력하는 함수
+        function loadComments() {
+          
+            let commentListContainer = $('#commentListContainer');
+            commentListContainer.empty();
 
-											$
-													.each(
-															data,
-															function(index,
-																	comment) {
-																let commentListItem = $(
-																		'<li></li>')
-																		.text(
-																				comment.content);
-																commentListContainer
-																		.append(commentListItem);
-															});
-										},
-										error : function(request, status, error) {
-											console
-													.log("Error loading comments: "
-															+ error);
-										}
-									});
-						}
+            $.ajax({
+                url: 'musicContentCommentsList.do',
+                type: 'GET',
+                dataType: 'json',
+                data: { album_id: '${vo.getMusic_id()}' },
+                success: function(data) {
+                    $.each(data, function(index, comment) {
+                        let commentListItem = $('<li></li>');
+                        let userIdSpan = $('<span></span>').text(comment.user_id + ': ');
+                        let userPicImg = $('<img>').attr('src', '<%=request.getContextPath()%>/fileupload/' + comment.user_pic).css({
+                            'width': '30px',
+                            'height': '30px'
+                        });
+                        let contentSpan = $('<span></span>').text(comment.content);
 
-						// 페이지 로드 시 댓글 불러오기
-						loadComments();
+                        commentListItem.append(userPicImg).append(userIdSpan).append(contentSpan);
+                        commentListContainer.append(commentListItem);
+                    });
+                }
+            });
+        }
 
-						// 댓글 작성
-						$('#submitComment')
-								.on(
-										'click',
-										function() {
-											let commentContent = $('#comment')
-													.val();
-											$
-													.ajax({
-														url : 'comment_write.do',
-														type : 'POST',
-														data : {
-															album_id : '${vo.getMusic_id()}',
-															content : commentContent
-														},
-														success : function() {
-															// 댓글 작성 후 입력창 초기화 및 댓글 목록 새로고침
-															$('#comment').val(
-																	'');
-															loadComments();
-														},
-														error : function(
-																request,
-																status, error) {
-															console
-																	.log("Error submitting comment: "
-																			+ error);
-														}
-													});
-										});
-					});
+        // 페이지 로드 시 댓글 목록을 가져와 출력합니다.
+        loadComments();
+
+        // 댓글 작성 버튼 클릭 이벤트
+        $('#submitComment').click(function() {
+            
+            let content = $('#commentContent').val();
+
+            $.ajax({
+                url: 'musicContentComments.do',
+                type: 'POST',
+                dataType: 'json',
+                data: { album_id: '${vo.getMusic_id()}', content: content },
+                success: function(response) {
+                    if (response.result === "success") {
+                        loadComments();
+                        $('#commentContent').val('');
+                    } else {
+                        alert('댓글 작성에 실패했습니다.');
+                    }
+                }
+            });
+        });
+    });
 </script>
 
 </html>

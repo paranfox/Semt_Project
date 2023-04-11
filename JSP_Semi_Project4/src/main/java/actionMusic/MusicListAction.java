@@ -27,7 +27,7 @@ public class MusicListAction implements Action {
 
 		forward.setRedirect(false);
 
-		forward.setPath("../musicBbs/music_list.jsp");
+		forward.setPath("/musicBbs/music_list.jsp");
 
 		return forward;
 
