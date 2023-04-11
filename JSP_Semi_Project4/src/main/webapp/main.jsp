@@ -1,9 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%
-String result = (String) session.getAttribute("sessionNickName");
-%>
 
 <!DOCTYPE html>
 
@@ -43,7 +40,7 @@ String result = (String) session.getAttribute("sessionNickName");
 
 							<a>${vo.getUser_nickname() }님 환영합니다</a>
 							<li><a href="<%=request.getContextPath()%>/logout_check.do">로그아웃</a></li>
-							<li><a href="http://www._____.com/MyPage">마이페이지</a></li>
+							<li><a href="<%=request.getContextPath()%>/my_page.do?num=${vo.getUser_id() }">마이페이지</a></li>
 							<li><a href="musicBbs/uploadsample.jsp">앨범 등록</a></li>
 							<li><a href="http://www._____.com/LIkeList">좋아요<br>플레이리스트
 							</a></li>
