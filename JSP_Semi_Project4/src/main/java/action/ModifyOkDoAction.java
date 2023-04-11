@@ -1,32 +1,27 @@
 package action;
 
-import java.io.IOException;
-
 import java.io.File;
+import java.io.IOException;
 import java.io.PrintWriter;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
+
 import java.util.*;
+import persistence.*;
+import model.*;
 
-import model.UserVO;
-import persistence.UserDAO;
-
-public class UserRegisterOkAction implements Action {
+public class ModifyOkDoAction implements Action {
 
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
-
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html; charset=UTF-8");
 
-		UserVO userVO = new UserVO();
-
+		UserVO vo = new UserVO();
 		// 파일 업로드 시에는 설정해야 할 내용이 있음.
 		// 1. 첨부 파일 저장 경로 지정.
 		String saveFolder = "C:\\Users\\jjyou\\OneDrive\\바탕 화면\\web\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp1\\wtpwebapps\\JSP_Semi_Project4\\profileUpload";
@@ -46,14 +41,11 @@ public class UserRegisterOkAction implements Action {
 
 		String user_id = multi.getParameter("user_id");
 		String user_pwd = multi.getParameter("user_pwd");
-		String user_name = multi.getParameter("user_name");
 		String user_nickname = multi.getParameter("user_nickname");
-		String user_email = multi.getParameter("user_email");
+		String user_name = multi.getParameter("user_name");
 		String user_phone = multi.getParameter("user_phone");
+		String user_email = multi.getParameter("user_email");
 		File user_pic = multi.getFile("user_pic");
-
-		// 자료실 폼 페이지에서 type="file" 속성으로 되어 있으면
-		// getFile() 메서드로 받아 주어야 함.
 
 		if (user_pic != null) { // 첨부파일이 존재하는 경우
 
@@ -90,32 +82,38 @@ public class UserRegisterOkAction implements Action {
 			// "/2023-03-28/홍길동_파일명" 으로 저장 예정.
 			String fileDBName = "/" + year + "-" + month + "-" + day + "/" + reFileName;
 
-			userVO.setUser_pic(fileDBName);
+			vo.setUser_pic(fileDBName);
 
 		}
-		userVO.setUser_email(user_email);
-		userVO.setUser_id(user_id);
-		userVO.setUser_name(user_name);
-		userVO.setUser_nickname(user_nickname);
-		userVO.setUser_phone(user_phone);
-		userVO.setUser_pwd(user_pwd);
-		
+
+		vo.setUser_id(user_id);
+		vo.setUser_pwd(user_pwd);
+		vo.setUser_nickname(user_nickname);
+		vo.setUser_name(user_name);
+		vo.setUser_phone(user_phone);
+		vo.setUser_email(user_email);
+
 		UserDAO dao = UserDAO.getInstance();
-		dao.registerUser(userVO);
-
-		HttpSession session = request.getSession();
-		session.setAttribute("sessionNickName", userVO.getUser_nickname());
-		request.setAttribute("user", userVO);
-
-		// 화면을 띄우게 하기 위한 코드.
-		ActionForward forward = new ActionForward();
+		int check = dao.updateUser(vo);
 		PrintWriter out = response.getWriter();
-		forward.setRedirect(false);
+		//ActionForward forward = new ActionForward();
+		
+		if (check > 0) {
+			out.println("<script>");
+			out.println("alert('수정 성공!!!')");
+			out.println("location.href='my_page.do?num="+user_id+"'");
+			out.println("</script>");
+			//request.setAttribute("vo", vo);
+			//forward.setRedirect(false);
+			//forward.setPath("mypage/MyPage.jsp");
 
-		forward.setPath("main.jsp");
-
-		return forward;
-
+		} else {
+			out.println("<script>");
+			out.println("alert('수정 실패~~~')");
+			out.println("history.back()");
+			out.println("</script>");
+		}
+		return null;
 	}
 
 }

@@ -64,4 +64,6 @@ public class UserVO {
 	public void setUser_pic(String user_pic) {
 		this.user_pic = user_pic;
 	}
+
+
 }

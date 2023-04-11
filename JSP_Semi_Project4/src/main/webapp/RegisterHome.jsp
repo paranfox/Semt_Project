@@ -10,8 +10,8 @@
 <title>회원 가입</title>
 </head>
 <body>
-	<form action="<%=request.getContextPath() %>/register.do" method="post"
-		enctype="multipart/form-data" onsubmit="validateForm()">
+	<form action="<%=request.getContextPath()%>/result.do" method="post"
+		enctype="multipart/form-data">
 		<table border="1px solid black">
 			<tr>
 				<td>ID</td>
@@ -62,7 +62,7 @@
 
 			<tr>
 				<td colspan="2" align="center"><input type="submit"
-					value="Register" onsubmit="return checkForm()"></td>
+					value="Register"></td>
 			</tr>
 
 		</table>

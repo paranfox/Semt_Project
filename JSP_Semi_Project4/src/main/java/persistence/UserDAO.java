@@ -8,6 +8,8 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
+import com.mysql.cj.x.protobuf.MysqlxConnection.Close;
+
 import model.*;
 
 public class UserDAO {
@@ -78,10 +80,10 @@ public class UserDAO {
 	}
 
 	public boolean registerUser(UserVO vo) {
+		connect();
 
 		try {
 
-			connect();
 			String sql = "insert into user values(?,?,?,?,?,?,?)";
 
 			pstmt = con.prepareStatement(sql);
@@ -97,19 +99,17 @@ public class UserDAO {
 			pstmt.executeUpdate();
 
 		} catch (SQLException e) {
-			
+
 			e.printStackTrace();
-			
-			return false;
-			
+
 		} finally {
-			
+
 			disconnect(rs, pstmt, con);
-			
+
 		}
-		
+
 		return true;
-		
+
 	}
 
 	public int logincheck(String id, String pwd) {
@@ -139,7 +139,6 @@ public class UserDAO {
 		return check;
 	}
 
-	
 	public UserVO userContent(String id) {
 		UserVO vo = null;
 
@@ -177,49 +176,189 @@ public class UserDAO {
 		return vo;
 	}
 
-
-	
-	
 	public String getUserNickname(String id) {
 		connect();
-		
+
 		String user_nickname = "";
-		
+
 		UserVO vo = new UserVO();
-		
+
 		try {
-			
+
 			sql = "SELECT USER_NICKNAME FROM USER WHERE USER_ID = ?";
-			
+
 			this.pstmt = this.con.prepareStatement(this.sql);
-			
+
 			this.pstmt.setString(1, id);
-			
+
 			this.rs = this.pstmt.executeQuery();
-			
+
 			if (this.rs.next()) {
-				
+
 				user_nickname = this.rs.getString("user_nickname");
-				
+
 				vo.setUser_nickname(user_nickname);
-				
+
 			}
-			
+
 		} catch (Exception e) {
-			
+
 			e.printStackTrace();
-			
+
 		} finally {
-			
+
 			disconnect(rs, pstmt, con);
-			
+
 		}
 		return user_nickname;
 	}
 
-	public void getMyProfile(String user_nick) {
-		// TODO Auto-generated method stub
-		
+	// 마이페이지 view페이지로 보여주기
+	public List<UserVO> myPage(String user_id) {
+
+		List<UserVO> list = new ArrayList<UserVO>();
+
+		try {
+			connect();
+
+			sql = "select * from user where user_id = ?";
+
+			pstmt = con.prepareStatement(sql);
+
+			pstmt.setString(1, user_id);
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				UserVO vo = new UserVO();
+
+				vo.setUser_id(rs.getString("user_id"));
+				vo.setUser_pwd(rs.getString("user_pwd"));
+				vo.setUser_name(rs.getString("user_name"));
+				vo.setUser_nickname(rs.getString("user_nickname"));
+				vo.setUser_email(rs.getString("user_email"));
+				vo.setUser_phone(rs.getString("user_phone"));
+				vo.setUser_pic(rs.getString("user_pic"));
+
+				list.add(vo);
+
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			disconnect(rs, pstmt, con);
+		}
+
+		return list;
 	}
+
+	// 유저 정보 수정 메서드
+	public UserVO modify(String user_id) {
+
+		UserVO vo = new UserVO();
+
+		try {
+			connect();
+
+			String sql = "select * from user where user_id = ?";
+
+			pstmt = con.prepareStatement(sql);
+
+			pstmt.setString(1, user_id);
+
+			rs = pstmt.executeQuery(); // 쿼리 실행
+
+			if (rs.next()) {
+				vo.setUser_id(rs.getString("user_id"));
+				vo.setUser_pwd(rs.getString("user_pwd"));
+				vo.setUser_name(rs.getString("user_name"));
+				vo.setUser_nickname(rs.getString("user_nickname"));
+				vo.setUser_phone(rs.getString("user_phone"));
+				vo.setUser_pic(rs.getString("user_pic"));
+				vo.setUser_email(rs.getString("user_email"));
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			disconnect(rs, pstmt, con);
+		}
+		return vo;
+	}		// 유저 정보 수정 메서드 end
+
+	// 유저 업데이트 메서드 시작
+	public int updateUser(UserVO vo) {
+		connect();
+
+		int result = 0;
+
+		try {
+
+			sql = "update user set user_name = ?, user_nickname = ?, user_phone = ?, user_email = ?, user_pic = ? where user_id = ?";
+
+			pstmt = con.prepareStatement(sql);
+		
+			pstmt.setString(1, vo.getUser_name());
+			pstmt.setString(2, vo.getUser_nickname());
+			pstmt.setString(3, vo.getUser_phone());
+			pstmt.setString(4, vo.getUser_email());
+			pstmt.setString(5, vo.getUser_pic());
+			pstmt.setString(6, vo.getUser_id());
+
+			result = pstmt.executeUpdate();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			disconnect(rs, pstmt, con);
+		}
+		return result;
+	} // 유저 업데이트 메서드 end
+	
+	
+	// 유저 탈퇴 메서드 시작
+	public int deleteUser(String user_id) {
+		
+		connect();
+		
+		int result = 0;
+		
+		try {
+			
+			sql = "DELETE FROM user WHERE user_id = ?";
+			
+			pstmt = con.prepareStatement(sql);
+			
+			pstmt.setString(1, user_id);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			disconnect(rs, pstmt, con);
+		}
+		return result;
+		
+	}	// 유저 탈퇴 메서드 종료
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 }

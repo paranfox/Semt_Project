@@ -27,6 +27,7 @@
 
 
 <title>로그인</title>
+<link rel="stylesheet" href="login.css">
 </head>
 <body>
 	<h3>로그인 화면</h3>
