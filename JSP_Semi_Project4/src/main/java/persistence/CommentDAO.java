@@ -127,4 +127,31 @@ public class CommentDAO {
 		return comments;
 	}
 
+	public void updateComment(CommentVO comment) {
+
+		connect();
+
+		try {
+
+			String sql = "UPDATE comments set content = ? where comment_id = ?";
+
+			pstmt = con.prepareStatement(sql);
+
+			pstmt.setInt(2, comment.getComment_id());
+
+			pstmt.setString(1, comment.getContent());
+
+			pstmt.executeUpdate();
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		} finally {
+
+			disconnect(rs, pstmt, con);
+
+		}
+	}
+
 }

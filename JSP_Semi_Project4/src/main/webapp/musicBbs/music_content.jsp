@@ -110,8 +110,31 @@
                             'height': '30px'
                         });
                         let contentSpan = $('<span></span>').text(comment.content);
+                        let editBtn =$('<button></button>').text('수정');
+                        let deleteBtn = $('<button></button>').text('삭제');
+                        
+                        // 댓글 수정 버튼 클릭 이벤트
+                        editBtn.click(function() {
+                            let newContent = prompt('수정할 댓글을 입력하세요.', comment.content);
 
-                        commentListItem.append(userPicImg).append(userIdSpan).append(contentSpan);
+                            if (newContent) {
+                                $.ajax({
+                                    url: 'musicContentCommentsUpdate.do',
+                                    type: 'POST',
+                                    dataType: 'json',
+                                    data: { comment_id: comment.comment_id, content: newContent },
+                                    success: function(response) {
+                                        if (response.result === "success") {
+                                            loadComments();
+                                        } else {
+                                            alert('댓글 수정에 실패했습니다.');
+                                        }
+                                    }
+                                });
+                            }
+                        });
+                        
+                        commentListItem.append(userPicImg).append(userIdSpan).append(contentSpan).append(editBtn).append(deleteBtn);
                         commentListContainer.append(commentListItem);
                     });
                 }
