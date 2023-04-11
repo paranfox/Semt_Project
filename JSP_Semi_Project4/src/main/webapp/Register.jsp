@@ -7,13 +7,13 @@
 <head>
 <meta charset="UTF-8">
 <title>회원 가입</title>
-<link rel="stylesheet" href="Register.css">
-<link rel="stylesheet" href="Register_2.css">
+<link rel="stylesheet" href="css/Register.css">
+<link rel="stylesheet" href="css/Register_2.css">
 
 </head>
 <body>
 	<form action="<%=request.getContextPath()%>/result.do" method="post"
-		enctype="multipart/form-data" onsubmit="validateForm()">
+		enctype="multipart/form-data">
 
 		<h1>4운드 클라우드</h1>
 		<div class="total">
@@ -94,7 +94,7 @@
 
 			<div class="register">
 				<div colspan="2" align="center">
-					<input type="submit" value="Register" onsubmit="return checkForm()">
+					<input type="submit" value="Register" >
 				</div>
 			</div>
 		</div>
@@ -106,7 +106,7 @@
 		$('.input_id').focusout(function() {
 			let userId = $('.input_id').val();
 			$.ajax({
-				url : "IdCheckService",
+				url : "ajax.IdCheckService",
 				type : "post",
 				data : {
 					userId : userId

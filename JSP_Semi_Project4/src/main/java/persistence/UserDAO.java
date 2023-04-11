@@ -102,6 +102,11 @@ public class UserDAO {
 
 			e.printStackTrace();
 
+<<<<<<< HEAD
+=======
+			return false;
+
+>>>>>>> refs/remotes/origin/master
 		} finally {
 
 			disconnect(rs, pstmt, con);
@@ -213,6 +218,7 @@ public class UserDAO {
 		return user_nickname;
 	}
 
+<<<<<<< HEAD
 	// 마이페이지 view페이지로 보여주기
 	public List<UserVO> myPage(String user_id) {
 
@@ -251,6 +257,31 @@ public class UserDAO {
 		}
 
 		return list;
+=======
+	public void getMyProfile(String user_nick) {
+		// TODO Auto-generated method stub
+
+	}
+
+	public UserVO getProfile_pic(String id) {
+		UserVO vo = null;
+		connect();
+		try {
+			sql = "select user_pic from user where user_id = ?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, id);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				vo = new UserVO();
+				vo.setUser_pic(rs.getString("user_pic"));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			disconnect(rs, pstmt, con);
+		}
+		return vo;
+>>>>>>> refs/remotes/origin/master
 	}
 
 	// 유저 정보 수정 메서드
