@@ -8,6 +8,7 @@ public class UserVO {
 	private String user_email;
 	private String user_phone;
 	private String user_pic;
+	
 
 	public String getUser_id() {
 		return user_id;

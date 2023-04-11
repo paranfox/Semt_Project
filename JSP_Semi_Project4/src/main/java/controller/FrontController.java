@@ -30,11 +30,8 @@ public class FrontController extends HttpServlet {
 		System.out.println("Path >>> " + path);
 
 		String command = uri.substring(path.length() + 1);
-<<<<<<< HEAD
+		
 		if(command.contains("/")) {
-=======
-		if (command.contains("/")) {
->>>>>>> branch 'master' of https://github.com/eownrrnf/semi_project.git
 			StringTokenizer st1 = new StringTokenizer(command, "/");
 			String url_1 = st1.nextToken();
 			command = st1.nextToken();
@@ -45,16 +42,10 @@ public class FrontController extends HttpServlet {
 		Action action = null;
 		ActionForward forward = null;
 		Properties prop = new Properties();
-<<<<<<< HEAD
 		
 		String path2 = FrontController.class.getResource("").getPath();
         //System.out.println("path2 >>> "+path2);
         FileInputStream fis = new FileInputStream(path2 + "mapping.properties");
-=======
-		FileInputStream fis = new FileInputStream(
-				"C:\\Users\\user\\git\\semi_project\\JSP_Semi_Project4\\src\\main\\java\\controller\\mapping.properties");
-
->>>>>>> branch 'master' of https://github.com/eownrrnf/semi_project.git
 		prop.load(fis);
 
 		String value = prop.getProperty(command);

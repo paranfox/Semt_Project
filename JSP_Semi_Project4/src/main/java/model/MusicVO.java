@@ -1,7 +1,5 @@
 package model;
 
-import javax.print.DocFlavor.STRING;
-
 public class MusicVO {
 
 	int music_id;
@@ -12,6 +10,16 @@ public class MusicVO {
 	int music_likecnt;
 	int music_playcnt;
 	String user_id;
+	
+	public int getMusic_id() {
+		return music_id;
+	}
+
+	public void setMusic_id(int music_id) {
+		this.music_id = music_id;
+	}
+
+
 
 	public String getUser_id() {
 		return user_id;
@@ -21,13 +29,7 @@ public class MusicVO {
 		this.user_id = user_id;
 	}
 
-	public int getMusic_id() {
-		return music_id;
-	}
 
-	public void setMusic_id(int music_id) {
-		this.music_id = music_id;
-	}
 
 	public String getMusic_pic() {
 		return music_pic;
