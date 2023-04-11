@@ -97,19 +97,19 @@ public class UserDAO {
 			pstmt.executeUpdate();
 
 		} catch (SQLException e) {
-			
+
 			e.printStackTrace();
-			
+
 			return false;
-			
+
 		} finally {
-			
+
 			disconnect(rs, pstmt, con);
-			
+
 		}
-		
+
 		return true;
-		
+
 	}
 
 	public int logincheck(String id, String pwd) {
@@ -139,7 +139,6 @@ public class UserDAO {
 		return check;
 	}
 
-	
 	public UserVO userContent(String id) {
 		UserVO vo = null;
 
@@ -177,49 +176,66 @@ public class UserDAO {
 		return vo;
 	}
 
-
-	
-	
 	public String getUserNickname(String id) {
 		connect();
-		
+
 		String user_nickname = "";
-		
+
 		UserVO vo = new UserVO();
-		
+
 		try {
-			
+
 			sql = "SELECT USER_NICKNAME FROM USER WHERE USER_ID = ?";
-			
+
 			this.pstmt = this.con.prepareStatement(this.sql);
-			
+
 			this.pstmt.setString(1, id);
-			
+
 			this.rs = this.pstmt.executeQuery();
-			
+
 			if (this.rs.next()) {
-				
+
 				user_nickname = this.rs.getString("user_nickname");
-				
+
 				vo.setUser_nickname(user_nickname);
-				
+
 			}
-			
+
 		} catch (Exception e) {
-			
+
 			e.printStackTrace();
-			
+
 		} finally {
-			
+
 			disconnect(rs, pstmt, con);
-			
+
 		}
 		return user_nickname;
 	}
 
 	public void getMyProfile(String user_nick) {
 		// TODO Auto-generated method stub
-		
+
+	}
+
+	public UserVO getProfile_pic(String id) {
+		UserVO vo = null;
+		connect();
+		try {
+			sql = "select user_pic from user where user_id = ?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, id);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				vo = new UserVO();
+				vo.setUser_pic(rs.getString("user_pic"));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			disconnect(rs, pstmt, con);
+		}
+		return vo;
 	}
 	
 	

@@ -100,19 +100,20 @@ public class CommentDAO {
 		List<CommentVO> comments = new ArrayList<>();
 		connect();
 		try {
-			String sql = "SELECT * FROM comments WHERE album_id = ? ORDER BY created_at DESC";
+			// 사용자 프로필 사진 정보를 가져오도록 SQL 쿼리를 수정합니다.
+			String sql = "SELECT c.*, u.user_pic FROM comments c INNER JOIN user u ON c.user_id = u.user_id WHERE album_id = ? ORDER BY created_at DESC";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, album_id);
 			rs = pstmt.executeQuery();
-			
+
 			while (rs.next()) {
-				
 				CommentVO comment = new CommentVO();
 				comment.setComment_id(rs.getInt("comment_id"));
 				comment.setAlbum_id(rs.getInt("album_id"));
 				comment.setUser_id(rs.getString("user_id"));
 				comment.setContent(rs.getString("content"));
 				comment.setCreated_at(rs.getTimestamp("created_at"));
+				comment.setUser_pic(rs.getString("user_pic")); // 프로필 사진 정보를 CommentVO에 설정합니다.
 
 				comments.add(comment);
 			}
@@ -124,6 +125,33 @@ public class CommentDAO {
 		}
 
 		return comments;
+	}
+
+	public void updateComment(CommentVO comment) {
+
+		connect();
+
+		try {
+
+			String sql = "UPDATE comments set content = ? where comment_id = ?";
+
+			pstmt = con.prepareStatement(sql);
+
+			pstmt.setInt(2, comment.getComment_id());
+
+			pstmt.setString(1, comment.getContent());
+
+			pstmt.executeUpdate();
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		} finally {
+
+			disconnect(rs, pstmt, con);
+
+		}
 	}
 
 }

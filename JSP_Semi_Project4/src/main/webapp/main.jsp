@@ -44,12 +44,9 @@ String result = (String) session.getAttribute("sessionNickName");
 							<a>${vo.getUser_nickname() }님 환영합니다</a>
 							<li><a href="<%=request.getContextPath()%>/logout_check.do">로그아웃</a></li>
 							<li><a href="http://www._____.com/MyPage">마이페이지</a></li>
-							<li><a href="uploadsample.jsp"> 뮤직업로드 </a></li>
+							<li><a href="musicBbs/uploadsample.jsp">앨범 등록</a></li>
 							<li><a href="http://www._____.com/LIkeList">좋아요<br>플레이리스트
 							</a></li>
-							<li><a href="<%=request.getContextPath()%>/upload_music.do">앨범
-									등록</a></li>
-
 						</c:if>
 
 						<c:if test="${empty vo }">

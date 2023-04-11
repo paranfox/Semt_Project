@@ -18,41 +18,53 @@ import javax.servlet.http.HttpServletResponse;
 public class FrontController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void service(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html; charset=UTF-8");
-		
+
 		String uri = request.getRequestURI();
 		System.out.println("uri >>> " + uri);
-		
+
 		String path = request.getContextPath();
 		System.out.println("Path >>> " + path);
-		
+
 		String command = uri.substring(path.length() + 1);
+<<<<<<< HEAD
 		if(command.contains("/")) {
+=======
+		if (command.contains("/")) {
+>>>>>>> branch 'master' of https://github.com/eownrrnf/semi_project.git
 			StringTokenizer st1 = new StringTokenizer(command, "/");
 			String url_1 = st1.nextToken();
 			command = st1.nextToken();
 		}
 		System.out.println("Command >>> " + command);
+
 		
 		Action action = null;
 		ActionForward forward = null;
 		Properties prop = new Properties();
+<<<<<<< HEAD
 		
 		String path2 = FrontController.class.getResource("").getPath();
         //System.out.println("path2 >>> "+path2);
         FileInputStream fis = new FileInputStream(path2 + "mapping.properties");
+=======
+		FileInputStream fis = new FileInputStream(
+				"C:\\Users\\user\\git\\semi_project\\JSP_Semi_Project4\\src\\main\\java\\controller\\mapping.properties");
+
+>>>>>>> branch 'master' of https://github.com/eownrrnf/semi_project.git
 		prop.load(fis);
-		
+
 		String value = prop.getProperty(command);
 		System.out.println("value >>> " + value);
-		
+
 		if (value.substring(0, 7).equals("execute")) {
 			StringTokenizer st = new StringTokenizer(value, "|");
 			String url_1 = st.nextToken();
 			String url_2 = st.nextToken();
-			
+
 			try {
 				Class<?> url = Class.forName(url_2);
 				Constructor<?> constructor = url.getConstructor(new Class[0]);
@@ -66,8 +78,7 @@ public class FrontController extends HttpServlet {
 			forward.setRedirect(false);
 			forward.setPath(value);
 		}
-		
-		
+
 		if (forward != null)
 			if (forward.isRedirect()) {
 				response.sendRedirect(forward.getPath());

@@ -8,7 +8,16 @@ public class CommentVO {
 	private String user_id;
 	private String content;
 	private Timestamp created_at;
-	
+	private String user_pic;
+
+	public String getUser_pic() {
+		return user_pic;
+	}
+
+	public void setUser_pic(String user_pic) {
+		this.user_pic = user_pic;
+	}
+
 	private int comment_id;
 
 	public int getComment_id() {
