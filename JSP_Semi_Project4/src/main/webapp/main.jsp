@@ -36,12 +36,16 @@
 
 						<c:set value="${user }" var="list" />
 						<c:set value="${sessionUserVO }" var="vo" />
+
 						<c:if test="${!empty vo }">
 
 							<a>${vo.getUser_nickname() }님 환영합니다</a>
 							<li><a href="<%=request.getContextPath()%>/logout_check.do">로그아웃</a></li>
-							<li><a href="<%=request.getContextPath()%>/my_page.do?num=${vo.getUser_id() }">마이페이지</a></li>
+							<li><a
+								href="<%=request.getContextPath()%>/my_page.do?num=${vo.getUser_id() }">마이페이지</a></li>
 							<li><a href="musicBbs/uploadsample.jsp">앨범 등록</a></li>
+							<li><a
+								href="<%=request.getContextPath()%>/user_music_list.do">앨범리스트</a></li>
 							<li><a href="http://www._____.com/LIkeList">좋아요<br>플레이리스트
 							</a></li>
 						</c:if>
@@ -56,6 +60,7 @@
 							</a></li>
 							<li><a href="http://www._____.com/HateList">싫어요<br>플레이리스트
 							</a></li>
+							<li><a href="<%=request.getContextPath()%>/user_music_list.do">앨범리스트</a></li>
 
 						</c:if>
 
@@ -120,25 +125,12 @@
 	<br>
 	<br>
 	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
+
 
 
 </body>
 
 <script type="text/javascript">
-
 	var slideIndex = 1;
 	showSlides(slideIndex);
 
@@ -155,9 +147,12 @@
 		var slides = document.getElementsByClassName("mySlides");
 		var dots = document.getElementsByClassName("dot");
 		if (n > slides.length) {
+
 			slideIndex = 1
+
 		}
 		if (n < 1) {
+
 			slideIndex = slides.length
 		}
 		for (i = 0; i < slides.length; i++) {
@@ -169,6 +164,5 @@
 		slides[slideIndex - 1].style.display = "block";
 		dots[slideIndex - 1].className += " active";
 	}
-	
 </script>
 </html>

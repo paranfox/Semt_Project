@@ -32,6 +32,7 @@ public class LoginCheckAction implements Action {
 			HttpSession session = request.getSession();
 			session.setAttribute("sessionId", id);
 			session.setAttribute("sessionUserVO", vo);
+			session.setAttribute("sessionUserNickName", vo.getUser_nickname());
 			session.setAttribute("profile_pic", profile_pic);
 			out.println("<script>");
 			out.println("alert('로그인 성공')");

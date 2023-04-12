@@ -27,11 +27,13 @@ public class MusicContentCommentsAction implements Action {
 		HttpSession session = request.getSession();
 
 		String user_id = (String) session.getAttribute("sessionId");
+		String user_nickname = (String) session.getAttribute("sessionUserNickName");
 		String profile_pic = (String) session.getAttribute("profile_pic");
 		// Comment 객체를 생성하고 값을 설정합니다.
 		CommentVO comment = new CommentVO();
 		comment.setAlbum_id(album_id);
 		comment.setUser_id(user_id);
+		comment.setUser_nickname(user_nickname);
 		comment.setContent(content);
 		comment.setUser_pic(profile_pic);
 
