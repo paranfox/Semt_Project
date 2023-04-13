@@ -34,6 +34,7 @@ public class LoginCheckAction implements Action {
 			session.setAttribute("sessionUserVO", vo);
 			session.setAttribute("sessionUserNickName", vo.getUser_nickname());
 			session.setAttribute("profile_pic", profile_pic);
+			session.setMaxInactiveInterval(60*300) ;
 			out.println("<script>");
 			out.println("alert('로그인 성공')");
 			out.println("location.href='../main.jsp'");

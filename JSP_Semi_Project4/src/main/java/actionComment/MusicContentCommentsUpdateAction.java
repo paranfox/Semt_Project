@@ -28,10 +28,10 @@ public class MusicContentCommentsUpdateAction implements Action {
 
 		CommentDAO dao = CommentDAO.getInstance();
 
-		// 현재 댓글의 작성자 ID를 가져옵니다.
+	
 		CommentVO originalComment = dao.getCommentById(comment_id);
 
-		// 현재 로그인한 사용자의 ID와 댓글 작성자의 ID가 일치하는지 확인합니다.
+
 		if (user_id.equals(originalComment.getUser_id())) {
 			CommentVO comment = new CommentVO();
 			comment.setComment_id(comment_id);

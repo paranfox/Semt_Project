@@ -112,9 +112,9 @@ public class CommentDAO {
 				comment.setAlbum_id(rs.getInt("album_id"));
 				comment.setUser_id(rs.getString("user_id"));
 				comment.setContent(rs.getString("content"));
-				comment.setCreated_at(rs.getTimestamp("created_at")); // 댓글 작성 날짜를 나타냅니다.
-				comment.setUser_pic(rs.getString("user_pic")); // 프로필 사진 정보를 CommentVO에 설정합니다.
-				comment.setUser_nickname(rs.getString("user_nickname")); // 유저 닉네임 정보를 받을수 있게 CommentVO에 설정합니다.
+				comment.setCreated_at(rs.getTimestamp("created_at"));
+				comment.setUser_pic(rs.getString("user_pic")); 
+				comment.setUser_nickname(rs.getString("user_nickname")); 
 
 				comments.add(comment);
 			}

@@ -41,7 +41,7 @@ td {
 					</tr>
 				</thead>
 				<tbody>
-					<c:set var="list" value="${musicList }" />
+					<c:set var="list" value="${myMusicList }" />
 					<c:if test="${!empty list }">
 						<c:forEach items="${list }" var="vo">
 							<tr>
@@ -59,7 +59,7 @@ td {
 									href="<%=request.getContextPath() %>/admin_product_modify.do?pnum=${dto.getPnum() }">수
 										정</a> &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp; <a
 									href="<%=request.getContextPath() %>/admin_product_delete.do?pnum=${dto.getPnum() }">삭
-										제</a></td>
+										제</a> <a href="<%=request.getContextPath()%>/main.jsp">삭 제</a></td>
 							</tr>
 						</c:forEach>
 

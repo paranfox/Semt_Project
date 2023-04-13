@@ -58,7 +58,8 @@
 </style>
 </head>
 <body>
-
+  
+   <c:set value="${sessionId }" var="sessionId" />
    <div class="container mt-5">
      <div class="text-center">
       <c:set var="vo" value="${musicCont }" />
@@ -76,7 +77,7 @@
          <tr>
             <th>ALBUM COVER IMG</th>
             <td align="center"><img
-               src="<%=request.getContextPath() %>/fileupload/${vo.getMusic_pic() }"
+               src="<%=request.getContextPath() %>/fileUpload/${vo.getMusic_pic() }"
                width="60" height="60"></td>
          </tr>
 
@@ -98,9 +99,9 @@
          <tr>
             <th>첨부파일</th>
             <c:if test="${!empty vo.getMusic_mp3() }">
-               <td><a
-                  href="<%=request.getContextPath()%>/fileupload/${vo.getMusic_mp3() }"
-                  download="${vo.getMusic_mp3() }">다운로드</a></td>
+               <td><img
+               src="<%=request.getContextPath() %>/fileUpload/${vo.getMusic_pic() }"
+               width="60" height="60"></td>
             </c:if>
          </tr>
 
@@ -112,11 +113,26 @@
             </tr>
          </c:if>
       </table>
-    
+      <br>
+       <c:if test="${!empty sessionId }">
          <div class="d-grid gap-2 d-md-flex justify-content-md-center">
             <input class="btn btn-primary" type="button" value="글수정" onclick="location.href='upload_modify.do?uno=${dto.getUpload_no() }'">
-            <input class="btn btn-danger" type="button" value="글삭제" onclick="if(confirm('게시글을 정말 삭제하시겠습니까?')) { location.href='upload_delete.do?uno=${dto.getUpload_no() }' }else { return; }">
-            <input class="btn btn-info" type="button" value="전체목록" onclick="location.href='upload_list.do'">
+            <input class="btn btn-danger" type="button" value="글삭제" onclick="if(confirm('게시글을 정말 삭제하시겠습니까?')) { location.href='upload_delete.do?id=${vo.getUser_id() }' }else { return; }">
+           <input class="btn btn-info" type="button" value="전체목록" onclick="location.href='user_music_list.do'">
+        </div>
+        </c:if>
+        
+       <br>
+        
+        <div>
+           
+           <!-- 좋아요 버튼 -->
+         <button id="likeButton" class="btn btn-primary">좋아요 <span id="likeCount">${vo.getMusic_likecnt()}</span></button>
+      
+         <!-- 비추천 버튼 -->
+         <button id="dislikeButton" class="btn btn-danger">비추천 <span id="dislikeCount">0</span></button>
+        
+
         </div>
    </div>
    </div>
@@ -134,11 +150,84 @@
         <ul id="commentListContainer" class="list-unstyled">
         </ul>
     </div>
+    
+
 </body>
 
 
 <script>
 $(document).ready(function() {
+	// 좋아요 상태를 가져올 때 새로고침 없이 업데이트하기 위해 페이지 로딩 시 호출합니다.
+    // getLikeStatus();
+	// 좋아요 버튼과 싫어요 관련 버튼 메서드 시작
+$('#likeButton').click(function() {
+    $.ajax({
+        url: 'toggleLike.do',
+        type: 'POST',
+        dataType: 'json',
+        data: {
+            user_id: '${sessionScope.sessionId}',
+            music_id: '${vo.getMusic_id()}'
+        },
+        success: function(response) {
+            if (response.result === 'success') {
+                getLikeStatus(); // 좋아요 수를 업데이트하는 함수 호출
+            } else {
+                alert('좋아요를 누르지 못했습니다.');
+            }
+        }
+    });
+});
+
+
+function getLikeStatus() {
+    $.ajax({
+        url: 'getLikeStatus.do',
+        type: 'GET',
+        dataType: 'json',
+        data: {
+            user_id : '${sessionScope.sessionId}',
+            music_id : '${vo.getMusic_id()}'
+        },
+        success : function(response) {
+            if (response.is_liked) {
+                $('#likeButton').addClass('btn-success');
+            } else {
+                $('#likeButton').removeClass('btn-success');
+            }
+
+            if (response.is_disliked) {
+                $('#dislikeButton').addClass('btn-success');
+            } else {
+                $('#dislikeButton').removeClass('btn-success');
+            }
+
+            $('#likeCount').text(response.like_count); // 좋아요 수 업데이트
+            $('#dislikeCount').text(response.dislike_count);
+        }
+    });
+}
+
+   $('#dislikeButton').click(function() {
+       $.ajax({
+           url: 'toggleDislike.do',
+           type: 'POST',
+           dataType: 'json',
+           data: {
+               user_id: '${sessionScope.sessionId}',
+               music_id: '${vo.getMusic_id()}'
+           },
+           success: function(response) {
+               if (response.result === 'success') {
+                   getLikeStatus();
+               } else {
+                   alert('싫어요를 누르지 못했습니다.');
+               }
+           }
+       });
+   });
+  
+  
   function loadComments() {
  
       let commentListContainer = $('#commentListContainer');
@@ -156,13 +245,14 @@ $(document).ready(function() {
                   let commentHeader = $('<div class="comment-header"></div>');
                   
                  
-                  let userPicImg = $('<img>').attr('src', '<%=request.getContextPath()%>/fileupload/' + comment.user_pic).css({
+                  let userPicImg = $('<img>').attr('src', '<%=request.getContextPath()%>/fileUpload/' + comment.user_pic).css({
                       'width': '30px',
                       'height': '30px',
                       'border-radius': '70%',
                       'margin-right': '5px'
                   });
                   let userNickNameSpan = $('<span class="user-nickname"></span>').text(comment.user_nickname);
+                  
                   let userCreatedAtSpan = $('<span></span>').text(comment.created_at);
                   
                   commentHeader.append(userPicImg).append(userNickNameSpan).append(userCreatedAtSpan);
@@ -174,6 +264,7 @@ $(document).ready(function() {
                       editBtn.hide();
                   }
                   let deleteBtn = $('<button = class="deleteBtn"></button>').text('삭제');
+                  
                   if (comment.user_id !== '${sessionScope.sessionId}') {
                       deleteBtn.hide();
                   }
@@ -211,7 +302,7 @@ $(document).ready(function() {
                             }
                         });
                     });
-
+                  
                        function updateComment() {
                            let newContent = $('#commentContent').val();
                            let commentId = $('#commentId').val();
@@ -222,38 +313,38 @@ $(document).ready(function() {
                                    type: 'POST',
                                    dataType: 'json',
                                    data: { comment_id: commentId, content: newContent },
-                            success: function(response) {
-                                 if (response.result === "success") {
-                                    loadComments();
-                                    $('#formTitle').text('댓글 작성');
-                                    $('#commentContent').val('');
-                                    $('#commentId').val('');
-                                    $('#submitComment').text('댓글 작성');
-                                    $('#submitComment').off('click').on('click', submitComment);
-                              } else {
-                              alert('댓글 수정에 실패했습니다.');
+                                   success: function(response) {
+                                       if (response.result === "success") {
+                                           loadComments();
+                                           $('#formTitle').text('댓글 작성');
+                                           $('#commentContent').val('');
+                                           $('#commentId').val('');
+                                           $('#submitComment').text('댓글 작성');
+                                           $('#submitComment').off('click').on('click', submitComment);
+                                       } else {
+                                           alert('댓글 수정에 실패했습니다.');
+                                       }
+                                   }
+                               });
                            }
-                          }
-                       });
-                    }
-                  }
-            deleteBtn.click(function() {
-                  if (confirm('댓글을 정말 삭제하시겠습니까?')) {
-                          $.ajax({
-                            url: 'musicContentCommentsDelete.do',
-                            type: 'POST',
-                            dataType: 'json',
-                                 data: { comment_id: comment.comment_id },
-                                 success: function(response) {
-                                 if (response.result === "success") {
-                                 loadComments();
-                                } else {
-                                alert('댓글 삭제에 실패했습니다.');
-                               }
-                              }
-                          });
-                        }
-                   });
+                       }
+                        deleteBtn.click(function() {
+                            if (confirm('댓글을 정말 삭제하시겠습니까?')) {
+                                $.ajax({
+                                    url: 'musicContentCommentsDelete.do',
+                                    type: 'POST',
+                                    dataType: 'json',
+                                    data: { comment_id: comment.comment_id },
+                                    success: function(response) {
+                                        if (response.result === "success") {
+                                            loadComments();
+                                        } else {
+                                            alert('댓글 삭제에 실패했습니다.');
+                                        }
+                                    }
+                               });
+                            }
+                        });
                         commentContent.append(contentSpan).append(editBtn).append(deleteBtn);
                         
                         commentListItem.append(commentHeader).append(commentContent);
@@ -271,9 +362,7 @@ $(document).ready(function() {
         }
         loadComments();
         function submitComment() {
-            
             let content = $('#commentContent').val();
-            
             $.ajax({
                 url: 'musicContentComments.do',
                 type: 'POST',

@@ -33,12 +33,12 @@
 				<li class="profile_top">
 					<ul class="profile_inner">
 
-
+						<%-- 로그인되었을 때 --%>
 						<c:set value="${user }" var="list" />
 						<c:set value="${sessionUserVO }" var="vo" />
 
 						<c:if test="${!empty vo }">
-
+							
 							<a>${vo.getUser_nickname() }님 환영합니다</a>
 							<li><a href="<%=request.getContextPath()%>/logout_check.do">로그아웃</a></li>
 							<li><a
@@ -46,6 +46,8 @@
 							<li><a href="musicBbs/uploadsample.jsp">앨범 등록</a></li>
 							<li><a
 								href="<%=request.getContextPath()%>/user_music_list.do">앨범리스트</a></li>
+							<li><a
+								href="<%=request.getContextPath()%>/my_music_list.do?id=${vo.getUser_id() }">내가 업로드한 파일</a></li>
 							<li><a href="http://www._____.com/LIkeList">좋아요<br>플레이리스트
 							</a></li>
 						</c:if>
@@ -60,7 +62,8 @@
 							</a></li>
 							<li><a href="http://www._____.com/HateList">싫어요<br>플레이리스트
 							</a></li>
-							<li><a href="<%=request.getContextPath()%>/user_music_list.do">앨범리스트</a></li>
+							<li><a
+								href="<%=request.getContextPath()%>/user_music_list.do">앨범리스트</a></li>
 
 						</c:if>
 
