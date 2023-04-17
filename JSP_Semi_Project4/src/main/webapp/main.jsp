@@ -14,6 +14,9 @@
 
 <link rel="stylesheet" href="css/main.css">
 
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
 </head>
 
 <body>
@@ -38,7 +41,6 @@
 						<c:set value="${sessionUserVO }" var="vo" />
 
 						<c:if test="${!empty vo }">
-							
 							<a>${vo.getUser_nickname() }님 환영합니다</a>
 							<li><a href="<%=request.getContextPath()%>/logout_check.do">로그아웃</a></li>
 							<li><a
@@ -47,13 +49,13 @@
 							<li><a
 								href="<%=request.getContextPath()%>/user_music_list.do">앨범리스트</a></li>
 							<li><a
-								href="<%=request.getContextPath()%>/my_music_list.do?id=${vo.getUser_id() }">내가 업로드한 파일</a></li>
+								href="<%=request.getContextPath()%>/my_music_list.do?id=${vo.getUser_id() }">내가
+									업로드한 파일</a></li>
 							<li><a href="http://www._____.com/LIkeList">좋아요<br>플레이리스트
 							</a></li>
 						</c:if>
 
 						<c:if test="${empty vo }">
-
 							<%-- 로그인되지 않았을 때 --%>
 							<a>프로필</a>
 							<li><a href="login/login.jsp">로그인</a></li>
@@ -64,9 +66,7 @@
 							</a></li>
 							<li><a
 								href="<%=request.getContextPath()%>/user_music_list.do">앨범리스트</a></li>
-
 						</c:if>
-
 					</ul>
 				</li>
 			</ul>
@@ -79,7 +79,7 @@
 	<br>
 	<br>
 
-
+	<div id="content"></div>
 	<div class="slideshow-container">
 
 
@@ -166,6 +166,40 @@
 		}
 		slides[slideIndex - 1].style.display = "block";
 		dots[slideIndex - 1].className += " active";
+	}
+
+	$(document).ready(function() {
+		loadMusicList();
+	});
+
+	function loadMusicList() {
+		$.ajax({
+			url : "music_list.jsp",
+			type : "GET",
+			success : function(data) {
+				$("#content").html(data);
+			},
+			error : function(xhr, status, error) {
+				console.error("Error loading music list:", error);
+			}
+		});
+	}
+
+	// 추가: 음악 상세 페이지를 AJAX로 불러오는 함수입니다.
+	function loadMusicDetails(musicId) {
+		$.ajax({
+			url : "music_details.jsp",
+			type : "GET",
+			data : {
+				id : musicId
+			},
+			success : function(data) {
+				$("#content").html(data);
+			},
+			error : function(xhr, status, error) {
+				console.error("Error loading music details:", error);
+			}
+		});
 	}
 </script>
 </html>
