@@ -24,16 +24,18 @@ public class LoginCheckAction implements Action {
 		UserDAO dao = UserDAO.getInstance();
 
 		int check = dao.logincheck(id, pwd);
-		UserVO vo = dao.userContent(id);
-		UserVO vo1 = dao.getProfile_pic(id);
-		String profile_pic = vo1.getUser_pic();
-		System.out.println("유저 사진  >>>>  " + profile_pic);
+
 		if (check == 1) {
+			UserVO vo = dao.userContent(id);
+			String profile_pic = vo.getUser_pic();
+			System.out.println("유저 사진  >>>>  " + profile_pic);
+
 			HttpSession session = request.getSession();
 			session.setAttribute("sessionId", id);
 			session.setAttribute("sessionUserVO", vo);
-			session.setAttribute("sessionUserNickName", vo.getUser_nickname());
+			session.setAttribute("sessionUserNickname", vo.getUser_nickname());
 			session.setAttribute("profile_pic", profile_pic);
+
 			out.println("<script>");
 			out.println("alert('로그인 성공')");
 			out.println("location.href='../main.jsp'");
@@ -49,7 +51,7 @@ public class LoginCheckAction implements Action {
 
 		} else {
 			out.println("<script>");
-			out.println("alert('없는 아이디 입니다.')");
+			out.println("alert('등록되지 않은 회원입니다.')");
 			out.println("history.back()");
 			out.println("</script>");
 

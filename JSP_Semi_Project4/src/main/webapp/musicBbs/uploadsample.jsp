@@ -18,7 +18,9 @@
 
 	<form action="<%=request.getContextPath()%>/user_file.do" method="post"
 		enctype="multipart/form-data">
-
+		
+		<input type="hidden" name ="user_id" value=${sessionId }>
+		<input type="hidden" name ="user_nickname" value=${sessionUserNickName }>
 		<div class="wrapper">
 			<div class="content">
 				<h3>파일을 넣어주세요</h3>

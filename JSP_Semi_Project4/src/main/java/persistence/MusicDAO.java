@@ -78,11 +78,11 @@ public class MusicDAO {
 	public int insertFile(MusicVO vo) {
 		connect();
 		int result = 0;
-		int count = 0;
+		// int count = 0;
 
 		try {
 
-			sql = "insert into music_info values(default,?,?,?,?,?,?,?) ";
+			sql = "insert into music_info values(default,?,?,?,?,?,?,?,?)";
 			pstmt = con.prepareStatement(sql);
 
 			pstmt.setString(1, vo.getMusic_pic());
@@ -91,7 +91,8 @@ public class MusicDAO {
 			pstmt.setString(4, vo.getMusic_contents());
 			pstmt.setInt(5, 0);
 			pstmt.setInt(6, 0);
-			pstmt.setString(7, vo.getUser_id());
+			pstmt.setString(7, vo.getUser_nickname());
+			pstmt.setString(8, vo.getUser_id());
 
 			result = pstmt.executeUpdate();
 
@@ -134,6 +135,7 @@ public class MusicDAO {
 				vo.setMusic_contents(rs.getString("music_contents"));
 				vo.setMusic_likecnt(rs.getInt("music_likecnt"));
 				vo.setMusic_playcnt(rs.getInt("music_playcnt"));
+				vo.setUser_nickname(rs.getString("user_nickname"));
 				vo.setUser_id(rs.getString("user_id"));
 
 				list.add(vo);
@@ -146,7 +148,50 @@ public class MusicDAO {
 		}
 		return list;
 	} // getMusicList() end
+	
+	
+	// user_id로 음악 리스트 가져오기
+	public List<MusicVO> getUserMusicList(String user_id) {
+		
+		connect();
+		
+		List<MusicVO> list = new ArrayList<MusicVO>();
+		
+		try {
+			
+			sql = "select * from music_info where user_id = ?";
+			
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, user_id);
+			
+			rs = pstmt.executeQuery();
+			
+			while (rs.next()) {
+				
+				MusicVO vo = new MusicVO();
+				
+				vo.setMusic_id(rs.getInt("music_id"));
+				vo.setMusic_pic(rs.getString("music_pic"));
+				vo.setMusic_mp3(rs.getString("music_mp3"));
+				vo.setMusic_title(rs.getString("music_title"));
+				vo.setMusic_contents(rs.getString("music_contents"));
+				vo.setMusic_likecnt(rs.getInt("music_likecnt"));
+				vo.setMusic_playcnt(rs.getInt("music_playcnt"));
+				vo.setUser_nickname(rs.getString("user_nickname"));
+				vo.setUser_id(rs.getString("user_id"));
+				
+				list.add(vo);
+				
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			disconnect(rs, pstmt, con);
+		}
+		return list;
+	} // getMusicList() end
 
+	
 	public MusicVO contentMusic(int album_id) {
 		connect();
 		MusicVO vo = null;

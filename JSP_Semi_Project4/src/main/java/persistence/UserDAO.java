@@ -11,6 +11,8 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
+import com.mysql.cj.x.protobuf.MysqlxCursor.Open;
+
 import model.UserVO;
 
 public class UserDAO {
@@ -103,7 +105,6 @@ public class UserDAO {
 
 			e.printStackTrace();
 
-
 			disconnect(rs, pstmt, con);
 
 		}
@@ -123,12 +124,16 @@ public class UserDAO {
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
 				dbPwd = rs.getString("user_pwd");
+				// 아이디에 해당하는 값이 있을 때
 				if (dbPwd.equals(pwd)) {
+					// 비밀번호 일치
 					check = 1;
 				} else {
+					// 비밀번호 다름
 					check = 0;
 				}
 			} else {
+				// 아이디 없음
 				check = -1;
 			}
 		} catch (SQLException e) {
@@ -252,6 +257,7 @@ public class UserDAO {
 
 		return list;
 	}
+
 	public void getMyProfile(String user_nick) {
 		// TODO Auto-generated method stub
 
@@ -278,6 +284,24 @@ public class UserDAO {
 	}
 	
 	
+	public String getProfile_pic_file(String id) {
+		String user_pic = "";
+		connect();
+		try {
+			sql = "select user_pic from user where user_id = ?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, id);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				user_pic = rs.getString("user_pic");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			disconnect(rs, pstmt, con);
+		}
+		return user_pic;
+	}
 
 	public int checkNameToEmail(String name, String email) {
 
@@ -316,29 +340,28 @@ public class UserDAO {
 
 	public String findUserId(String email) {
 		String user_id = "";
-		
+
 		connect();
-		
+
 		sql = "SELECT USER_ID FROM USER WHERE USER_EMAIL = ?";
-		
+
 		try {
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, email);
-			
+
 			rs = pstmt.executeQuery();
-			
-			if(rs.next()) {
+
+			if (rs.next()) {
 				user_id = rs.getString(1);
 			}
-			
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return user_id;
 	} // findUserId end
-	
-	
+
 	public int checkIdToEmail(String id, String email) {
 		int result = 0;
 		String db_id = "";
@@ -371,35 +394,35 @@ public class UserDAO {
 		}
 
 		return result;
-	}	// checkIdToEmail end
+	} // checkIdToEmail end
 
 	public int modifyPwd(String user_id, String user_pwd) {
-		
+
 		int result = 0;
-		
+
 		connect();
-		
+
 		try {
-			
+
 			sql = "UPDATE USER SET USER_PWD = ? WHERE USER_ID = ?";
-			
+
 			pstmt = con.prepareStatement(sql);
-			
+
 			pstmt.setString(1, user_pwd);
 			pstmt.setString(2, user_id);
-			
+
 			result = pstmt.executeUpdate();
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			disconnect(rs, pstmt, con);
 		}
-		
+
 		return result;
-		
-	}	// modifyPwd end
-	
+
+	} // modifyPwd end
+
 	// 유저 정보 수정 메서드
 	public UserVO modify(String user_id) {
 
@@ -432,7 +455,7 @@ public class UserDAO {
 			disconnect(rs, pstmt, con);
 		}
 		return vo;
-	}		// 유저 정보 수정 메서드 end
+	} // 유저 정보 수정 메서드 end
 
 	// 유저 업데이트 메서드 시작
 	public int updateUser(UserVO vo) {
@@ -445,7 +468,7 @@ public class UserDAO {
 			sql = "update user set user_name = ?, user_nickname = ?, user_phone = ?, user_email = ?, user_pic = ? where user_id = ?";
 
 			pstmt = con.prepareStatement(sql);
-		
+
 			pstmt.setString(1, vo.getUser_name());
 			pstmt.setString(2, vo.getUser_nickname());
 			pstmt.setString(3, vo.getUser_phone());
@@ -462,32 +485,58 @@ public class UserDAO {
 		}
 		return result;
 	} // 유저 업데이트 메서드 end
-	
-	
+
 	// 유저 탈퇴 메서드 시작
 	public int deleteUser(String user_id) {
-		
+
 		connect();
-		
+
 		int result = 0;
-		
+
 		try {
-			
+
 			sql = "DELETE FROM user WHERE user_id = ?";
-			
+
 			pstmt = con.prepareStatement(sql);
-			
+
 			pstmt.setString(1, user_id);
-			
+
 			result = pstmt.executeUpdate();
-			
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			disconnect(rs, pstmt, con);
 		}
 		return result;
-		
-	}	// 유저 탈퇴 메서드 종료
+
+	} // 유저 탈퇴 메서드 종료
+
+	public int checkEmailExist(String email) {
+		int result = 0;
+
+		connect();
+
+		try {
+			sql = "SELECT * FROM USER WHERE USER_EMAIL = ?";
+
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, email);
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+				// 등록된 이메일인 경우
+				result = 1;
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			disconnect(rs, pstmt, con);
+		}
+
+		return result;
+
+	}
 
 }

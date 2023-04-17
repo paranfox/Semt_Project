@@ -1,28 +1,18 @@
-package ajax;
+package actionUser;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import action.Action;
+import action.ActionForward;
 import persistence.registerDAO;
 
-@WebServlet("/NicknameCheckService")
-public class NicknameCheckService extends HttpServlet {
-	private static final long serialVersionUID = 1L;
-
-	public NicknameCheckService() {
-		super();
-	}
-
-	protected void service(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		request.setCharacterEncoding("UTF-8");
-		response.setContentType("text/html; charset=UTF-8");
+public class NicknameCheckAction implements Action {
+	@Override
+	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
 		String userNickname = request.getParameter("userNickname");
 
@@ -38,6 +28,7 @@ public class NicknameCheckService extends HttpServlet {
 			System.out.println("아이디 생성이 가능합니다.");
 		}
 		out.write(nickCheck + "");
-	}
 
+		return null;
+	}
 }

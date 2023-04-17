@@ -99,7 +99,7 @@
             <th>첨부파일</th>
             <c:if test="${!empty vo.getMusic_mp3() }">
                <td><a
-                  href="<%=request.getContextPath()%>/fileupload/${vo.getMusic_mp3() }"
+                  href="<%=request.getContextPath()%>/fileUpload/${vo.getMusic_mp3() }"
                   download="${vo.getMusic_mp3() }">다운로드</a></td>
             </c:if>
          </tr>

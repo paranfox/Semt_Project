@@ -4,24 +4,20 @@
 <html>
 <head>
 <meta charset="UTF-8">
-
 <!-- 카카오 -->
 <script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
 <script type="text/javascript">
 	Kakao.init('813cd237c40399ffe801d1e722e6e738');
 	Kakao.isInitialized();
 </script>
-
 <!-- 구글 -->
 <script src="https://accounts.google.com/gsi/client" async defer></script>
 <script src="https://apis.google.com/js/platform.js" async defer></script>
 <script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-      
-
 <title>Register</title>
 </head>
 <body>
-	<header>Create Your Account</header>
+	<h2>Create Your Account</h2>
 
 	<div>
 		<a onclick="registerKakao();" style="cursor: pointer"> <img
@@ -32,7 +28,7 @@
 		
 		<br>
 		
-		<button class="api-btn" onclick="location.href='../Register.jsp'">4운드 회원가입</button>
+		<button class="api-btn" onclick="location.href='Register.jsp'">4운드 회원가입</button>
 	</div>
 
 </body>
@@ -57,15 +53,12 @@
 								const id = res.id;
 								const email = res.kakao_account.email;
 								const nickname = res.properties.nickname;
-								<%--const profile_image_address = res.properties.profile_image; --%>
+								const nickname_endcoded = encodeURIComponent(nickname);
 								
-								
-								alert(id);
-								alert(nickname);
-								alert(email);
-								<%-- alert(profile_image_address); --%>
+								//alert(id);
+								//alert(nickname);
+								//alert(email);
 
-								<%-- location.href = "<%=request.getContextPath()%>/login_check.do?id="+id+"&pwd="+id; --%>
 								// post 방식으로 값 전달..
 								const form = document.createElement('form');        // form 태그 생성 
 								let objs = document.createElement('input');             // 값을 넣을 input 생성 
@@ -88,13 +81,8 @@
 								objs4.setAttribute('name', "social_email");                  // 값을 담을 변수 이름 : 인증 성공 시 서버에서 받아서 셋팅 
 								objs4.setAttribute('value', email);          // 값 : 인증 성공시 서버에서 받아서 셋팅 
 								form.appendChild(objs4);
-								<%-- let objs4 = document.createElement('input');             // 값을 넣을 input 생성 
-								objs4.setAttribute('type', 'hidden');                                  // 값의 type
-								objs4.setAttribute('name', "profile_image");                  // 값을 담을 변수 이름 : 인증 성공 시 서버에서 받아서 셋팅 
-								objs4.setAttribute('value', profile_image);          // 값 : 인증 성공시 서버에서 받아서 셋팅 
-								form.appendChild(objs4); --%>
 								form.setAttribute('method', 'post');                            //get,post 가능
-								form.setAttribute('action', "RegisterSocial.jsp");         // 호출할 url : 인증 성공시 서버에서 받아서 셋팅 
+								form.setAttribute('action', "register_social_email_check.do");         // 호출할 url : 인증 성공시 서버에서 받아서 셋팅 
 								document.body.appendChild(form);
 								form.submit();
 								
@@ -111,7 +99,7 @@
 	
 	
 
-
+	// 구글로그인
 	function handleCredentialResponse(response) {
     	const responsePayload = parseJwt(response.credential);
     	console.log("ID: " + responsePayload.sub);
@@ -124,8 +112,8 @@
         const id = responsePayload.sub;
         const email = responsePayload.email;
         const nickname = responsePayload.given_name;
+        const nickname_endcoded = encodeURIComponent(nickname);
         
-        <%-- location.href = "<%=request.getContextPath()%>/login_check.do?id="+id+"&pwd="+id; --%>
 		// post 방식으로 값 전달..
 		const form = document.createElement('form');        // form 태그 생성 
 		let objs = document.createElement('input');             // 값을 넣을 input 생성 
@@ -148,18 +136,14 @@
 		objs4.setAttribute('name', "social_email");                  // 값을 담을 변수 이름 : 인증 성공 시 서버에서 받아서 셋팅 
 		objs4.setAttribute('value', email);          // 값 : 인증 성공시 서버에서 받아서 셋팅 
 		form.appendChild(objs4);
-		<%-- let objs4 = document.createElement('input');             // 값을 넣을 input 생성 
-		objs4.setAttribute('type', 'hidden');                                  // 값의 type
-		objs4.setAttribute('name', "profile_image");                  // 값을 담을 변수 이름 : 인증 성공 시 서버에서 받아서 셋팅 
-		objs4.setAttribute('value', profile_image);          // 값 : 인증 성공시 서버에서 받아서 셋팅 
-		form.appendChild(objs4); --%>
 		form.setAttribute('method', 'post');                            //get,post 가능
-		form.setAttribute('action', "RegisterSocial.jsp");         // 호출할 url : 인증 성공시 서버에서 받아서 셋팅 
+		form.setAttribute('action', "register_social_email_check.do");         // 호출할 url : 인증 성공시 서버에서 받아서 셋팅 
 		document.body.appendChild(form);
 		form.submit();
         
     }
 	
+	// 구글 정보 변환
     function parseJwt (token) {
         var base64Url = token.split('.')[1];
         var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
@@ -170,7 +154,7 @@
         return JSON.parse(jsonPayload);
     };
     
-    
+    // 구글 버튼 및 구글 제공 정보 입력
     window.onload = function () {
         google.accounts.id.initialize({
           client_id: "1041087198718-inbdu2ft7ri1j36l72g3sojpumk19tea.apps.googleusercontent.com",

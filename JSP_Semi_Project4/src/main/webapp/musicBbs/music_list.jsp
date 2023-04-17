@@ -34,10 +34,10 @@ td {
 						<th>앨범 이미지</th>
 						<th>music_mp3(파일명)</th>
 						<th>앨범 설명(contents)</th>
+						<th>작성자</th>
 						<th>좋아요</th>
 						<th>재생수</th>
 						<th>상제 정보 들어가기</th>
-						<th>수정 / 삭제</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -47,27 +47,22 @@ td {
 							<tr>
 								<td>${vo.getMusic_title() }</td>
 								<td><img
-									src="<%=request.getContextPath() %>/fileupload/${vo.getMusic_pic() }"
+									src="<%=request.getContextPath() %>/fileUpload/${vo.getMusic_pic() }"
 									width="60" height="60"></td>
 								<td>${vo.getMusic_mp3() }</td>
 								<td>${vo.getMusic_contents() }</td>
+								<td><a href="<%=request.getContextPath() %>/user_main.do?user_id=${vo.getUser_id() }">${vo.getUser_nickname() }</a></td>
 								<td>${vo.getMusic_likecnt() }</td>
 								<td>${vo.getMusic_playcnt() }</td>
 								<td><a
 									href="<%=request.getContextPath() %>/user_music_content.do?id=${vo.getMusic_id() }">들어가기</a></td>
-								<td><a
-									href="<%=request.getContextPath() %>/admin_product_modify.do?pnum=${dto.getPnum() }">수
-										정</a> &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp; <a
-									href="<%=request.getContextPath() %>/admin_product_delete.do?pnum=${dto.getPnum() }">삭
-										제</a></td>
-							</tr>
 						</c:forEach>
 
 					</c:if>
 
 					<c:if test="${empty list }">
 						<tr>
-							<td colspan="9" class="text-center">
+							<td colspan="10" class="text-center">
 								<h3>앨범 리스트가 없습니다.</h3>
 							</td>
 						</tr>

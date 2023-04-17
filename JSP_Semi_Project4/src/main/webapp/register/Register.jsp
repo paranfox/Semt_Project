@@ -12,16 +12,20 @@
 
 </head>
 <body>
+	<div>
 	<form action="<%=request.getContextPath()%>/result.do" method="post"
 		enctype="multipart/form-data">
 
+		<input type="hidden" id="email_certification" name="email_certification" value="0">
+
 		<h1>4운드 클라우드</h1>
+		
 		<div class="total">
 			<div class="id">
 				<strong class="td_1">ID</strong>
 				<div class="td_2">
-					<input type="text" name="user_id" class="input_id"><br><font
-						id="checkId" size="2"></font>
+					<input type="text" name="user_id" class="input_id"><br>
+					<font id="checkId" size="2"></font>
 				</div>
 			</div>
 
@@ -78,20 +82,19 @@
 				<strong class="td_1">이메일</strong>
 				<div class="td_2">
 					<input type="text" name="user_email" class="input_email">
-			 		<button type="button" onclick="sendEmail()">인증코드 전송</button><br>
-					<font id="checkEmail" size="2"></font>
+					<button id="email_check_btn" onclick="sendEmail()">인증코드 전송</button>
+					<br> <font id="checkEmail" size="2"></font>
 				</div>
 			</div>
-			 <br>
-			 
-				<div class="td_2">
-					<input type="text" name="email_code" class="email_code">
-			 		<button type="button" onclick="checkCode()">인증코드 확인</button><br>
-					<font id="checkCode" size="2"></font>
-					<font id="checkCode2" size="2"></font>
-				</div>
-			 
-			
+			<br>
+
+			<div class="td_2">
+				<input type="text" name="email_code" class="email_code">
+				<button type="button" onclick="checkCode()">인증코드 확인</button>
+				<br> <font id="checkCode" size="2"></font>
+			</div>
+
+
 			<br> <br>
 
 			<div class="pic">
@@ -105,19 +108,24 @@
 
 			<div class="register">
 				<div colspan="2" align="center">
-					<input type="submit" value="Register" >
+					<input type="submit" value="Register">
 				</div>
 			</div>
 		</div>
 	</form>
-	<br><br><br><br> 
-
+	<br>
+	<br>
+	<br>
+	<br>
+	</div>
 	<script src="https://code.jquery.com/jquery-3.6.3.js"></script>
 	<script type="text/javascript">
+	
+		// 아이디 중복 검사
 		$('.input_id').focusout(function() {
 			let userId = $('.input_id').val();
 			$.ajax({
-				url : "IdCheckService",
+				url : "userId_check.do",
 				type : "post",
 				data : {
 					userId : userId
@@ -137,11 +145,12 @@
 				}
 			})
 		})
-
+		
+		// 닉네임 중복 검사
 		$('.input_nickname').focusout(function() {
 			let userNickname = $('.input_nickname').val();
 			$.ajax({
-				url : "NicknameCheckService",
+				url : "nickname_check.do",
 				type : "post",
 				data : {
 					userNickname : userNickname
@@ -161,7 +170,8 @@
 				}
 			})
 		})
-
+	
+		// 비밀번호 일치 확인
 		$('.pw').keyup(function() {
 			let pass1 = $("#password_1").val();
 			let pass2 = $("#password_2").val();
@@ -176,63 +186,91 @@
 				}
 			}
 		})
+
 		
-		
+		// 인증 코드를 저장할 전역 변수
 		let code;
+
 		// 이메일 전송
 		function sendEmail() {
-			let userEmail = $('.input_email').val();
 			
+			// 전송 버튼 클릭 후 재전송 버튼으로 바꾸기
+		    const button = document.getElementById('email_check_btn');
+		    button.innerText = '인증코드 재전송';
+			
+		    // 작성한 이메일
+			let userEmail = $('.input_email').val();
+
 			$.ajax({
-				url : "register_send_email.do",
-				type : "POST",
+				// db 이메일 유무 파악
+				url : "email_check.do",
+				type : "post",
 				data : {
 					userEmail : userEmail
-					},
-					success : function(result) {
-						code = result; // 전역 변수에 코드 저장.
-						alert(code);
-						$("#checkEmail").html('인증코드가 전송되었습니다. 이메일을 확인하세요.');
-						$("#checkEmail").attr('color', 'green');
-					},
-					error : function(){
-						alert("이메일 주소를 확인하세요.");
+				},
+				success : function(res) {
+					if (res == 0) {
+					// 등록되지 않은 이메일 > 진행 가능
+						$.ajax({
+							// 이메일 보내기
+							url : "register_send_email.do",
+							type : "POST",
+							data : {
+								// input 이메일 보내기
+								userEmail : userEmail
+							},
+							success : function(result) {
+								code = result; // 전역 변수에 코드 저장. => 코드 비교
+								// alert(code);
+								$("#checkEmail").html('인증코드가 전송되었습니다. 이메일을 확인하세요.');
+								$("#checkEmail").attr('color', 'green');
+							},
+							error : function() {
+								alert("이메일 주소를 확인하세요.");
+							}	
+						});
+					} else if (res == 1) {
+						// 등록된 이메일 > 진행 불가능
+						alert("이미 가입된 이메일입니다. 다른 이메일을 입력하세요.");
 					}
+
+				},
+				error : function() {
+					alert("이메일 체크 서버 요청 실패");
+				}
 			});
 		}
-		
-	 	/* function checkCode() {
+	
+		// 메일 인증 코드 비교
+		function checkCode() {
+			
+			
+			const email_certification = document.getElementById('email_certification');
+			let certification;
+
 			let email_code = $(".email_code").val();
-			let email_code2 = $("#checkCode").html(code);
-				
-					if(email_code.equals(email_code2)){
-						$("#checkCode2").html('사용할 수 있는 코드입니다.');
-						$("#checkCode2").attr('color', 'green');
-						
-					}else{
-							alert("인증번호가 틀립니다.");
-					} 
+			let email_code_trim = email_code.trim();
+			code_trim = code.trim();
+			//console.log(typeof code);
+			//console.log(typeof email_code_trim);
 
-		} */  
-	
+			if (!(email_code_trim === "") && !(code_trim === "")) {
+				if (email_code_trim === code_trim) {
+					$("#checkCode").html('인증 완료');
+					$("#checkCode").attr('color', 'green');
 
-	
-/* 		$(document).ready(function() {
-			$("#check_code").click(function() {
-				const userInput = $("#input_code").val();
-				
-					if (userInput.equals(code)) {
-						$("#checkCode").html('인증코드가 일치 합니다.');
-						$("#checkCode").attr('color', 'green');
-					} else if (userInput != code) {
-						$("#checkCode").html('인증코드가 불일치 합니다.');
-						$("#checkCode").attr('color', 'red');
-					}
-				
-			});
-		}); */
-		
-		
+					certification = 1;
+					alert("인증결과" + certification);
+					email_certification.value = certification;
+				} else {
+					$("#checkCode").html('인증 코드를 다시 확인하세요.');
+					$("#checkCode").attr('color', 'red');
+
+				}
+			}
+
+		}
+
 	</script>
 
 

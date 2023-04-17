@@ -72,12 +72,13 @@ public class FrontController extends HttpServlet {
 			forward.setPath(value);
 		}
 
-		if (forward != null)
+		if (forward != null) {
 			if (forward.isRedirect()) {
 				response.sendRedirect(forward.getPath());
 			} else {
 				RequestDispatcher rd = request.getRequestDispatcher(forward.getPath());
 				rd.forward((ServletRequest) request, (ServletResponse) response);
 			}
+		}
 	}
 }

@@ -20,9 +20,10 @@ public class MusicListAction implements Action {
 		MusicDAO dao = MusicDAO.getInstance();
 
 		List<MusicVO> list = dao.getMusicList();
-
+		
+		
 		request.setAttribute("musicList", list);
-
+		
 		ActionForward forward = new ActionForward();
 
 		forward.setRedirect(false);

@@ -1,4 +1,4 @@
-package actionUser;
+package actionUserMain;
 
 import java.io.IOException;
 
@@ -8,21 +8,10 @@ import javax.servlet.http.HttpServletResponse;
 import action.Action;
 import action.ActionForward;
 
-import java.util.*;
-import model.*;
-import persistence.*;
-
-public class UserMyProfileAction implements Action {
-
+public class UserFollowingListAction implements Action {
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		
-		
-	String user_nick = request.getParameter(
-			"nick");
-		UserDAO dao = UserDAO.getInstance();
-		
+		// TODO Auto-generated method stub
 		return null;
 	}
-
 }

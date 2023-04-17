@@ -29,7 +29,6 @@
 						<button class="search-btn" type="submit">검색</button>
 				</a></li>
 				<li class="pay"><a href="http://www._____.com/Travel">이용권</a></li>
-				<li class="upload"><a href="musicBbs/uploadsample.jsp">UPLOAD</a></li>
 				<li class="profile_top">
 					<ul class="profile_inner">
 
