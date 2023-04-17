@@ -5,62 +5,6 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Audio 객체</title>
-<script type="text/javascript">
-
-"use strict";
-
-const options = {
-  defaultSpeed: '1.00',
-  speeds: ['1.25','1.50', '2.00', '0.75'],
-  loop: true,
-  skipBackInterval: 15,
-  jumpForwardInterval: 15,
-  features: [
-    "playpause",
-    "progress",
-    "current",
-    "duration",
-    "skipback",
-    "changespeed",
-    "volume",
-    "jumpforward",
-  ]
-}
-
-new MediaElementPlayer(
-  document.querySelector("audio"),
-  options
- );
-
-// Separate the audio controls so I can style them better.
-(function() => {
-	const elementTop = document.createElement('div');
-  const elementBottom = document.createElement('div');
-	elementTop.classList.add('mejs-prepended-buttons');
-  elementBottom.classList.add('mejs-appended-buttons');
-
-	const controls = document.querySelector('.mejs__controls');
-	controls.prepend(elementTop);
-  controls.append(elementBottom);
-  
-	const controlsChildren = Array.from(controls.childNodes).filter(v => v.className.startsWith("mejs_"));
-
-  controlsChildren.slice(0, 3).forEach(elem => {
-
-	  elementTop.append(elem)
-  
-  });
-  
-  controlsChildren.slice(3, controlsChildren.length).forEach(elem => {
-    elementBottom.append(elem)
-  })
-})()
-
-</script>
 <style type="text/css">
 .container {
 	width: 800px;
@@ -186,25 +130,85 @@ __meta {
 	display: none !important;
 }
 </style>
+<script type="text/javascript">
+"use strict";
+
+const options = {
+  defaultSpeed: '1.00',
+  speeds: ['1.25','1.50', '2.00', '0.75'],
+  loop: true,
+  skipBackInterval: 15,
+  jumpForwardInterval: 15,
+  features: [
+    "playpause",
+    "progress",
+    "current",
+    "duration",
+    "skipback",
+    "changespeed",
+    "volume",
+    "jumpforward",
+  ]
+}
+
+new MediaElementPlayer(
+  document.querySelector("audio"),
+  options
+ );
+
+(() => {
+   const elementTop = document.createElement('div');
+  const elementBottom = document.createElement('div');
+   elementTop.classList.add('mejs-prepended-buttons');
+  elementBottom.classList.add('mejs-appended-buttons');
+
+   const controls = document.querySelector('.mejs__controls');
+   controls.prepend(elementTop);
+  controls.append(elementBottom);
+  
+   const controlsChildren = Array.from(controls.childNodes).filter(v => v.className.startsWith("mejs_"));
+
+  controlsChildren.slice(0, 3).forEach(elem => {
+     elementTop.append(elem)
+  });
+  
+  controlsChildren.slice(3, controlsChildren.length).forEach(elem => {
+    elementBottom.append(elem)
+  })
+})()
+</script>
+
 </head>
 
-<div class="container">
-	<div class="podcast">
-		<h3 class="podcast__episode_title">Debugging Tools + Tips</h3>
-		<h5 class="podcast__title">
-			Syntax.fm <i>Episode 152</i>
-		</h5>
 
-		<div class="podcast__meta">
-			<audio controls width="100%">
-				<source
-					src="https://hwcdn.libsyn.com/p/5/1/8/518b62b2d896549d/Syntax152.mp3?c_id=44542285&cs_id=44542285&expiration=1561491578&hwt=40b42995123424c9086441d814f8a1ba">
-			</audio>
-			<a href="#" class="artwork"> <img
-				src="https://images.unsplash.com/photo-1490821872962-f2e55097079b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=300&h=300"
-				alt="">
-			</a>
+
+<body>
+	<div class="container">
+		<div class="podcast">
+			<h3 class="podcast__episode_title" id="albumTitle">[Click Play Button]</h3>
+			<h5 class="podcast__title">
+				장르<i>작곡가</i>
+			</h5>
+
+			<div class="podcast__meta">
+				<audio id="audioPlayer" controls style="width: 50%;">
+					<source
+						src="fileUpload/LP1607110010_임샛별_On the hill (Organ ver.).mp3"
+						type="audio/mpeg">
+				</audio>
+				<a href="#" class="artwork"> <img id="albumImage" src="img/pic_1.png"
+					alt="앨범 이미지가 표시됩니다." width="60" height="60" class="rounded">
+				</a>
+			</div>
 		</div>
 	</div>
-</div>
+
+	<script>
+	const image = ""; // 여기에 이미지 URL을 설정하십시오. 만약 이미지가 없으면 공백을 사용합니다.
+	const albumImage = document.getElementById("albumImage");
+	if (image && image.trim() !== "") {
+ 	 albumImage.src = image;
+	}
+</script>
+</body>
 </html>
