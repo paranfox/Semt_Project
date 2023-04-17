@@ -51,7 +51,7 @@
 							<li><a
 								href="<%=request.getContextPath()%>/my_music_list.do?id=${vo.getUser_id() }">내가
 									업로드한 파일</a></li>
-							<li><a href="http://www._____.com/LIkeList">좋아요<br>플레이리스트
+							<li><a href="<%=request.getContextPath()%>/like_list.do">좋아요<br>플레이리스트
 							</a></li>
 						</c:if>
 

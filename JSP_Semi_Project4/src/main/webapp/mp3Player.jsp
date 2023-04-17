@@ -8,7 +8,7 @@
 <style type="text/css">
 .container {
 	width: 800px;
-	margin: 30px auto;
+	margin: 1px auto;
 }
 
 .mejs { &__container { margin-top:10px;
@@ -37,7 +37,7 @@ __time {
 	padding: 30px;
 	border-radius: 3px; & __episode_title { font-size : 28px;
 	font-weight: bold;
-	line-height: 1.5;
+	line-height: 0.5;
 	margin-bottom: 0;
 	padding-bottom: 0;
 	margin-top: 0;
@@ -130,7 +130,9 @@ __meta {
 	display: none !important;
 }
 </style>
-<script type="text/javascript">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<link rel="stylesheet" href="mediaelement-master/build/mediaelementplayer.css" />
+<script type="text/javascript" src="mediaelement-master/build/mediaelement-and-player.js">
 "use strict";
 
 const options = {
