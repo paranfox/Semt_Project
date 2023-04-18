@@ -385,5 +385,188 @@ public class MusicDAO {
 
 		return likeStatus;
 	}
+	
+public MusicVO musicModify(int music_id) {
+		
+		MusicVO vo = null;
+		
+		try {
+			connect();
+			
+			sql = "select * from music_info where music_id = ?";
+			
+			pstmt = con.prepareStatement(sql);
+			
+			pstmt.setInt(1, music_id);
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				vo = new MusicVO();
+				vo.setMusic_id(rs.getInt("music_id"));
+				vo.setMusic_pic(rs.getString("music_pic"));
+				vo.setMusic_mp3(rs.getString("music_mp3"));
+				vo.setMusic_title(rs.getString("music_title"));
+				vo.setMusic_contents(rs.getString("music_contents"));
+				vo.setMusic_likecnt(rs.getInt("music_likecnt"));
+				vo.setMusic_playcnt(rs.getInt("music_playcnt"));
+				vo.setUser_id(rs.getString("user_id"));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			disconnect(rs, pstmt, con);
+		}
+		return vo;
+	}	// musicModify() 메서드 end
+	
+	
+	// 상세페이지에서 수정 페이지로 가는 메서드
+	public MusicVO modifyOkDo(String music_id) {
+		
+		MusicVO vo = new MusicVO();
+		
+		try {
+			connect();
+			
+			sql = "select * from music_info where music_id = ?";
+			
+			pstmt = con.prepareStatement(sql);
+			
+			pstmt.setString(1, music_id);
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				
+				vo.setMusic_id(rs.getInt("music_id"));
+				vo.setMusic_pic(rs.getString("music_pic"));
+				vo.setMusic_mp3(rs.getString("music_mp3"));
+				vo.setMusic_title(rs.getString("music_title"));
+				vo.setMusic_contents(rs.getString("music_contents"));
+				vo.setMusic_likecnt(rs.getInt("music_likecnt"));
+				vo.setMusic_playcnt(rs.getInt("music_playcnt"));
+				vo.setUser_id(rs.getString("user_id"));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			disconnect(rs, pstmt, con);
+		}
+		return vo;
+	}	
+
+	// 게시한 앨범을 삭제.
+	public int deleteMusic(int music_id) {
+		
+		connect();
+		
+		int result = 0;
+		
+		try {
+			// 앨범에 달린 댓글을 삭제
+			sql = "DELETE FROM comments WHERE album_id = ?";
+			
+			pstmt = con.prepareStatement(sql);
+			
+			pstmt.setInt(1, music_id);
+			
+			result = pstmt.executeUpdate();
+			
+			// 앨범을 삭제
+			sql = "DELETE FROM MUSIC_INFO WHERE music_id = ?";
+		
+			pstmt = con.prepareStatement(sql);
+			
+			pstmt.setInt(1, music_id);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			disconnect(rs, pstmt, con);
+		}
+		
+		return result;
+	}	// 앨범을 삭제하는 메서드 end
+	
+	public void updateSequence(int music_id) {
+
+		connect();
+		
+		try {
+			sql = "update music_info set music_id = music_id -1 where music_id > ?";
+			
+			pstmt = con.prepareStatement(sql);
+			
+			pstmt.setInt(1, music_id);
+			
+			pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			disconnect(rs, pstmt, con);
+		}
+	}	
+	
+	// 조회수 증가
+	public void musicPlayCnt(int music_id) {
+		
+		try {
+			connect();
+			
+			sql = "UPDATE music_info "
+					+ "SET music_playcnt = music_playcnt + 1 "
+					+ "where music_id = ?";
+			
+			pstmt = con.prepareStatement(sql);
+
+			pstmt.setInt(1, music_id);
+			
+			pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			disconnect(rs, pstmt, con);
+		}
+	}	// 조회수 증가 메서드 end
+	
+	public int updateModifyMusic(MusicVO vo) {
+		
+		connect();
+		
+		int result = 0;
+		
+		
+		try {
+			sql = "update music_info set music_contents = ?, music_likecnt = ?, music_playcnt = ?, music_title = ?, music_pic = ? WHERE music_id = ?";
+			
+			pstmt = con.prepareStatement(sql);
+			
+			pstmt.setString(1, vo.getMusic_contents());
+			pstmt.setInt(2, vo.getMusic_likecnt());
+			pstmt.setInt(3, vo.getMusic_playcnt());
+			pstmt.setString(4, vo.getMusic_title());
+			pstmt.setString(5, vo.getMusic_pic());
+			pstmt.setInt(6, vo.getMusic_id());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			disconnect(rs, pstmt, con);
+		}
+		
+		return result;
+	}	// 음악 수정 업데이트 메서드 end
+	
+	
 
 }

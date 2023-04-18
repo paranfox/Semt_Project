@@ -13,7 +13,7 @@
 <script
 	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>앨범 List</title>
 <!-- Add Bootstrap CSS -->
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
@@ -73,7 +73,7 @@ td {
 								<td><a
 									href="<%=request.getContextPath() %>/user_music_content.do?id=${vo.getMusic_id() }">들어가기</a></td>
 								<td><a
-									href="<%=request.getContextPath() %>/admin_product_modify.do?pnum=${dto.getPnum() }">수
+									href="<%=request.getContextPath() %>/admin_product_modify.do?uno=${vo.getMusic_id()}">수
 										정</a> &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp; <a href="#"
 									class="goToContentBtn" data-album-id="${vo.getMusic_id()}">들어가기</a></td>
 							</tr>
