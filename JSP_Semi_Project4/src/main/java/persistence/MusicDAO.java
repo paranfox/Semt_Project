@@ -545,7 +545,7 @@ public MusicVO musicModify(int music_id) {
 		
 		
 		try {
-			sql = "update music_info set music_contents = ?, music_likecnt = ?, music_playcnt = ?, music_title = ?, music_pic = ? WHERE music_id = ?";
+			sql = "update music_info set music_contents = ?, music_likecnt = ?, music_playcnt = ?, music_title = ?, music_pic = ?, music_mp3 = ? WHERE music_id = ?";
 			
 			pstmt = con.prepareStatement(sql);
 			
@@ -554,7 +554,8 @@ public MusicVO musicModify(int music_id) {
 			pstmt.setInt(3, vo.getMusic_playcnt());
 			pstmt.setString(4, vo.getMusic_title());
 			pstmt.setString(5, vo.getMusic_pic());
-			pstmt.setInt(6, vo.getMusic_id());
+			pstmt.setString(6, vo.getMusic_mp3());
+			pstmt.setInt(7, vo.getMusic_id());
 			
 			result = pstmt.executeUpdate();
 			

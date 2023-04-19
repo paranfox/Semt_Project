@@ -12,6 +12,7 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
+import model.LikeVO;
 import model.MusicVO;
 
 public class LikeDAO {
@@ -217,6 +218,5 @@ public class LikeDAO {
 		return result;
 		
 	}  // likecheckprocess() 메서드 end
-	
 
 }

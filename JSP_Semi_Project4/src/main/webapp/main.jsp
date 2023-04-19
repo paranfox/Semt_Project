@@ -26,6 +26,10 @@
 			<ul>
 				<li class="home"><a href="http://www._____.com">4운드 클라우드</a></li>
 				<li class="feed"><a href="http://www._____.com/About">feed</a></li>
+				
+				<li class="best"><a href="best_like_list.do">Like</a></li>
+				
+				
 
 				<li class="search"><a href="http://www._____.com/Project">
 						<input class="search-txt" type="text" placeholder=" 검색어를 입력해 주세요">&nbsp;

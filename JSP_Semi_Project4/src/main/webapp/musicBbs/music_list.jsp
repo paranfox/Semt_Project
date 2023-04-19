@@ -72,8 +72,7 @@ td {
 								<td>${vo.getMusic_playcnt() }</td>
 								<td><a
 									href="<%=request.getContextPath() %>/user_music_content.do?id=${vo.getMusic_id() }">들어가기</a></td>
-								<td><a
-									href="<%=request.getContextPath() %>/admin_product_modify.do?uno=${vo.getMusic_id()}">수
+								<td><a href="<%=request.getContextPath() %>/admin_product_modify.do?uno=${vo.getMusic_id()}">수
 										정</a> &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp; <a href="#"
 									class="goToContentBtn" data-album-id="${vo.getMusic_id()}">들어가기</a></td>
 							</tr>

@@ -51,13 +51,26 @@
 					<th>좋아요수</th>
 					<td><input name="music_like" value="${vo.getMusic_likecnt() }" readonly></td>
 				</tr>
-	
+
+<%-- 	
 				<tr>
 					<th>첨부파일</th>
 					<c:if test="${!empty vo.getMusic_mp3() }">
-						<td><a
-							href="<%=request.getContextPath()%>/fileUpload/${vo.getMusic_mp3() }"
+						<td>
+						<a href="<%=request.getContextPath()%>/fileUpload/${vo.getMusic_mp3() }"
 							download="${vo.getMusic_mp3() }">다운로드</a></td>
+					</c:if>
+				</tr>
+
+ --%>
+				
+				<tr>
+					<th>첨부파일</th>
+					<c:if test="${!empty vo.getMusic_mp3() }">
+						<td>	
+							<label for="music_mp3">	음원파일
+							<input id="music_mp3" type="file" name="music_mp3"></label> 
+						</td>
 					</c:if>
 				</tr>
 	

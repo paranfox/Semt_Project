@@ -40,6 +40,8 @@ public class MusicModifyOkAction implements Action {
 		String music_album = multi.getParameter("music_album").trim();
 		int music_cnt = Integer.parseInt(multi.getParameter("music_cnt").trim());
 		int music_like = Integer.parseInt(multi.getParameter("music_like").trim());
+		String music_mp3 = multi.getFilesystemName("music_mp3");
+		
 		
 		MusicVO vo = new MusicVO();
 		
@@ -49,6 +51,7 @@ public class MusicModifyOkAction implements Action {
 		vo.setMusic_contents(music_album);
 		vo.setMusic_likecnt(music_cnt);
 		vo.setMusic_likecnt(music_like);
+		vo.setMusic_mp3(music_mp3);
 		
 		MusicDAO dao = MusicDAO.getInstance();
 		

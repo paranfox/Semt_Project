@@ -12,11 +12,13 @@
 	
 	<div align="center">
 	<hr width="85%" color="red">
-	<h3>회원님에 전체 좋와요 페이지</h3>
+	<h3>회원님에 전체 좋아요 페이지</h3>
 	<hr width="85%" color="red">
 	</div>
 	<a href="main.jsp">홈으로</a>
 	<br>
+
+
 
 	<table border="1" cellspacing="0" width="85%">
 		<tr bgcolor="#ffcc00">
