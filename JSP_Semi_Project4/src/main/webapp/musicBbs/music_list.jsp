@@ -10,7 +10,7 @@
 <script	src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
 <script	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>앨범 List</title>
 <!-- Add Bootstrap CSS -->
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
@@ -70,11 +70,17 @@ td {
 								<td>${vo.getMusic_playcnt() }</td>
 								<td><a
 									href="<%=request.getContextPath() %>/user_music_content.do?id=${vo.getMusic_id() }">들어가기</a></td>
+<<<<<<< HEAD
 								<td><a
 									href="<%=request.getContextPath() %>/admin_product_modify.do?pnum=${dto.getPnum() }">수
 										정</a> &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp; <a
 									href="<%=request.getContextPath() %>/admin_product_delete.do?pnum=${dto.getPnum() }">삭
 										제</a></td>
+=======
+								<td><a href="<%=request.getContextPath() %>/admin_product_modify.do?uno=${vo.getMusic_id()}">수
+										정</a> &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp; <a href="#"
+									class="goToContentBtn" data-album-id="${vo.getMusic_id()}">들어가기</a></td>
+>>>>>>> branch 'master' of https://github.com/eownrrnf/semi_project.git
 							</tr>
 						</c:forEach>
 					</c:if>

@@ -16,6 +16,7 @@ public class MusicLikesVO {
 		this.is_liked = is_liked;
 	}
 
+	
 	public boolean getIs_disliked() {
 		return is_disliked;
 	}
@@ -24,6 +25,7 @@ public class MusicLikesVO {
 		this.is_disliked = is_disliked;
 	}
 
+	
 	public int getId() {
 		return id;
 	}
@@ -32,6 +34,7 @@ public class MusicLikesVO {
 		this.id = id;
 	}
 
+	
 	public String getUser_id() {
 		return user_id;
 	}
