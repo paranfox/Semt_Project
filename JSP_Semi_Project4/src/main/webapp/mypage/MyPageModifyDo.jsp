@@ -9,6 +9,10 @@
 </head>
 <body>
 
+	<jsp:include page="../test_main_top.jsp" />
+
+	<div class="main_con"></div>
+	
 
 	<form method="post"
 		action="<%=request.getContextPath()%>/modifyOk.do?id=${dto.getUser_id()}"

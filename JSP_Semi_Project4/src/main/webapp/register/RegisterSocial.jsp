@@ -8,6 +8,12 @@
 <title>Register</title>
 </head>
 <body>
+
+
+	<jsp:include page="../test_main_top.jsp" />
+
+	<div class="main_con"></div>
+	
 	<header>Create Your Account(Social)</header>
 
 	<div>

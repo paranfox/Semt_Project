@@ -17,6 +17,12 @@
 <title>Register</title>
 </head>
 <body>
+
+
+	<jsp:include page="../test_main_top.jsp" />
+
+	<div class="main_con"></div>
+	
 	<h2>Create Your Account</h2>
 
 	<div>

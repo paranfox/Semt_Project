@@ -8,11 +8,18 @@
 <title>Insert title here</title>
 </head>
 <body>
+
+
+	<jsp:include page="../test_main_top.jsp" />
+
+	<div class="main_con"></div>
+	
 	<c:set var="vo" value="${userVO }"></c:set>
 	<h3>Follows of ${vo.getUser_nickname() }</h3>
 	
 	<table border="1">
 		<tr>
+			<th>팔로워 id</th>
 			<th>프로필 사진</th>
 			<th>닉네임</th>
 			<th>팔로워</th>
@@ -22,7 +29,8 @@
 		<c:if test="${!empty followerList }">
 			<c:forEach items="${followerList }" var="fvo" >
 				<tr>
-					<td>${fvo.getUser_pic() }</td>				
+					<td>${fvo.getFollower_id() }</td>				
+					<td><img src="<%=request.getContextPath() %>/fileUpload/${fvo.getUser_pic() }"></td>				
 					<td>${fvo.getUser_nickname() }</td>				
 					<td>${fvo.getFollowers_count() }</td>				
 				</tr>

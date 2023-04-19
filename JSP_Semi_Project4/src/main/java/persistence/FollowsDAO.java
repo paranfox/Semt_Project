@@ -223,49 +223,133 @@ public class FollowsDAO {
 	public List<FollowersProfileVO> getFollowerList(String bbs_id) {
 
 		List<FollowersProfileVO> list = new ArrayList<FollowersProfileVO>();
-		
-		connect();
 
 		try {
-			sql = "SELECT * FROM followerlist WHERE followed_id = ?";
-			
+			connect();
+
+			String sql1 = null;
+			String sql2 = null;
+
+			PreparedStatement pstmt1 = null;
+			PreparedStatement pstmt2 = null;
+
+			ResultSet rs1 = null;
+			ResultSet rs2 = null;
+
+			// 게시판 아이디를 팔로우하는 유저 조회
+			sql = "SELECT follower_id FROM follows WHERE followed_id = ?";
+
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, bbs_id);
-			
+
 			rs = pstmt.executeQuery();
-			
-			FollowersProfileVO vo = new FollowersProfileVO();
-			
-			if(rs.next()) {
-				
-				vo.setFollower_id(rs.getString("follower_id"));
-				//vo.setFollowed_id(rs.getString("followed_id"));
-				
+
+			// 유저가 있는 동안에,
+			while (rs.next()) {
+
+				// 팔로워 프로필 vo 생성
+				FollowersProfileVO vo = new FollowersProfileVO();
+
 				String followers_id = rs.getString("follower_id");
-				sql = "SELECT * FROM user WHERE user_id = ?";
-				pstmt = con.prepareStatement(sql);
-				pstmt.setString(1, followers_id);
-				
-				rs = pstmt.executeQuery();
-				
-				while(rs.next()) {
-					vo.setUser_nickname(rs.getString("user_nickname"));
-					vo.setUser_pic(rs.getString("user_pic"));
-					
-					sql = "SELECT COUNT(followed_id) FROM followerlist WHERE followed_id = ?";
-					pstmt = con.prepareStatement(sql);
-					pstmt.setString(1, followers_id);
-					
-					rs = pstmt.executeQuery();
-					
-					while(rs.next()) {
-						vo.setFollowers_count(rs.getInt(1));
+
+				vo.setFollower_id(followers_id);
+
+				sql1 = "SELECT COUNT(followed_id) FROM follows WHERE followed_id = ?";
+
+				pstmt1 = con.prepareStatement(sql1);
+				pstmt1.setString(1, followers_id);
+
+				rs1 = pstmt1.executeQuery();
+
+				if (rs1.next()) {
+					vo.setFollowers_count(rs1.getInt(1));
+
+					sql2 = "SELECT * FROM user WHERE user_id = ?";
+					pstmt2 = con.prepareStatement(sql2);
+					pstmt2.setString(1, followers_id);
+
+					rs2 = pstmt2.executeQuery();
+
+					if (rs2.next()) {
+						vo.setUser_nickname(rs2.getString("user_nickname"));
+						vo.setUser_pic(rs2.getString("user_pic"));
 					}
-					
+
 				}
-				
+
 				list.add(vo);
 			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			disconnect(rs, pstmt, con);
+		}
+
+		return list;
+	}
+	
+	
+	public List<FollowersProfileVO> getFollowingList(String bbs_id) {
+
+		List<FollowersProfileVO> list = new ArrayList<FollowersProfileVO>();
+
+		try {
+			connect();
+
+			String sql1 = null;
+			String sql2 = null;
+
+			PreparedStatement pstmt1 = null;
+			PreparedStatement pstmt2 = null;
+
+			ResultSet rs1 = null;
+			ResultSet rs2 = null;
+
+			// 게시판 아이디를 팔로우하는 유저 조회
+			sql = "SELECT followed_id FROM follows WHERE follower_id = ?";
+
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, bbs_id);
+
+			rs = pstmt.executeQuery();
+
+			// 유저가 있는 동안에,
+			while (rs.next()) {
+
+				// 팔로워 프로필 vo 생성
+				FollowersProfileVO vo = new FollowersProfileVO();
+
+				String following_id = rs.getString("followed_id");
+
+				vo.setFollower_id(following_id);
+
+				sql1 = "SELECT COUNT(followed_id) FROM follows WHERE followed_id = ?";
+
+				pstmt1 = con.prepareStatement(sql1);
+				pstmt1.setString(1, following_id);
+
+				rs1 = pstmt1.executeQuery();
+
+				if (rs1.next()) {
+					vo.setFollowers_count(rs1.getInt(1));
+
+					sql2 = "SELECT * FROM user WHERE user_id = ?";
+					pstmt2 = con.prepareStatement(sql2);
+					pstmt2.setString(1, following_id);
+
+					rs2 = pstmt2.executeQuery();
+
+					if (rs2.next()) {
+						vo.setUser_nickname(rs2.getString("user_nickname"));
+						vo.setUser_pic(rs2.getString("user_pic"));
+					}
+
+				}
+
+				list.add(vo);
+			}
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {

@@ -8,6 +8,11 @@
 <title>Insert title here</title>
 </head>
 <body>
+
+	<jsp:include page="../test_main_top.jsp" />
+
+	<div class="main_con"></div>
+	
 		<h3>아이디 찾기</h3>
 		이메일 정보와 일치하는 아이디 입니다.
 		

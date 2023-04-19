@@ -17,6 +17,12 @@ td {
 </style>
 </head>
 <body>
+
+
+	<jsp:include page="../test_main_top.jsp" />
+
+	<div class="main_con"></div>
+	
 	<div class="container mt-5">
 		<div class="text-center">
 			<hr class="w-75 bg-danger" align="center">
@@ -30,7 +36,7 @@ td {
 				<tr>
 					<th>pic</th>
 					<td><img
-						src="<%=request.getContextPath() %>/fileupload/${uservo.getUser_pic() }"
+						src="<%=request.getContextPath() %>/fileUpload/${uservo.getUser_pic() }?ver=1"
 						width="60" height="60"></td>
 				</tr>
 				<tr>
@@ -38,20 +44,16 @@ td {
 					<td>${uservo.getUser_nickname() }</td>
 				</tr>
 				<tr>
-						<th>follower</th>
-						<td id="followers_count">
-							<a href="<%=request.getContextPath() %>/user_follower_list.do?user_id=${uservo.getUser_id() }">
-							${followersCount }
-							</a>
-						</td>
+					<th>follower</th>
+					<td id="followers_count"><a
+						href="<%=request.getContextPath() %>/user_follower_list.do?user_id=${uservo.getUser_id() }">
+							${followersCount } </a></td>
 				</tr>
 				<tr>
-						<th>following</th>
-						<td>
-							<a href="<%=request.getContextPath() %>/user_following_list.do?user_id=${uservo.getUser_id() }">
-							${followingCount }
-							</a>
-						</td>
+					<th>following</th>
+					<td><a
+						href="<%=request.getContextPath() %>/user_following_list.do?user_id=${uservo.getUser_id() }">
+							${followingCount } </a></td>
 				</tr>
 				<tr>
 					<td colspan="2"><input type="button" id="follow_btn"
@@ -80,7 +82,7 @@ td {
 							<tr>
 								<td>${vo.getMusic_title() }</td>
 								<td><img
-									src="<%=request.getContextPath() %>/fileupload/${vo.getMusic_pic() }"
+									src="<%=request.getContextPath() %>/fileUpload/${vo.getMusic_pic() }"
 									width="60" height="60"></td>
 								<td>${vo.getMusic_mp3() }</td>
 								<td>${vo.getMusic_contents() }</td>
@@ -181,14 +183,15 @@ td {
 								success : function(res) {
 									let count = res;
 									//alert(count);
-									let followerCountElement = document.getElementById("followers_count");
+									let followerCountElement = document
+											.getElementById("followers_count");
 									followerCountElement.innerHTML = count;
 								},
 								error : function() {
 									alert("팔로우 카운트 실패")
 								}
 							})
-							
+
 						},
 						error : function() {
 							alert("팔로우 실패")
@@ -202,10 +205,8 @@ td {
 			});
 
 		}
-		
-		// 팔로우 팔로워 수 
-		
-		
+
+		// 팔로우 팔로워 수
 	</script>
 </body>
 </html>

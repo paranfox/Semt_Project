@@ -13,18 +13,18 @@ import persistence.EmailHelper;
 public class UserRegisterSendEmail implements Action {
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		
+
 		String register_email = request.getParameter("userEmail");
-		
+
 		EmailHelper emailHelper = EmailHelper.getInstance();
 		String code = emailHelper.sendAndGetCode(register_email);
-		
+
 		request.setAttribute("code", code);
-		
+
 		PrintWriter out = response.getWriter();
-		
+
 		out.println(code);
-		
+
 		return null;
 	}
 }

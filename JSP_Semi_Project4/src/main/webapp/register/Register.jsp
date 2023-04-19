@@ -12,6 +12,12 @@
 
 </head>
 <body>
+
+
+	<jsp:include page="../test_main_top.jsp" />
+
+	<div class="main_con"></div>
+	
 	<div>
 	<form action="<%=request.getContextPath()%>/result.do" method="post"
 		enctype="multipart/form-data">
@@ -214,7 +220,7 @@
 						$.ajax({
 							// 이메일 보내기
 							url : "register_send_email.do",
-							type : "POST",
+							type : "post",
 							data : {
 								// input 이메일 보내기
 								userEmail : userEmail

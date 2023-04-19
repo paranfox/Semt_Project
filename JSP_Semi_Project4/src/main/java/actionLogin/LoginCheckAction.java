@@ -36,13 +36,14 @@ public class LoginCheckAction implements Action {
 			session.setAttribute("sessionUserNickname", vo.getUser_nickname());
 			session.setAttribute("profile_pic", profile_pic);
 
-			out.println("<script>");
-			out.println("alert('로그인 성공')");
-			out.println("location.href='../main.jsp'");
-			out.println("</script>");
+			session.setMaxInactiveInterval(60*300) ;
+			/*
+			 * out.println("<script>"); out.println("alert('로그인 성공')");
+			 * out.println("location.href='../main.jsp'"); out.println("</script>");
+			 */
 
-//	    	forward.setRedirect(false);
-//	        forward.setPath("LoginOk.jsp");
+	    	forward.setRedirect(true);
+	        forward.setPath("main.do");
 		} else if (check == 0) {
 			out.println("<script>");
 			out.println("alert('비밀번호를 확인해주세요')");
@@ -57,7 +58,7 @@ public class LoginCheckAction implements Action {
 
 		}
 
-		return null;
+		return forward;
 	}
 
 }

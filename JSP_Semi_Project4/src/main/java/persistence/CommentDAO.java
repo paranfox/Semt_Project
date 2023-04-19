@@ -98,7 +98,7 @@ public class CommentDAO {
 
 	public List<CommentVO> getCommentsByAlbumId(int album_id) {
 		List<CommentVO> comments = new ArrayList<>();
-		connect();
+		connect();	
 		try {
 			// 사용자 프로필 사진 정보를 가져오도록 SQL 쿼리를 수정합니다.
 			String sql = "SELECT c.*, u.user_pic , u.user_nickname FROM comments c INNER JOIN user u ON c.user_id = u.user_id WHERE album_id = ? ORDER BY created_at DESC";
@@ -112,9 +112,9 @@ public class CommentDAO {
 				comment.setAlbum_id(rs.getInt("album_id"));
 				comment.setUser_id(rs.getString("user_id"));
 				comment.setContent(rs.getString("content"));
-				comment.setCreated_at(rs.getTimestamp("created_at")); // 댓글 작성 날짜를 나타냅니다.
-				comment.setUser_pic(rs.getString("user_pic")); // 프로필 사진 정보를 CommentVO에 설정합니다.
-				comment.setUser_nickname(rs.getString("user_nickname")); // 유저 닉네임 정보를 받을수 있게 CommentVO에 설정합니다.
+				comment.setCreated_at(rs.getTimestamp("created_at"));
+				comment.setUser_pic(rs.getString("user_pic")); 
+				comment.setUser_nickname(rs.getString("user_nickname")); 
 
 				comments.add(comment);
 			}

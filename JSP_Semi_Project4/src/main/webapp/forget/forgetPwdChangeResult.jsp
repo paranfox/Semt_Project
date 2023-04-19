@@ -8,6 +8,11 @@
 </head>
 <body>
 
+	<jsp:include page="../test_main_top.jsp" />
+
+	<div class="main_con"></div>
+	
+
 	<h3>비밀번호 찾기</h3>
 
 	<div>

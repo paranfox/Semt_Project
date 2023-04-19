@@ -20,21 +20,21 @@ public class MusicContentCommentsDeleteAction implements Action {
 		// Get comment_id from request
 		int commentId = Integer.parseInt(request.getParameter("comment_id"));
 
-		// Create DAO instance and call deleteComment method
+
 		CommentDAO dao = CommentDAO.getInstance();
 		boolean result = dao.deleteComment(commentId);
 
-		// Set response content type and character encoding
+
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
 
-		// Create JSON object for response
+
 		JSONObject jsonObject = new JSONObject();
 		if (result) {
 			try {
 				jsonObject.put("result", "success");
 			} catch (JSONException e) {
-				// TODO Auto-generated catch block
+		
 				e.printStackTrace();
 			}
 		} else {

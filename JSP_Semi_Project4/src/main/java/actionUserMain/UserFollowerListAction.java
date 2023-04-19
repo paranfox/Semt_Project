@@ -10,7 +10,9 @@ import javax.servlet.http.HttpServletResponse;
 import action.Action;
 import action.ActionForward;
 import model.FollowersProfileVO;
+import model.UserVO;
 import persistence.FollowsDAO;
+import persistence.UserDAO;
 
 public class UserFollowerListAction implements Action {
 	@Override
@@ -19,6 +21,8 @@ public class UserFollowerListAction implements Action {
 		
 		// bbs 유저 id
 		String bbs_id = request.getParameter("user_id").trim();
+		UserDAO dao = UserDAO.getInstance();
+		UserVO vo = dao.userContent(bbs_id);
 		
 		FollowsDAO followsdao = FollowsDAO.getInstance();
 		
@@ -27,7 +31,9 @@ public class UserFollowerListAction implements Action {
 		//String profile_pic = userdao.getProfile_pic_file(user_id);
 		
 		request.setAttribute("followerList", list);
+		request.setAttribute("userVO", vo);
 		
+		System.out.println(list.size());
 		ActionForward forward = new ActionForward();
 		
 		forward.setRedirect(false);

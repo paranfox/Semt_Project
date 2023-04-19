@@ -14,60 +14,13 @@
 
 <link rel="stylesheet" href="css/main.css">
 
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
 </head>
 
 <body>
-
-	<header id="top">
-		<div class="top">
-			<ul>
-				<li class="home"><a href="http://www._____.com">4운드 클라우드</a></li>
-				<li class="feed"><a href="http://www._____.com/About">feed</a></li>
-
-				<li class="search"><a href="http://www._____.com/Project">
-						<input class="search-txt" type="text" placeholder=" 검색어를 입력해 주세요">&nbsp;
-						<button class="search-btn" type="submit">검색</button>
-				</a></li>
-				<li class="pay"><a href="http://www._____.com/Travel">이용권</a></li>
-				<li class="profile_top">
-					<ul class="profile_inner">
-
-
-						<c:set value="${user }" var="list" />
-						<c:set value="${sessionUserVO }" var="vo" />
-
-						<c:if test="${!empty vo }">
-
-							<a>${vo.getUser_nickname() }님 환영합니다</a>
-							<li><a href="<%=request.getContextPath()%>/logout_check.do">로그아웃</a></li>
-							<li><a
-								href="<%=request.getContextPath()%>/my_page.do?num=${vo.getUser_id() }">마이페이지</a></li>
-							<li><a href="musicBbs/uploadsample.jsp">앨범 등록</a></li>
-							<li><a
-								href="<%=request.getContextPath()%>/user_music_list.do">앨범리스트</a></li>
-							<li><a href="http://www._____.com/LIkeList">좋아요<br>플레이리스트
-							</a></li>
-						</c:if>
-
-						<c:if test="${empty vo }">
-
-							<%-- 로그인되지 않았을 때 --%>
-							<a>프로필</a>
-							<li><a href="login/login.jsp">로그인</a></li>
-							<li><a href="register/RegisterChoice.jsp">회원가입</a></li>
-							<li><a href="http://www._____.com/LIkeList">좋아요<br>플레이리스트
-							</a></li>
-							<li><a href="http://www._____.com/HateList">싫어요<br>플레이리스트
-							</a></li>
-							<li><a href="<%=request.getContextPath()%>/user_music_list.do">앨범리스트</a></li>
-
-						</c:if>
-
-					</ul>
-				</li>
-			</ul>
-		</div>
-	</header>
+	<jsp:include page="test_main_top.jsp"/>
 
 	<br>
 	<br>
@@ -75,7 +28,7 @@
 	<br>
 	<br>
 
-
+	<div id="content"></div>
 	<div class="slideshow-container">
 
 
@@ -162,6 +115,40 @@
 		}
 		slides[slideIndex - 1].style.display = "block";
 		dots[slideIndex - 1].className += " active";
+	}
+
+	$(document).ready(function() {
+		loadMusicList();
+	});
+
+	function loadMusicList() {
+		$.ajax({
+			url : "music_list.jsp",
+			type : "GET",
+			success : function(data) {
+				$("#content").html(data);
+			},
+			error : function(xhr, status, error) {
+				console.error("Error loading music list:", error);
+			}
+		});
+	}
+
+	// 추가: 음악 상세 페이지를 AJAX로 불러오는 함수입니다.
+	function loadMusicDetails(musicId) {
+		$.ajax({
+			url : "music_details.jsp",
+			type : "GET",
+			data : {
+				id : musicId
+			},
+			success : function(data) {
+				$("#content").html(data);
+			},
+			error : function(xhr, status, error) {
+				console.error("Error loading music details:", error);
+			}
+		});
 	}
 </script>
 </html>

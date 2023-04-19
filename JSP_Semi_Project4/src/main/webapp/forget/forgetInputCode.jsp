@@ -9,6 +9,11 @@
 </head>
 <body>
 	
+	<jsp:include page="../test_main_top.jsp" />
+
+	<div class="main_con"></div>
+	
+	
 	<c:if test="${empty id }">
 		<h3>아이디 찾기</h3>
 	</c:if>
