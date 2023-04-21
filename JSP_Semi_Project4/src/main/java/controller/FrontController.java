@@ -30,7 +30,8 @@ public class FrontController extends HttpServlet {
 		System.out.println("Path >>> " + path);
 
 		String command = uri.substring(path.length() + 1);
-
+		System.out.println("command >>> " + command);
+		
 		if (command.contains("/")) {
 			StringTokenizer st1 = new StringTokenizer(command, "/");
 			String url_1 = st1.nextToken();
@@ -45,7 +46,8 @@ public class FrontController extends HttpServlet {
 		String path2 = FrontController.class.getResource("").getPath();
 		// System.out.println("path2 >>> "+path2);
 		FileInputStream fis = new FileInputStream(path2 + "mapping.properties");
-
+		System.out.println("fis >>> "+fis);
+		
 		prop.load(fis);
 
 		String value = prop.getProperty(command);

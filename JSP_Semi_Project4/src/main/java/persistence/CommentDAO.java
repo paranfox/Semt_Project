@@ -98,7 +98,7 @@ public class CommentDAO {
 
 	public List<CommentVO> getCommentsByAlbumId(int album_id) {
 		List<CommentVO> comments = new ArrayList<>();
-		connect();	
+		connect();
 		try {
 			// 사용자 프로필 사진 정보를 가져오도록 SQL 쿼리를 수정합니다.
 			String sql = "SELECT c.*, u.user_pic , u.user_nickname FROM comments c INNER JOIN user u ON c.user_id = u.user_id WHERE album_id = ? ORDER BY created_at DESC";

@@ -1,4 +1,4 @@
-	package actionMusic;
+package actionMusic;
 
 import java.io.IOException;
 

@@ -12,7 +12,6 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
-import model.LikeVO;
 import model.MusicVO;
 
 public class LikeDAO {
@@ -25,7 +24,7 @@ public class LikeDAO {
 	private static LikeDAO dao;
 
 	private LikeDAO() {
-		
+
 	}
 
 	public void connect() {
@@ -64,90 +63,59 @@ public class LikeDAO {
 	}
 
 	public List<MusicVO> contentLike(String id) {
-	    List<MusicVO> list = new ArrayList<MusicVO>();
-	    List<Integer> list2 = new ArrayList<Integer>();
+		List<MusicVO> list = new ArrayList<MusicVO>();
+		List<Integer> list2 = new ArrayList<Integer>();
 
-	    MusicVO vo = new MusicVO();
+		MusicVO vo = new MusicVO();
 
-	    try {
-	        connect();
-
-	        sql = "select album_id from likes where user_id = ? and likes = 1";
-	        pstmt = con.prepareStatement(sql);
-	        pstmt.setString(1, id);
-	        rs = pstmt.executeQuery();
-
-	        while(rs.next()) {
-	            list2.add(rs.getInt(1));
-	            System.out.println(list2);
-	        }
-
-	        // IN 절에 사용할 배열값을 동적으로 생성합니다.
-	        StringJoiner joiner = new StringJoiner(",", "(", ")");
-	        for (int music_id : list2) {
-	            joiner.add("?");
-	        }
-
-	        // SQL 쿼리에 매개변수를 지정합니다.
-	        String sql = "select * from MUSIC_INFO where music_id in  " + joiner.toString();
-	        pstmt = con.prepareStatement(sql);
-
-	        // 배열값으로 대체할 매개변수의 인덱스를 지정합니다.
-	        int parameterIndex = 1;
-
-	        // 배열값으로 대체할 매개변수를 설정합니다.
-	        for (int music_id : list2) {
-	            pstmt.setInt(parameterIndex++, music_id);
-	        }
-
-	        // 쿼리 실행
-	        rs = pstmt.executeQuery();
-
-	        // 결과를 리스트로 저장
-	        while (rs.next()) {
-	            vo = new MusicVO();
-	            vo.setMusic_id(rs.getInt("music_id"));
-	            vo.setMusic_pic(rs.getString("music_pic"));
-	            vo.setMusic_mp3(rs.getString("music_mp3"));
-	            vo.setMusic_title(rs.getString("music_title"));
-	            vo.setMusic_contents(rs.getString("music_contents"));
-	            vo.setMusic_likecnt(rs.getInt("music_likecnt"));
-	            vo.setMusic_playcnt(rs.getInt("music_playcnt"));
-	            vo.setUser_id(rs.getString("user_id"));
-	            list.add(vo);
-	        }
-
-	    } catch (SQLException e) {
-	        // TODO Auto-generated catch block
-	        e.printStackTrace();
-	    } finally {
-	        disconnect(rs, pstmt, con);
-	    }
-
-	    return list;
-	}
-
-	
-	public MusicVO Music_pic(int id) {
-		
-		
-		 MusicVO vo = new MusicVO();
-		
 		try {
 			connect();
-			
-			sql = "select music_pic from music_info where music_id = ?";
+
+			sql = "select album_id from likes where user_id = ? and likes = 1";
 			pstmt = con.prepareStatement(sql);
-			pstmt.setInt(1, id);
+			pstmt.setString(1, id);
 			rs = pstmt.executeQuery();
-			
-			if(rs.next()) {
-				vo = new MusicVO();
-				
-				
-				
+
+			while (rs.next()) {
+				list2.add(rs.getInt(1));
+				System.out.println(list2);
 			}
-			
+
+			// IN 절에 사용할 배열값을 동적으로 생성합니다.
+			StringJoiner joiner = new StringJoiner(",", "(", ")");
+			for (int music_id : list2) {
+				joiner.add("?");
+			}
+
+			// SQL 쿼리에 매개변수를 지정합니다.
+			String sql = "select * from MUSIC_INFO where music_id in  " + joiner.toString();
+			pstmt = con.prepareStatement(sql);
+
+			// 배열값으로 대체할 매개변수의 인덱스를 지정합니다.
+			int parameterIndex = 1;
+
+			// 배열값으로 대체할 매개변수를 설정합니다.
+			for (int music_id : list2) {
+				pstmt.setInt(parameterIndex++, music_id);
+			}
+
+			// 쿼리 실행
+			rs = pstmt.executeQuery();
+
+			// 결과를 리스트로 저장
+			while (rs.next()) {
+				vo = new MusicVO();
+				vo.setMusic_id(rs.getInt("music_id"));
+				vo.setMusic_pic(rs.getString("music_pic"));
+				vo.setMusic_mp3(rs.getString("music_mp3"));
+				vo.setMusic_title(rs.getString("music_title"));
+				vo.setMusic_contents(rs.getString("music_contents"));
+				vo.setMusic_likecnt(rs.getInt("music_likecnt"));
+				vo.setMusic_playcnt(rs.getInt("music_playcnt"));
+				vo.setUser_id(rs.getString("user_id"));
+				list.add(vo);
+			}
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -155,60 +123,83 @@ public class LikeDAO {
 			disconnect(rs, pstmt, con);
 		}
 
-		
-		return vo;
-	} // contentLike() 메서드 end
-	
-	
-	
-	public int likecheckprocess(String id, int album) {
-		int result = -1;
-		
+		return list;
+	}
+
+	public MusicVO Music_pic(int id) {
+
+		MusicVO vo = new MusicVO();
+
 		try {
 			connect();
-			
+
+			sql = "select music_pic from music_info where music_id = ?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, id);
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+				vo = new MusicVO();
+
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			disconnect(rs, pstmt, con);
+		}
+
+		return vo;
+	} // contentLike() 메서드 end
+
+	public int likecheckprocess(String id, int album) {
+		int result = -1;
+
+		try {
+			connect();
+
 			sql = "select likes from likes where user_id = ? and album_id = ?";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, id);
 			pstmt.setInt(2, album);
 			rs = pstmt.executeQuery();
-			
-			if(rs.next()) {
+
+			if (rs.next()) {
 
 				int likes = rs.getInt("likes"); // "likes" 열의 값을 가져옴
-				
-				if(likes == 0) {
+
+				if (likes == 0) {
 					sql = "UPDATE likes SET likes = 1 WHERE user_id = ? AND album_id = ?";
-					
+
 					pstmt = con.prepareStatement(sql);
 					pstmt.setString(1, id);
 					pstmt.setInt(2, album);
 					pstmt.executeUpdate();
 					result = 1;
-				}else if(likes == 1) {
+				} else if (likes == 1) {
 					// 만약 id랑 음악id가 같을 때 likes가 0이라면
 					sql = "UPDATE likes SET likes = 0 WHERE user_id = ? AND album_id = ?";
-					
+
 					pstmt = con.prepareStatement(sql);
 					pstmt.setString(1, id);
 					pstmt.setInt(2, album);
 					pstmt.executeUpdate();
 					result = 0;
-			
-				}else {
-					
+
+				} else {
+
 				}
-			}else {
+			} else {
 				// 만약 처음 넣는 곡일 경우 좋와요를 1 넣어 준다.
-				sql = "insert into likes values(null, ?, ?, 1, CURRENT_TIMESTAMP)";  // where id = ?
+				sql = "insert into likes values(null, ?, ?, 1, CURRENT_TIMESTAMP)"; // where id = ?
 				pstmt = con.prepareStatement(sql);
 				pstmt.setInt(1, album);
 				pstmt.setString(2, id);
 				pstmt.executeUpdate();
 				result = 2;
 			}
-			
-			
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -216,7 +207,159 @@ public class LikeDAO {
 			disconnect(rs, pstmt, con);
 		}
 		return result;
+
+	} // likecheckprocess() 메서드 end
+		// page 테이블의 전체 게시물의 수를 확인하는 메서드.
+
+	public int getPageingCount(String id) {
+
+		int count = 0;
+
+		try {
+			connect();
+
+			sql = "select max(like_id) from likes where user_id = ?"; // max함수는 문제가 생길 수 있어 count함수를 권장하지만 (숫자가 비어 있다면 max를 사용하자)
+
+			pstmt = con.prepareStatement(sql);
+			
+			pstmt.setString(1, id);
+			
+			rs = pstmt.executeQuery();
+			
+			
+			if (rs.next()) {
+				count = rs.getInt(1);
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			disconnect(rs, pstmt, con);
+		}
+
+		return count;
+	} // getPageingCount() 메서드 end
+
+	// board 테이블에서 현재 페이지에 해당하는 게시물을 조회하는 메서드
+	public List<MusicVO> getPageingList(int page, int rowsize, String id) {
+
+		List<MusicVO> list = new ArrayList<MusicVO>();
+
+		// 해당 페이지에서 시작 번호
+		int startNo = (page * rowsize) - (rowsize - 1);
+
+		// 해당 페이지에서 끝 번호
+		int endNo = (page * rowsize);
+
+		try {
+			connect();
+
+			List<Integer> list2 = new ArrayList<Integer>();
+
+			MusicVO vo = new MusicVO();
+
+			sql = "select album_id from (SELECT row_number() over(order by like_id desc) rnum, b.* FROM "
+					+ "likes b where user_id = ? and likes = 1) AS likes where rnum between ? and ?";
+
+			pstmt = con.prepareStatement(sql);
+			
+			pstmt.setString(1, id);
+			pstmt.setInt(2, startNo);
+			pstmt.setInt(3, endNo);
+
+			rs = pstmt.executeQuery();
+
 		
-	}  // likecheckprocess() 메서드 end
+			while (rs.next()) {
+				list2.add(rs.getInt(1));
+				System.out.println(list2);
+			}
+
+			// IN 절에 사용할 배열값을 동적으로 생성합니다.
+			StringJoiner joiner = new StringJoiner(",", "(", ")");
+			for (int music_id : list2) {
+				joiner.add("?");
+			}
+
+			// SQL 쿼리에 매개변수를 지정합니다.
+			String sql = "select * from MUSIC_INFO where music_id in  " + joiner.toString();
+			pstmt = con.prepareStatement(sql);
+
+			// 배열값으로 대체할 매개변수의 인덱스를 지정합니다.
+			int parameterIndex = 1;
+
+			// 배열값으로 대체할 매개변수를 설정합니다.
+			for (int music_id : list2) {
+				pstmt.setInt(parameterIndex++, music_id);
+			}
+
+			// 쿼리 실행
+			rs = pstmt.executeQuery();
+		
+		// 결과를 리스트로 저장
+		while (rs.next()) {
+			vo = new MusicVO();
+			vo.setMusic_id(rs.getInt("music_id"));
+			vo.setMusic_pic(rs.getString("music_pic"));
+			vo.setMusic_mp3(rs.getString("music_mp3"));
+			vo.setMusic_title(rs.getString("music_title"));
+			vo.setMusic_contents(rs.getString("music_contents"));
+			vo.setMusic_likecnt(rs.getInt("music_likecnt"));
+			vo.setMusic_playcnt(rs.getInt("music_playcnt"));
+			vo.setUser_id(rs.getString("user_id"));
+			list.add(vo);
+		}
+	} catch (
+
+	SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	} finally {
+		disconnect(rs, pstmt, con);
+	}
+
+	return list;
+
+	} // getPageingList() 메서드 end
+	
+	public List<MusicVO> getmusiclist(String id) {
+		List<MusicVO> list = new ArrayList<MusicVO>();
+
+		try {
+			connect();
+			MusicVO vo = new MusicVO();
+			sql =  "SELECT music_id, music_pic, music_mp3, music_title, music_contents, music_likecnt, music_playcnt, music_info.user_genre, music_info.user_id"
+					+ " FROM music_info "
+					+ " INNER JOIN user ON music_info.user_id = user.user_id "
+					+ " WHERE user.user_id = ?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, id);
+			rs = pstmt.executeQuery();
+			
+			
+		// 결과를 리스트로 저장
+		while (rs.next()) {
+			vo = new MusicVO();
+			vo.setMusic_lank(rs.getInt(1));
+			vo.setMusic_id(rs.getInt("music_id"));
+			vo.setMusic_pic(rs.getString("music_pic"));
+			vo.setMusic_mp3(rs.getString("music_mp3"));
+			vo.setMusic_title(rs.getString("music_title"));
+			vo.setMusic_contents(rs.getString("music_contents"));
+			vo.setMusic_likecnt(rs.getInt("music_likecnt"));
+			vo.setMusic_playcnt(rs.getInt("music_playcnt"));
+			vo.setUser_id(rs.getString("user_id"));
+			list.add(vo);
+		}
+	} catch (
+	SQLException e) {
+		e.printStackTrace();
+	} finally {
+		disconnect(rs, pstmt, con);
+	}
+	return list;
+	} // getmusiclist() 메서드 end
+	
 
 }

@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"%>
 
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -24,7 +24,7 @@
 	
 	<div align="center">
 	<hr width="85%" color="red">
-	<h3>회원님에 전체 좋와요 페이지</h3>
+	<h3> MY LIST PAGE</h3>
 	<hr width="85%" color="red">
 	</div>
 	<a href="main.jsp">홈으로</a>
@@ -32,14 +32,14 @@
 
 	<table border="1" cellspacing="0" width="85%">
 		<tr bgcolor="#ffcc00">
-			<th>가장 최근 누른 좋와요 곡</th>
+			<th>가장 최근 추가한 곡</th>
 			<th>앨범명</th>
 			<th>올린 유저명</th>
 			<th>커버 이 미 지</th>
-			<th>좋와요 라벨</th>
+			<th>기타</th>
 
 		</tr>
-		<c:set var="list" value="${user_likelist }" />
+		<c:set var="list" value="${my_playlist }" />
 		<c:forEach items="${list }" var="dto">
 				<tr>
 					<td><section class="tape">

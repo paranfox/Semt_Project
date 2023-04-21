@@ -1,4 +1,4 @@
-package actionMusic;
+package actionUser;
 
 import java.io.IOException;
 
@@ -7,20 +7,17 @@ import javax.servlet.http.HttpServletResponse;
 
 import action.Action;
 import action.ActionForward;
-import java.util.*;
-import persistence.*;
-import model.*;
 
-public class MusicContentDeleteAction implements Action {
-
+public class UserRegisterCheckEmailCode implements Action {
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		
+		String emailCode = request.getParameter("emailCode").trim();
+		String code = request.getParameter("code");
 
-		String user_id = request.getParameter("user_id");
-
-		MusicDAO dao = MusicDAO.getInstance();
-
+		// 쓰레기
+		
+		
 		return null;
 	}
-
 }

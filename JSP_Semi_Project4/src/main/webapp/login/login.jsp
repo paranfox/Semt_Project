@@ -6,6 +6,7 @@
 <meta charset="UTF-8">
 <script src="http://code.jquery.com/jquery.js"></script>
 
+
 <!-- 카카오 -->
 <script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
 <script type="text/javascript">
@@ -16,58 +17,59 @@
 <!-- 구글 -->
 <script src="https://accounts.google.com/gsi/client" async defer></script>
 <script src="https://apis.google.com/js/platform.js" async defer></script>
+<script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+      
+
+<!-- 네이버 -->
 <script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.2.js"
+	charset="utf-8"></script>
+
 
 <title>로그인</title>
 </head>
 <body>
-
-	<jsp:include page="../test_main_top.jsp" />
-
-	<div class="main_con">
-		<h3>로그인 화면</h3>
+	<h3>로그인 화면</h3>
 
 
-		<div>
-			<a onclick="loginKakao();"> <img
-				src="../img/kakao_login_medium_wide.png" alt="카카오 로그인"></img>
-			</a>
-		</div>
+	<div>
+		<a onclick="loginKakao();"> 
+			<img src="../img/kakao_login_medium_wide.png" alt="카카오 로그인"></img>
+		</a>
+	</div>
 
-		<div id="buttonDiv"></div>
-		<!-- <div>
+	<div id="buttonDiv"></div> 
+	<!-- <div>
 		<a onclick="loginGoogle();"> 
 			<img src="img/btn_google_signin_light_pressed_web.png" alt="카카오 로그인"></img>
 		</a>
 	</div> -->
 
-		<div>
-			<form action="login_check.do" method="post">
-				<table>
-					<tr>
-						<th>ID</th>
-						<td><input name="id"></td>
-					</tr>
-					<tr>
-						<th>PWD</th>
-						<td><input type="password" name="pwd"></td>
-					</tr>
-					<tr>
-						<td colspan="2"><input type="submit" value="로그인"> <input
-							type="button" value="회원가입"
-							onclick="location.href='../register/RegisterChoice.jsp'">
-						</td>
-					</tr>
+	<div>
+		<form action="login_check.do" method="post">
+			<table>
+				<tr>
+					<th>ID</th>
+					<td><input name="id"></td>
+				</tr>
+				<tr>
+					<th>PWD</th>
+					<td><input type="password" name="pwd"></td>
+				</tr>
+				<tr>
+					<td colspan="2">
+						<input type="submit" value="로그인">
+						<input	type="button" value="회원가입" onclick="location.href='../register/RegisterChoice.jsp'">
+					</td>
+				</tr>
 
-				</table>
-			</form>
-			<input type="button" value="아이디 찾기"
-				onclick="location.href='../forget/forgetId.jsp'"> <input
-				type="button" value="비밀번호 찾기"
-				onclick="location.href='../forget/forgetPwd.jsp'">
-		</div>
+			</table>
+		</form>
+		<input type="button" value="아이디 찾기" onclick="location.href='../forget/forgetId.jsp'">
+		<input type="button" value="비밀번호 찾기" onclick="location.href='../forget/forgetPwd.jsp'">
 	</div>
+
+
 </body>
 
 <script type='text/javascript'>
@@ -176,6 +178,9 @@
       );
       google.accounts.id.prompt(); // also display the One Tap dialog
     }
+    
+    
+    
     
 </script>
 </html>

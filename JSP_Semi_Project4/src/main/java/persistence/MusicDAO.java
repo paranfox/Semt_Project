@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.StringJoiner;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -96,7 +97,7 @@ public class MusicDAO {
 
 		try {
 
-			sql = "insert into music_info values(default,?,?,?,?,?,?,?,?)";
+			sql = "insert into music_info values(default,?,?,?,?,?,?,?,?) ";
 
 			pstmt = con.prepareStatement(sql);
 
@@ -111,9 +112,10 @@ public class MusicDAO {
 			pstmt.setInt(5, 0);
 
 			pstmt.setInt(6, 0);
-			pstmt.setString(7, vo.getUser_nickname());
-			pstmt.setString(8, vo.getUser_id());
 
+			pstmt.setString(7, vo.getUser_id());
+
+			pstmt.setString(8, vo.getMusic_genre());
 
 			result = pstmt.executeUpdate();
 
@@ -131,7 +133,7 @@ public class MusicDAO {
 
 	} // insertUpload() 메서드 end
 
-	public List<MusicVO> getMusicList() {
+	public List<MusicVO> getMyMusicList(String id) {
 
 		connect();
 
@@ -156,7 +158,6 @@ public class MusicDAO {
 				vo.setMusic_contents(rs.getString("music_contents"));
 				vo.setMusic_likecnt(rs.getInt("music_likecnt"));
 				vo.setMusic_playcnt(rs.getInt("music_playcnt"));
-				vo.setUser_nickname(rs.getString("user_nickname"));
 				vo.setUser_id(rs.getString("user_id"));
 
 				list.add(vo);
@@ -169,50 +170,7 @@ public class MusicDAO {
 		}
 		return list;
 	} // getMusicList() end
-	
-	
-	// user_id로 음악 리스트 가져오기
-	public List<MusicVO> getUserMusicList(String user_id) {
-		
-		connect();
-		
-		List<MusicVO> list = new ArrayList<MusicVO>();
-		
-		try {
-			
-			sql = "select * from music_info where user_id = ?";
-			
-			pstmt = con.prepareStatement(sql);
-			pstmt.setString(1, user_id);
-			
-			rs = pstmt.executeQuery();
-			
-			while (rs.next()) {
-				
-				MusicVO vo = new MusicVO();
-				
-				vo.setMusic_id(rs.getInt("music_id"));
-				vo.setMusic_pic(rs.getString("music_pic"));
-				vo.setMusic_mp3(rs.getString("music_mp3"));
-				vo.setMusic_title(rs.getString("music_title"));
-				vo.setMusic_contents(rs.getString("music_contents"));
-				vo.setMusic_likecnt(rs.getInt("music_likecnt"));
-				vo.setMusic_playcnt(rs.getInt("music_playcnt"));
-				vo.setUser_nickname(rs.getString("user_nickname"));
-				vo.setUser_id(rs.getString("user_id"));
-				
-				list.add(vo);
-				
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			disconnect(rs, pstmt, con);
-		}
-		return list;
-	} // getMusicList() end
 
-	
 	public MusicVO contentMusic(int album_id) {
 		connect();
 		MusicVO vo = null;
@@ -239,48 +197,6 @@ public class MusicDAO {
 			disconnect(rs, pstmt, con);
 		}
 		return vo;
-	}
-
-	public List<MusicVO> getMyMusicList(String user_id) {
-
-		connect();
-
-		List<MusicVO> list = new ArrayList<MusicVO>();
-		try {
-			sql = "select * from music_info where user_id =?";
-			pstmt = con.prepareStatement(sql);
-			pstmt.setString(1, user_id);
-			rs = pstmt.executeQuery();
-
-			while (rs.next()) {
-
-				MusicVO vo = new MusicVO();
-
-				vo.setMusic_id(rs.getInt("music_id"));
-				vo.setMusic_pic(rs.getString("music_pic"));
-				vo.setMusic_mp3(rs.getString("music_mp3"));
-				vo.setMusic_title(rs.getString("music_title"));
-				vo.setMusic_contents(rs.getString("music_contents"));
-				vo.setMusic_likecnt(rs.getInt("music_likecnt"));
-				vo.setMusic_playcnt(rs.getInt("music_playcnt"));
-				vo.setUser_id(rs.getString("user_id"));
-
-				list.add(vo);
-
-			}
-
-		} catch (Exception e) {
-
-			e.printStackTrace();
-
-		} finally {
-
-			disconnect(rs, pstmt, con);
-
-		}
-
-		return list;
-
 	}
 
 	public MusicLikesVO getMusicLikesByUserIdAndMusicId(String user_id, int music_id) throws SQLException {
@@ -430,23 +346,61 @@ public class MusicDAO {
 
 		return likeStatus;
 	}
-	
-public MusicVO musicModify(int music_id) {
-		
-		MusicVO vo = null;
-		
+
+	public int getPageingCount(String id) {
+
+		int count = 0;
+
 		try {
 			connect();
-			
-			sql = "select * from music_info where music_id = ?";
-			
+
+			sql = "select count(music_id) from music_info where user_id = ?";
+
 			pstmt = con.prepareStatement(sql);
-			
-			pstmt.setInt(1, music_id);
-			
+
+			pstmt.setString(1, id);
+
 			rs = pstmt.executeQuery();
-			
-			if(rs.next()) {
+
+			if (rs.next()) {
+				count = rs.getInt(1);
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			disconnect(rs, pstmt, con);
+		}
+
+		return count;
+	} // getPageingCount() 메서드 end
+
+	// music_info 테이블에서 현재 페이지에 해당하는 게시물을 조회하는 메서드
+	public List<MusicVO> getPageingList(int page, int rowsize, String id) {
+
+		List<MusicVO> list = new ArrayList<MusicVO>();
+		MusicVO vo = new MusicVO();
+		connect();
+		// 해당 페이지에서 시작 번호
+		int startNo = (page * rowsize) - (rowsize - 1);
+
+		// 해당 페이지에서 끝 번호
+		int endNo = (page * rowsize);
+
+		try {
+			sql = "SELECT *"
+					+ " FROM (SELECT row_number() over(order by music_id desc) rnum, b.* FROM music_info b where user_id = ?) AS subquery"
+					+ " WHERE rnum BETWEEN ? AND ?";
+			pstmt = con.prepareStatement(sql);
+
+			pstmt.setString(1, id);
+			pstmt.setInt(2, startNo);
+			pstmt.setInt(3, endNo);
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
 				vo = new MusicVO();
 				vo.setMusic_id(rs.getInt("music_id"));
 				vo.setMusic_pic(rs.getString("music_pic"));
@@ -456,163 +410,111 @@ public MusicVO musicModify(int music_id) {
 				vo.setMusic_likecnt(rs.getInt("music_likecnt"));
 				vo.setMusic_playcnt(rs.getInt("music_playcnt"));
 				vo.setUser_id(rs.getString("user_id"));
+
+				list.add(vo);
+
 			}
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			disconnect(rs, pstmt, con);
-		}
-		return vo;
-	}	// musicModify() 메서드 end
-	
-	
-	// 상세페이지에서 수정 페이지로 가는 메서드
-	public MusicVO modifyOkDo(String music_id) {
-		
-		MusicVO vo = new MusicVO();
-		
-		try {
-			connect();
-			
-			sql = "select * from music_info where music_id = ?";
-			
-			pstmt = con.prepareStatement(sql);
-			
-			pstmt.setString(1, music_id);
-			
-			rs = pstmt.executeQuery();
-			
-			if(rs.next()) {
-				
-				vo.setMusic_id(rs.getInt("music_id"));
-				vo.setMusic_pic(rs.getString("music_pic"));
-				vo.setMusic_mp3(rs.getString("music_mp3"));
-				vo.setMusic_title(rs.getString("music_title"));
-				vo.setMusic_contents(rs.getString("music_contents"));
-				vo.setMusic_likecnt(rs.getInt("music_likecnt"));
-				vo.setMusic_playcnt(rs.getInt("music_playcnt"));
-				vo.setUser_id(rs.getString("user_id"));
-			}
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			disconnect(rs, pstmt, con);
-		}
-		return vo;
-	}	
 
-	// 게시한 앨범을 삭제.
-	public int deleteMusic(int music_id) {
-		
-		connect();
-		
-		int result = 0;
-		
-		try {
-			// 앨범에 달린 댓글을 삭제
-			sql = "DELETE FROM comments WHERE album_id = ?";
-			
-			pstmt = con.prepareStatement(sql);
-			
-			pstmt.setInt(1, music_id);
-			
-			result = pstmt.executeUpdate();
-			
-			// 앨범을 삭제
-			sql = "DELETE FROM MUSIC_INFO WHERE music_id = ?";
-		
-			pstmt = con.prepareStatement(sql);
-			
-			pstmt.setInt(1, music_id);
-			
-			result = pstmt.executeUpdate();
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			disconnect(rs, pstmt, con);
-		}
-		
-		return result;
-	}	// 앨범을 삭제하는 메서드 end
-	
-	public void updateSequence(int music_id) {
+		} catch (
 
-		connect();
-		
-		try {
-			sql = "update music_info set music_id = music_id -1 where music_id > ?";
-			
-			pstmt = con.prepareStatement(sql);
-			
-			pstmt.setInt(1, music_id);
-			
-			pstmt.executeUpdate();
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			disconnect(rs, pstmt, con);
-		}
-	}	
-	
-	// 조회수 증가
-	public void musicPlayCnt(int music_id) {
-		
-		try {
-			connect();
-			
-			sql = "UPDATE music_info "
-					+ "SET music_playcnt = music_playcnt + 1 "
-					+ "where music_id = ?";
-			
-			pstmt = con.prepareStatement(sql);
-
-			pstmt.setInt(1, music_id);
-			
-			pstmt.executeUpdate();
-			
-		} catch (SQLException e) {
+		SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 			disconnect(rs, pstmt, con);
 		}
-	}	// 조회수 증가 메서드 end
-	
-	public int updateModifyMusic(MusicVO vo) {
-		
+
+		return list;
+
+	} // getPageingList() 메서드 end
+
+	// playlist에서 만들어진 list조회하는 메서드
+	public int getMyPlayList(String id, String name, int music_id) {
+
+		int reseult = 0;
+		int count = 0;
+		int user_count = 0;
 		connect();
-		
-		int result = 0;
-		
-		
+
 		try {
-			sql = "update music_info set music_contents = ?, music_likecnt = ?, music_playcnt = ?, music_title = ?, music_pic = ?, music_mp3 = ? WHERE music_id = ?";
-			
+			sql = "select * from myplaylist where user_id = ?";
 			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, id);
+			rs = pstmt.executeQuery();
+			count = rs.getInt(4) + 1;
+			user_count = rs.getInt(6) + 1;
 			
-			pstmt.setString(1, vo.getMusic_contents());
-			pstmt.setInt(2, vo.getMusic_likecnt());
-			pstmt.setInt(3, vo.getMusic_playcnt());
-			pstmt.setString(4, vo.getMusic_title());
-			pstmt.setString(5, vo.getMusic_pic());
-			pstmt.setString(6, vo.getMusic_mp3());
-			pstmt.setInt(7, vo.getMusic_id());
-			
-			result = pstmt.executeUpdate();
-			
-		} catch (SQLException e) {
+			if (rs.next()) {
+
+				sql = "insert into myplaylist values(null, ?, ?, ?, ?, ?)";
+				pstmt = con.prepareStatement(sql);
+
+				pstmt.setString(1, id);
+				pstmt.setInt(2, music_id);
+				pstmt.setInt(3, count);
+				pstmt.setString(4, name);
+				pstmt.setInt(5, user_count);
+				reseult = pstmt.executeUpdate();
+				
+				if (rs.next()) {
+
+				}
+				reseult = -1;
+
+			}
+
+			reseult = -2;
+
+		} catch (
+
+		SQLException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 			disconnect(rs, pstmt, con);
 		}
+
+		return reseult;
+
+	} // getMyPlayList() 메서드 end
+	
+	// id에 맞는 플레이리스트를 가져오는 메서드
+	public List<LikelistVO> getMyPlayListshow(String id) {
+
+		List<LikelistVO> list = new ArrayList<LikelistVO>();
+		LikelistVO vo = new LikelistVO();
+		connect();
 		
-		return result;
-	}	// 음악 수정 업데이트 메서드 end
+
+		try {
+			sql = "";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, id);
+			
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				vo = new LikelistVO();
+				
+
+				list.add(vo);
+
+			}
+
+		} catch (
+
+		SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			disconnect(rs, pstmt, con);
+		}
+
+		return list;
+
+	} // getMyPlayListshow() 메서드 end
 	
 	
+	// 삭제할때 playlist, user_id, user_count 를 비교
 
 }

@@ -6,13 +6,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.StringJoiner;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
-import com.mysql.cj.x.protobuf.MysqlxCursor.Open;
-
+import model.MusicVO;
 import model.UserVO;
 
 public class UserDAO {
@@ -124,16 +124,12 @@ public class UserDAO {
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
 				dbPwd = rs.getString("user_pwd");
-				// 아이디에 해당하는 값이 있을 때
 				if (dbPwd.equals(pwd)) {
-					// 비밀번호 일치
 					check = 1;
 				} else {
-					// 비밀번호 다름
 					check = 0;
 				}
 			} else {
-				// 아이디 없음
 				check = -1;
 			}
 		} catch (SQLException e) {
@@ -281,26 +277,6 @@ public class UserDAO {
 			disconnect(rs, pstmt, con);
 		}
 		return vo;
-	}
-	
-	
-	public String getProfile_pic_file(String id) {
-		String user_pic = "";
-		connect();
-		try {
-			sql = "select user_pic from user where user_id = ?";
-			pstmt = con.prepareStatement(sql);
-			pstmt.setString(1, id);
-			rs = pstmt.executeQuery();
-			if (rs.next()) {
-				user_pic = rs.getString("user_pic");
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			disconnect(rs, pstmt, con);
-		}
-		return user_pic;
 	}
 
 	public int checkNameToEmail(String name, String email) {
@@ -494,13 +470,9 @@ public class UserDAO {
 		int result = 0;
 
 		try {
-
 			sql = "DELETE FROM user WHERE user_id = ?";
-
 			pstmt = con.prepareStatement(sql);
-
 			pstmt.setString(1, user_id);
-
 			result = pstmt.executeUpdate();
 
 		} catch (SQLException e) {
@@ -512,31 +484,279 @@ public class UserDAO {
 
 	} // 유저 탈퇴 메서드 종료
 
-	public int checkEmailExist(String email) {
-		int result = 0;
+	// my_playlist작성
+	public List<MusicVO> contentLike(String id) {
+		List<MusicVO> list = new ArrayList<MusicVO>();
+		List<Integer> list2 = new ArrayList<Integer>();
 
-		connect();
+		MusicVO vo = new MusicVO();
 
 		try {
-			sql = "SELECT * FROM USER WHERE USER_EMAIL = ?";
+			connect();
 
+			sql = "select album_id from likes where user_id = ? and likes = 1";
 			pstmt = con.prepareStatement(sql);
-			pstmt.setString(1, email);
+			pstmt.setString(1, id);
 			rs = pstmt.executeQuery();
 
-			if (rs.next()) {
-				// 등록된 이메일인 경우
-				result = 1;
+			while (rs.next()) {
+				list2.add(rs.getInt(1));
+				System.out.println(list2);
 			}
 
-		} catch (Exception e) {
+			// IN 절에 사용할 배열값을 동적으로 생성합니다.
+			StringJoiner joiner = new StringJoiner(",", "(", ")");
+			for (int music_id : list2) {
+				joiner.add("?");
+			}
+
+			// SQL 쿼리에 매개변수를 지정합니다.
+			String sql = "select * from MUSIC_INFO where music_id in  " + joiner.toString();
+			pstmt = con.prepareStatement(sql);
+
+			// 배열값으로 대체할 매개변수의 인덱스를 지정합니다.
+			int parameterIndex = 1;
+
+			// 배열값으로 대체할 매개변수를 설정합니다.
+			for (int music_id : list2) {
+				pstmt.setInt(parameterIndex++, music_id);
+			}
+
+			// 쿼리 실행
+			rs = pstmt.executeQuery();
+
+			// 결과를 리스트로 저장
+			while (rs.next()) {
+				vo = new MusicVO();
+				vo.setMusic_id(rs.getInt("music_id"));
+				vo.setMusic_pic(rs.getString("music_pic"));
+				vo.setMusic_mp3(rs.getString("music_mp3"));
+				vo.setMusic_title(rs.getString("music_title"));
+				vo.setMusic_contents(rs.getString("music_contents"));
+				vo.setMusic_likecnt(rs.getInt("music_likecnt"));
+				vo.setMusic_playcnt(rs.getInt("music_playcnt"));
+				vo.setUser_id(rs.getString("user_id"));
+				list.add(vo);
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 			disconnect(rs, pstmt, con);
 		}
 
+		return list;
+	}
+
+	public MusicVO Music_pic(int id) {
+
+		MusicVO vo = new MusicVO();
+
+		try {
+			connect();
+
+			sql = "select music_pic from music_info where music_id = ?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, id);
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+				vo = new MusicVO();
+
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			disconnect(rs, pstmt, con);
+		}
+
+		return vo;
+	} // contentLike() 메서드 end
+
+	public int likecheckprocess(String id, int album) {
+		int result = -1;
+
+		try {
+			connect();
+
+			sql = "select likes from likes where user_id = ? and album_id = ?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, id);
+			pstmt.setInt(2, album);
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+
+				int likes = rs.getInt("likes"); // "likes" 열의 값을 가져옴
+
+				if (likes == 0) {
+					sql = "UPDATE likes SET likes = 1 WHERE user_id = ? AND album_id = ?";
+
+					pstmt = con.prepareStatement(sql);
+					pstmt.setString(1, id);
+					pstmt.setInt(2, album);
+					pstmt.executeUpdate();
+					result = 1;
+				} else if (likes == 1) {
+					// 만약 id랑 음악id가 같을 때 likes가 0이라면
+					sql = "UPDATE likes SET likes = 0 WHERE user_id = ? AND album_id = ?";
+
+					pstmt = con.prepareStatement(sql);
+					pstmt.setString(1, id);
+					pstmt.setInt(2, album);
+					pstmt.executeUpdate();
+					result = 0;
+
+				} else {
+
+				}
+			} else {
+				// 만약 처음 넣는 곡일 경우 좋와요를 1 넣어 준다.
+				sql = "insert into likes values(null, ?, ?, 1, CURRENT_TIMESTAMP)"; // where id = ?
+				pstmt = con.prepareStatement(sql);
+				pstmt.setInt(1, album);
+				pstmt.setString(2, id);
+				pstmt.executeUpdate();
+				result = 2;
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			disconnect(rs, pstmt, con);
+		}
 		return result;
 
-	}
+	} // likecheckprocess() 메서드 end
+		// page 테이블의 전체 게시물의 수를 확인하는 메서드.
+
+	public int getPageingCount(String id) {
+
+		int count = 0;
+
+		try {
+			connect();
+
+			sql = "select count(music_id) from myplaylist where user_id = ?"; 
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, id);
+
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+				count = rs.getInt(1);
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			disconnect(rs, pstmt, con);
+		}
+
+		return count;
+	} // getPageingCount() 메서드 end
+
+	// board 테이블에서 현재 페이지에 해당하는 게시물을 조회하는 메서드
+	public List<MusicVO> getPageingList(int page, int rowsize, String id) {
+
+		List<MusicVO> list = new ArrayList<MusicVO>();
+
+		int startNo = (page * rowsize) - (rowsize - 1);
+		int endNo = (page * rowsize);
+
+		try {
+			connect();
+
+			List<Integer> list2 = new ArrayList<Integer>();
+
+			MusicVO vo = new MusicVO();
+
+			sql = "select music_id from myplaylist where user_id = ?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, id);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				list2.add(rs.getInt(1));
+				System.out.println(list2);
+			}
+
+			// IN 절에 사용할 배열값을 동적으로 생성합니다.
+			StringJoiner joiner = new StringJoiner(",", "(", ")");
+			for (int music_id : list2) {
+				joiner.add("?");
+			}
+
+			// SQL 쿼리에 매개변수를 지정합니다.
+			String sql = "select * from MUSIC_INFO where music_id in  " + joiner.toString();
+			pstmt = con.prepareStatement(sql);
+
+			// 배열값으로 대체할 매개변수의 인덱스를 지정합니다.
+			int parameterIndex = 1;
+
+			// 배열값으로 대체할 매개변수를 설정합니다.
+			for (int music_id : list2) {
+				pstmt.setInt(parameterIndex++, music_id);
+			}
+
+			// 쿼리 실행
+			rs = pstmt.executeQuery();
+
+			// 결과를 리스트로 저장
+			while (rs.next()) {
+				vo = new MusicVO();
+				vo.setMusic_id(rs.getInt("music_id"));
+				vo.setMusic_pic(rs.getString("music_pic"));
+				vo.setMusic_mp3(rs.getString("music_mp3"));
+				vo.setMusic_title(rs.getString("music_title"));
+				vo.setMusic_contents(rs.getString("music_contents"));
+				vo.setMusic_likecnt(rs.getInt("music_likecnt"));
+				vo.setMusic_playcnt(rs.getInt("music_playcnt"));
+				vo.setUser_id(rs.getString("user_id"));
+				list.add(vo);
+			}
+		} catch (
+
+		SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			disconnect(rs, pstmt, con);
+		}
+
+		return list;
+
+	} // getPageingList() 메서드 end
+
+	public void checkduplication(String id) {
+		try {
+			connect();
+			sql = "SELECT music_id, COUNT(music_id) FROM myplaylist where user_id = 'po' GROUP BY music_id"
+					+ " HAVING COUNT(music_id) > 1";
+			pstmt = con.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				sql = "DELETE a FROM myplaylist a, myplaylist b WHERE a.playlist > b.playlist AND a.music_id = b.music_id";
+				pstmt = con.prepareStatement(sql);
+				pstmt.executeUpdate();
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			disconnect(rs, pstmt, con);
+		}
+
+
+	} // checkduplication() 메서드end
+	
+	
+	
+	
 
 }

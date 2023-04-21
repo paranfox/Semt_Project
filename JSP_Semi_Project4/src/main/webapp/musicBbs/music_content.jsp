@@ -8,7 +8,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
 <head>
 <meta charset="UTF-8">
-<title>ALBUM 상세페이지</title>
+<title>Insert title here</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script type="text/javascript">
 const audioPlayer = document.querySelector("#audioPlayer");
@@ -100,15 +100,6 @@ document.addEventListener("DOMContentLoaded", function () {
 </style>
 </head>
 <body>
-
-	
-	<jsp:include page="../test_main_top.jsp" />
-
-	<div class="main_con"></div>
-	
-
-
-
    <c:set value="${sessionId }" var="sessionId" />
    <div class="container mt-5">
      <div class="text-center">
@@ -143,9 +134,6 @@ document.addEventListener("DOMContentLoaded", function () {
          <tr>
             <th>Play Album</th>
             <c:if test="${!empty vo.getMusic_mp3() }">
-               <td><a
-                  href="<%=request.getContextPath()%>/fileUpload/${vo.getMusic_mp3() }"
-                  download="${vo.getMusic_mp3() }">다운로드</a></td>
                <td><button class="playMusicBtn btn btn-primary"
   				  	 	   data-mp3="<%=request.getContextPath() %>/fileUpload/${vo.getMusic_mp3() }"
   						   data-album-title="${vo.getMusic_title() }"
@@ -170,8 +158,8 @@ document.addEventListener("DOMContentLoaded", function () {
       
        <c:if test="${!empty sessionId }">
          <div class="d-grid gap-2 d-md-flex justify-content-md-center">
-            <input class="btn btn-primary" type="button" value="글수정" onclick="location.href='upload_modify.do?uno=${vo.getMusic_id() }'">
-            <input class="btn btn-danger" type="button" value="글삭제" onclick="if(confirm('게시글을 정말 삭제하시겠습니까?')) { location.href='upload_delete.do?id=${vo.getMusic_id() }' }else { return; }">
+            <input class="btn btn-primary" type="button" value="글수정" onclick="location.href='upload_modify.do?uno=${dto.getUpload_no() }'">
+            <input class="btn btn-danger" type="button" value="글삭제" onclick="if(confirm('게시글을 정말 삭제하시겠습니까?')) { location.href='upload_delete.do?id=${vo.getUser_id() }' }else { return; }">
            <input class="btn btn-info" type="button" value="전체목록" onclick="location.href='user_music_list.do'">
         </div>
         </c:if>

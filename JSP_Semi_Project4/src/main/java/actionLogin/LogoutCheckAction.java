@@ -17,8 +17,8 @@ public class LogoutCheckAction implements Action {
 		HttpSession session = request.getSession();
 		session.invalidate();
 		PrintWriter out = response.getWriter();
-		forward.setRedirect(true);
-		forward.setPath("main.do");
+		forward.setRedirect(false);
+		forward.setPath("main.jsp");
 		return forward;
 	}
 }

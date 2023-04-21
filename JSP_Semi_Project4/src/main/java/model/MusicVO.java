@@ -9,8 +9,27 @@ public class MusicVO {
 	String music_contents;
 	int music_likecnt;
 	int music_playcnt;
-	String user_nickname;
 	String user_id;
+	int music_lank;
+	String music_genre;
+	
+	
+	
+	public String getMusic_genre() {
+		return music_genre;
+	}
+
+	public void setMusic_genre(String music_genre) {
+		this.music_genre = music_genre;
+	}
+
+	public int getMusic_lank() {
+		return music_lank;
+	}
+
+	public void setMusic_lank(int music_lank) {
+		this.music_lank = music_lank;
+	}
 
 	public int getMusic_id() {
 		return music_id;
@@ -19,6 +38,18 @@ public class MusicVO {
 	public void setMusic_id(int music_id) {
 		this.music_id = music_id;
 	}
+
+
+
+	public String getUser_id() {
+		return user_id;
+	}
+
+	public void setUser_id(String user_id) {
+		this.user_id = user_id;
+	}
+
+
 
 	public String getMusic_pic() {
 		return music_pic;
@@ -66,22 +97,6 @@ public class MusicVO {
 
 	public void setMusic_playcnt(int music_playcnt) {
 		this.music_playcnt = music_playcnt;
-	}
-
-	public String getUser_nickname() {
-		return user_nickname;
-	}
-
-	public void setUser_nickname(String user_nickname) {
-		this.user_nickname = user_nickname;
-	}
-
-	public String getUser_id() {
-		return user_id;
-	}
-
-	public void setUser_id(String user_id) {
-		this.user_id = user_id;
 	}
 
 }

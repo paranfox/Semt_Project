@@ -19,12 +19,6 @@ td {
 </style>
 </head>
 <body>
-
-
-	<jsp:include page="../test_main_top.jsp" />
-
-	<div class="main_con"></div>
-	
 	<div class="container mt-5">
 		<div class="text-center">
 			<hr class="w-75 bg-danger" align="center">
@@ -65,7 +59,7 @@ td {
 									href="<%=request.getContextPath() %>/admin_product_modify.do?pnum=${dto.getPnum() }">수
 										정</a> &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp; <a
 									href="<%=request.getContextPath() %>/admin_product_delete.do?pnum=${dto.getPnum() }">삭
-										제</a> <a href="<%=request.getContextPath()%>/main.do">삭 제</a></td>
+										제</a> <a href="<%=request.getContextPath()%>/main.jsp">삭 제</a></td>
 							</tr>
 						</c:forEach>
 

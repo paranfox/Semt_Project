@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%   
+     session.setMaxInactiveInterval(18000);                                                
+%>
 
 <!DOCTYPE html>
 
@@ -20,19 +23,12 @@
 </head>
 
 <body>
-<<<<<<< HEAD
-	<jsp:include page="test_main_top.jsp"/>
-=======
 
 	<header id="top">
 		<div class="top">
 			<ul>
 				<li class="home"><a href="http://www._____.com">4운드 클라우드</a></li>
 				<li class="feed"><a href="http://www._____.com/About">feed</a></li>
-				
-				<li class="best"><a href="best_like_list.do">Like</a></li>
-				
-				
 
 				<li class="search"><a href="http://www._____.com/Project">
 						<input class="search-txt" type="text" placeholder=" 검색어를 입력해 주세요">&nbsp;
@@ -60,6 +56,9 @@
 									업로드한 파일</a></li>
 							<li><a href="<%=request.getContextPath()%>/like_list.do">좋아요<br>플레이리스트
 							</a></li>
+							<li><a href="<%=request.getContextPath()%>/user_myplaylistok.do">MY<br>플레이리스트
+							</a></li>
+							
 						</c:if>
 
 						<c:if test="${empty vo }">
@@ -79,7 +78,6 @@
 			</ul>
 		</div>
 	</header>
->>>>>>> branch 'master' of https://github.com/eownrrnf/semi_project.git
 
 	<br>
 	<br>
@@ -92,11 +90,11 @@
 
 
 		<div class="mySlides fade">
-			<a href="http://www._____.com/slideshow-container">
+			
 				<div class="genre">발라드</div>
 				<div class="singer">가수</div> <img class="imgs" src="img/img2.png">
 				<img class="pic" src="img/pic_1.png">
-			</a>
+			
 		</div>
 
 		<div class="mySlides fade">
@@ -137,7 +135,7 @@
 	<br>
 	<br>
 
-
+<a href="<%=request.getContextPath() %>/music_list.do">음악 리스트 로 가는 버튼</a>
 
 </body>
 

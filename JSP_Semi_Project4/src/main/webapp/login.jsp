@@ -30,9 +30,6 @@
 <link rel="stylesheet" href="login.css">
 </head>
 <body>
-
-	<jsp:include page="test_main_top.jsp"/>
-
 	<h3>로그인 화면</h3>
 
 
