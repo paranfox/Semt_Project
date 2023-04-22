@@ -56,7 +56,7 @@
 									업로드한 파일</a></li>
 							<li><a href="<%=request.getContextPath()%>/like_list.do">좋아요<br>플레이리스트
 							</a></li>
-							<li><a href="<%=request.getContextPath()%>/user_myplaylistok.do">MY<br>플레이리스트
+							<li><a href="<%=request.getContextPath()%>/user_myplaylist_show.do">MY<br>플레이리스트
 							</a></li>
 							
 						</c:if>
@@ -135,7 +135,7 @@
 	<br>
 	<br>
 
-<a href="<%=request.getContextPath() %>/music_list.do">음악 리스트 로 가는 버튼</a>
+
 
 </body>
 

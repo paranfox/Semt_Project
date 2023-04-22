@@ -22,7 +22,6 @@ public class MyPlayListAction implements Action {
 		ActionForward forward = new ActionForward();
 		HttpSession session = request.getSession();
 		String user_id = (String) session.getAttribute("sessionId");
-		PrintWriter out = response.getWriter();
 
 		UserDAO dao = UserDAO.getInstance();
 

@@ -8,6 +8,8 @@ public class LikelistVO {
 	int music_id;
 	int playlist;
 	String playlist_name;
+	
+	
 	public int getPlaylist_id() {
 		return playlist_id;
 	}

@@ -40,7 +40,7 @@ td {
 						<th>수정 / 삭제</th>
 					</tr>
 				</thead>
-				<tbody>
+				
 					<c:set var="list" value="${myMusicList }" />
 					<c:if test="${!empty list }">
 						<c:forEach items="${list }" var="vo">
@@ -72,7 +72,7 @@ td {
 							</td>
 						</tr>
 					</c:if>
-				</tbody>
+				
 			</table>
 		</div>
 	</div>

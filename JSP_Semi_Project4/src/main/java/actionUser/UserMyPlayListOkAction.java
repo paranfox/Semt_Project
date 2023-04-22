@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import action.Action;
 import action.ActionForward;
@@ -19,10 +20,11 @@ public class UserMyPlayListOkAction implements Action {
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		// 플레이 리스트를 보여주는 비지니스 로직
 		// 단 만들어진 플레이리스트만 보여주고 없으면 안보여 준다 
-		
-		String user_id = request.getParameter("id");
+		HttpSession session = request.getSession();
+		String user_id = (String)session.getAttribute("sessionId");
 		String list_name = request.getParameter("my_play_listname");
 		int music_id = Integer.getInteger(request.getParameter("music_id"));
+		System.out.println("music_id >>>> "+music_id);
 		
 		MusicDAO dao = MusicDAO.getInstance();
 		int check = dao.getMyPlayList(user_id, list_name, music_id);

@@ -480,14 +480,13 @@ public class MusicDAO {
 	
 	// id에 맞는 플레이리스트를 가져오는 메서드
 	public List<LikelistVO> getMyPlayListshow(String id) {
-
 		List<LikelistVO> list = new ArrayList<LikelistVO>();
 		LikelistVO vo = new LikelistVO();
 		connect();
 		
 
 		try {
-			sql = "";
+			sql = "select * from myplaylist where user_id = ?";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, id);
 			
@@ -495,6 +494,12 @@ public class MusicDAO {
 
 			while (rs.next()) {
 				vo = new LikelistVO();
+				
+				vo.setPlaylist_id(rs.getInt("playlist_id"));
+				vo.setUser_id(rs.getString("user_id"));
+				vo.setMusic_id(rs.getInt("music_id"));
+				vo.setPlaylist(rs.getInt("playlist"));
+				vo.setPlaylist_name(rs.getString("playlist_name"));
 				
 
 				list.add(vo);
