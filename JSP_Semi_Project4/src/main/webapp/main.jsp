@@ -135,7 +135,7 @@
 	<br>
 	<br>
 
-
+<%-- <a href="<%=request.getContextPath() %>/music_list.do">음악 리스트 로 가는 버튼 아직미완성</a> --%>
 
 </body>
 
