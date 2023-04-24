@@ -7,29 +7,30 @@ import javax.servlet.http.HttpServletResponse;
 
 import action.Action;
 import action.ActionForward;
-import java.util.*;
-import persistence.*;
-import model.*;
+import model.MusicVO;
+import persistence.MusicDAO;
 
-public class MyMusicListAction implements Action {
+public class MusicContAction implements Action {
 
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
-
-		String user_id = request.getParameter("id");
+		
+		// 앨범 수정 
+		int music_id = Integer.parseInt(request.getParameter("uno"));
+		
 		MusicDAO dao = MusicDAO.getInstance();
-		List<MusicVO> list = dao.getMyMusicList(user_id);
-
-		request.setAttribute("myMusicList", list);
-
+				
+		MusicVO vo = dao.musicModify(music_id);
+		
+		request.setAttribute("musicCont", vo);
+		
 		ActionForward forward = new ActionForward();
-
+		
 		forward.setRedirect(false);
-
-		forward.setPath("/mypage/myMusic_List.jsp");
-
+		
+		forward.setPath("musicBbs/music_content.jsp");
+		
 		return forward;
-
 	}
 
 }

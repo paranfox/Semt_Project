@@ -33,7 +33,7 @@
 				<div class="file">
 					<table class="table">
 						<tr>
-							<td>음원 파일</td>
+							<td>앨범 사진</td>
 							<td><label for="file">음원 파일</label> <input id="file"
 								type="file" class="form-control-file" name="music_mp3"></td>
 						</tr>
@@ -55,28 +55,6 @@
 							<td>음원 제목</td>
 							<td><input type="text" name="music_title"
 								class="form-control"></td>
-						</tr>
-
-						<tr>
-							<td>음원 장르</td>
-							<td><select name="genre">
-									<option value="classic">클래식</option>
-									<option value="jazz">재즈</option>
-									<option value="ccm">CCM</option>
-									<option value="pop">POP</option>
-									<option value="ballad">발라드</option>
-									<option value="blues">블루스</option>
-									<option value="rand_d">(R&D)</option>
-									<option value="hip_hop">힙합</option>
-									<option value="country">컨트리뮤직</option>
-									<option value="folk">포크뮤직</option>
-									<option value="reggae">레게</option>
-									<option value="disco">디스코</option>
-									<option value="writer">ROOK</option>
-									<option value="electronic">전자음악</option>
-									<option value="trot">트로트</option>
-									<option value="dance">댄스음악</option>
-							</select></td>
 						</tr>
 
 						<tr>

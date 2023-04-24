@@ -10,27 +10,16 @@ public class MusicVO {
 	int music_likecnt;
 	int music_playcnt;
 	String user_id;
-	int music_lank;
-	String music_genre;
+	String user_nickname;
 	
 	
-	
-	public String getMusic_genre() {
-		return music_genre;
+	public String getUser_nickname() {
+		return user_nickname;
 	}
 
-	public void setMusic_genre(String music_genre) {
-		this.music_genre = music_genre;
+	public void setUser_nickname(String user_nickname) {
+		this.user_nickname = user_nickname;
 	}
-
-	public int getMusic_lank() {
-		return music_lank;
-	}
-
-	public void setMusic_lank(int music_lank) {
-		this.music_lank = music_lank;
-	}
-
 	public int getMusic_id() {
 		return music_id;
 	}

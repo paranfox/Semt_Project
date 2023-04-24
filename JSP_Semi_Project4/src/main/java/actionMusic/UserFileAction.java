@@ -40,8 +40,8 @@ public class UserFileAction implements Action {
 		// 시스템안에있는 환경변수중에서 USERPROFILE를 따옵니다. 그게 보통 C:\Users\KangChan 이렇게 나오는데 앞에 3개를 없애요.
 		// 그러면 Users\Kangchan이 나오겠죠.(미리 프로퍼티스에 저장해둬요 절대경로를) 거기에 폴더 경로(현재는 join)를 붙여줍니다.
 		// 프로퍼티스의 절대경로는 실제 프로젝트의 경로를 넣어줍니다.
-		String saveFolder = prop.getProperty(System.getenv("USERPROFILE").substring(3));
-		// String saveFolder = "C:\\Users\\user\\eclipse-workspace\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp2\\wtpwebapps\\JSP_Semi_Project4\\fileUpload";
+		// String saveFolder = prop.getProperty(System.getenv("USERPROFILE").substring(3));
+		String saveFolder = "C:\\Users\\user\\eclipse-workspace\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp2\\wtpwebapps\\JSP_Semi_Project4\\fileUpload";
 		// 2. 첨부 파일 크기 지정.
 		int fileSize = 100 * 1024 * 1024; // 100MB
 
@@ -60,15 +60,13 @@ public class UserFileAction implements Action {
 		String music_title = multi.getParameter("music_title");
 		String music_contents = multi.getParameter("music_contents");
 		String music_mp3 = multi.getFilesystemName("music_mp3");
-		String music_genre = multi.getParameter("genre");
 		
 		vo.setMusic_mp3(music_mp3);
 		vo.setMusic_pic(music_pic);
 		vo.setUser_id(user_id);
 		vo.setMusic_title(music_title);
 		vo.setMusic_contents(music_contents);
-		vo.setMusic_genre(music_genre);
-		
+
 		MusicDAO dao = MusicDAO.getInstance();
 		int check = dao.insertFile(vo);
 

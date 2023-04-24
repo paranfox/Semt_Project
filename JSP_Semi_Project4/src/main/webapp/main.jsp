@@ -1,80 +1,74 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%   
-     session.setMaxInactiveInterval(18000);                                                
-%>
-
 <!DOCTYPE html>
-
 <html>
-
 <head>
-
 <meta charset="UTF-8">
-
-<title>main</title>
-
+<title>4undCLOUD</title>
 <link rel="stylesheet" href="css/main.css">
-
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
-
 <body>
+<%-- 	<jsp:include page="test_main_top.jsp"/> --%>
 
 	<header id="top">
 		<div class="top">
 			<ul>
-				<li class="home"><a href="http://www._____.com">4운드 클라우드</a></li>
-				<li class="feed"><a href="http://www._____.com/About">feed</a></li>
+				<li class="home"><a href="main.jsp">4undCLOUD</a></li>
+				<li class="feed"><a href="http://www._____.com/About">FEED</a></li>
+				<li class="library"><a href="best_like_list.do">LIBRARY</a></li>
 
-				<li class="search"><a href="http://www._____.com/Project">
-						<input class="search-txt" type="text" placeholder=" 검색어를 입력해 주세요">&nbsp;
-						<button class="search-btn" type="submit">검색</button>
-				</a></li>
-				<li class="pay"><a href="http://www._____.com/Travel">이용권</a></li>
-				<li class="upload"><a href="musicBbs/uploadsample.jsp">UPLOAD</a></li>
-				<li class="profile_top">
-					<ul class="profile_inner">
-
-						<%-- 로그인되었을 때 --%>
-						<c:set value="${user }" var="list" />
-						<c:set value="${sessionUserVO }" var="vo" />
-
-						<c:if test="${!empty vo }">
-							<a>${vo.getUser_nickname() }님 환영합니다</a>
-							<li><a href="<%=request.getContextPath()%>/logout_check.do">로그아웃</a></li>
-							<li><a
-								href="<%=request.getContextPath()%>/my_page.do?num=${vo.getUser_id() }">마이페이지</a></li>
-							<li><a href="musicBbs/uploadsample.jsp">앨범 등록</a></li>
-							<li><a
-								href="<%=request.getContextPath()%>/user_music_list.do">앨범리스트</a></li>
-							<li><a
-								href="<%=request.getContextPath()%>/my_music_list.do?id=${vo.getUser_id() }">내가
-									업로드한 파일</a></li>
-							<li><a href="<%=request.getContextPath()%>/like_list.do">좋아요<br>플레이리스트
-							</a></li>
-							<li><a href="<%=request.getContextPath()%>/user_myplaylist_show.do">MY<br>플레이리스트
-							</a></li>
-							
-						</c:if>
-
-						<c:if test="${empty vo }">
-							<%-- 로그인되지 않았을 때 --%>
-							<a>프로필</a>
-							<li><a href="login/login.jsp">로그인</a></li>
-							<li><a href="register/RegisterChoice.jsp">회원가입</a></li>
-							<li><a href="http://www._____.com/LIkeList">좋아요<br>플레이리스트
-							</a></li>
-							<li><a href="http://www._____.com/HateList">싫어요<br>플레이리스트
-							</a></li>
-							<li><a
-								href="<%=request.getContextPath()%>/user_music_list.do">앨범리스트</a></li>
-						</c:if>
-					</ul>
+				<li class="search_top">
+					<form class="search"
+						action="<%=request.getContextPath()%>/search.do" method="post">
+						<select name="find">
+							<option value="All">전체</option>
+							<option value="name">닉네임</option>
+							<option value="title">앨범명</option>
+							<option value="content">내용</option>
+						</select> <input class="search-txt" type="text" name="keyword" placeholder="검색어를 입력해 주세요">
+						<button class="search-btn" type="submit">&#128269;</button>
+					</form>
 				</li>
+
+				<c:set value="${user }" var="list" />
+				<c:set value="${sessionUserVO }" var="vo" />
+
+				<%-- 로그인되지 않았을 때 --%>
+				<c:if test="${empty vo }">
+					<li class="login"><a href="login/login.jsp">LOGIN</a></li>
+					<li class="account"><a>CREATE ACCOUNT</a></li>
+					<li class="upload"><a href="musicBbs/uploadsample.jsp">UPLOAD</a></li>
+				</c:if>
+
+				<%-- 로그인되었을 때 --%>
+				<c:if test="${!empty vo }">
+					<li class="upload"><a href="musicBbs/uploadsample.jsp">UPLOAD</a></li>
+					
+					
+					<iframe id="contentIframe" frameborder="0" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 100;"></iframe>
+					<li class="nickname">
+						<a>${vo.getUser_nickname() }님 환영합니다</a>
+						<ul class="profile_inner_1">
+							<li><a href="musicBbs/uploadsample.jsp">PROFILE</a></li>
+							<li><a href="<%=request.getContextPath()%>/user_music_list.do">LIKES</a></li>
+							<li><a href="<%=request.getContextPath()%>/my_music_list.do?id=${vo.getUser_id() }">FOLLOWING</a></li>
+							<li><a href="<%=request.getContextPath()%>/like_list.do">WHO TO FOLLOWS</a></li>
+							<li><a href="#" class="goToContentBtn" onclick="loadIframe(this);">SHOW ALL ALBUM</a></li>
+							<%-- <li><a href="<%=request.getContextPath()%>/user_myplaylist_show.do">MY<br>플레이리스트</a></li> --%>
+							<li><a href="#" class="goToContentBtn" onclick="loadMframe(this);">MY<br>PLAY LIST</a></li>
+						</ul>
+					</li>
+					<li class="settings">
+					  <a class="settings-link" href="#"><ion-icon class="settings-outline" name="settings-outline"></ion-icon></a>
+					  <ul class="profile_inner_2">
+					    <li><a href="<%=request.getContextPath()%>/my_page.do?num=${vo.getUser_id() }">마이페이지</a></li>
+					    <li><a href="<%=request.getContextPath()%>/logout_check.do">로그아웃</a></li>
+					  </ul>
+					</li> 
+				</c:if>
 			</ul>
 		</div>
 	</header>
@@ -90,11 +84,11 @@
 
 
 		<div class="mySlides fade">
-			
+			<a href="http://www._____.com/slideshow-container">
 				<div class="genre">발라드</div>
 				<div class="singer">가수</div> <img class="imgs" src="img/img2.png">
 				<img class="pic" src="img/pic_1.png">
-			
+			</a>
 		</div>
 
 		<div class="mySlides fade">
@@ -134,9 +128,12 @@
 	<br>
 	<br>
 	<br>
+	
+	
 
-<%-- <a href="<%=request.getContextPath() %>/music_list.do">음악 리스트 로 가는 버튼 아직미완성</a> --%>
 
+<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </body>
 
 <script type="text/javascript">
@@ -191,21 +188,24 @@
 		});
 	}
 
-	// 추가: 음악 상세 페이지를 AJAX로 불러오는 함수입니다.
-	function loadMusicDetails(musicId) {
-		$.ajax({
-			url : "music_details.jsp",
-			type : "GET",
-			data : {
-				id : musicId
-			},
-			success : function(data) {
-				$("#content").html(data);
-			},
-			error : function(xhr, status, error) {
-				console.error("Error loading music details:", error);
+	   function loadIframe(link) {
+	       const iframe = document.getElementById("contentIframe");
+	       if (iframe.style.visibility === "hidden") {
+	           iframe.style.visibility = "visible";
+	       } else {
+	           iframe.src = "<%=request.getContextPath()%>/user_music_list.do";
+				iframe.style.display = "block";
 			}
-		});
-	}
+		}
+	   
+	   function loadMframe(link) {
+	       const iframe = document.getElementById("contentIframe");
+	       if (iframe.style.visibility === "hidden") {
+	           iframe.style.visibility = "visible";
+	       } else {
+	           iframe.src = "<%=request.getContextPath()%>/user_myplaylist_show.do";
+				iframe.style.display = "block";
+			}
+		}
 </script>
 </html>

@@ -21,13 +21,11 @@ public class UserMyPlayListShowAction implements Action {
 		HttpSession session = request.getSession();
 		ActionForward forward = new ActionForward();
 		String user_id = (String) session.getAttribute("sessionId");
-		
-		
+
 		MusicDAO dao = MusicDAO.getInstance();
 		List<LikelistVO> list = dao.getMyPlayListshow(user_id);
-		System.out.println("list >>>> "+list);
+		System.out.println("list >>>> " + list);
 		request.setAttribute("myPlayList", list);
-		
 
 		forward.setRedirect(false);
 

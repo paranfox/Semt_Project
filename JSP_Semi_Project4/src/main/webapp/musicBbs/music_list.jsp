@@ -13,7 +13,7 @@
 <script
 	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>앨범 List</title>
 <!-- Add Bootstrap CSS -->
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
@@ -30,15 +30,20 @@ td {
 	right: 0;
 }
 
-.pagination {
-	justify-content: center;
-}
-#home {
-	color: black;
-	text-decoration: none;
-	
+#contentContainer {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	z-index: 100;
+	background-color: rgba(255, 255, 255, 1);
+	overflow-y: auto;
+	display: none;
 }
 </style>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 <body>
 	<div class="container mt-5">
@@ -46,10 +51,8 @@ td {
 			<hr width="100%" color="tomato" align="center">
 			<h3>Album List</h3>
 			<hr width="100%" color="tomato" align="center">
-			
-			<a href="main.jsp" id="home">HOME</a>
-			<br>
-
+			<br> <input class="btn btn-info" type="button" value="메인 메뉴"
+				id="closeIframeBtn">
 			<!-- Add Bootstrap table classes -->
 			<table class="table table-bordered table-striped w-75 mx-auto">
 				<thead class="bg-warning">
@@ -61,11 +64,9 @@ td {
 						<th>좋아요</th>
 						<th>재생수</th>
 						<th>상제 정보 들어가기</th>
-						<th>수정 / 삭제</th>
 					</tr>
 				</thead>
 				<tbody>
-
 					<c:set var="list" value="${musicList }" />
 					<c:if test="${!empty list }">
 						<c:forEach items="${list }" var="vo">
@@ -76,17 +77,14 @@ td {
 									data-mp3="<%=request.getContextPath() %>/fileUpload/${vo.getMusic_mp3() }"
 									data-album-title="${vo.getMusic_title() }"
 									data-image="<%=request.getContextPath() %>/fileUpload/${vo.getMusic_pic() }"
-									width="60" height="60" class="album-image rounded-circle"></td>
+									width="60" height="60" class="album-image rounded-circle"
+									onclick="pauseContentAudioPlayer();"></td>
 								<td>${vo.getMusic_mp3() }</td>
 								<td>${vo.getMusic_contents() }</td>
 								<td>${vo.getMusic_likecnt() }</td>
 								<td>${vo.getMusic_playcnt() }</td>
-								<td><a
-									href="<%=request.getContextPath() %>/user_music_content.do?id=${vo.getMusic_id() }">들어가기</a></td>
-								<td><a
-									href="<%=request.getContextPath() %>/admin_product_modify.do?pnum=${dto.getPnum() }&page=${page }">수
-										정</a> &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp; <a href="#"
-									class="goToContentBtn" data-album-id="${vo.getMusic_id()}">들어가기</a></td>
+								<td><a href="#" class="goToContentBtn"
+									data-album-id="${vo.getMusic_id()}" onclick="loadIframe(this);">들어가기</a></td>
 							</tr>
 						</c:forEach>
 					</c:if>
@@ -102,50 +100,17 @@ td {
 		</div>
 	</div>
 
-	<%-- 페이징 처리 하나 만들어 놓고 연속으로 써먹기 --%>
+	<div class="music-player-container">
 
-	<nav>
-		<ul class="pagination">
-			<li class="page-item">
-				<!-- 처음 페이지로 이동 --> <a class="page-link" href="user_music_list.do?page=1">First</a>
-			</li>
-			<li>
-				<!-- 현재 페이지의 이전 페이지로 이동 --> <a class="page-link"
-				href="user_music_list.do?page=${page - 1 }">Previous</a>
-			</li>
-			<!-- 부트 스트랩 사용 -->
-			<c:forEach begin="${startBlock }" end="${endBlock }" var="i">
-				<c:if test="${i == page }">
-					<li class="page-item active" aria-current="page"><a
-						class="page-link" href="user_music_list.do?page=${i }">${i }</a></li>
+		<jsp:include page="../mp3Player.jsp" />
 
-				</c:if>
-				<c:if test="${i != page }">
-					<li class="page-item"><a class="page-link"
-						href="user_music_list.do?page=${i }">${i }</a></li>
-
-				</c:if>
-			</c:forEach>
-			<!-- 페이지가 5이상인 경우 6이상은 사라지게 만듬. -->
-			<c:if test="${endBlock < allPage }">
-				<li class="page-item"><a class="page-link"
-					href="user_music_list.do?page=${page + 1 }">Next</a></li>
-				<li class="page-item"><a class="page-link"
-					href="user_music_list.do?page=${allPage }">End</a></li>
-
-			</c:if>
-		</ul>
-
-	</nav>
-
-
-
-
-
-
+	</div>
+	<iframe id="contentIframe" frameborder="0"
+		style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 100;"></iframe>
 	<script>
+   
     const audioPlayer = document.querySelector("#audioPlayer");
-
+   
     document.querySelectorAll(".album-image").forEach((img) => {
         img.addEventListener("click", (event) => {
             const mp3Path = event.target.dataset.mp3;
@@ -157,37 +122,128 @@ td {
 
             document.getElementById("albumTitle").textContent = albumTitle;
             document.getElementById("albumImage").src = albumImage;
+        
+            $.ajax({
+            	type : "POST",
+            	url : "save_played_music.do",
+            	data: {
+        			user_id : '${sessionScope.sessionId}',
+        			music_id : event.target.parentElement.parentElement.querySelector(".goToContentBtn").dataset.albumId
+            	},
+            	success: function(response) {
+        			console.log("재생 정보 저장 성공");
+            	},
+            	error : function(xhr, status, error) {
+            		console.error("재생 정보 저장 실패: " + error);
+            	}
+            });
+        
         });
     });
     
-
-    document.querySelectorAll(".goToContentBtn").forEach((btn) => {
-      btn.addEventListener("click", function (event) {
-        event.preventDefault();
-
+    function loadIframe(link) {
+        const albumId = link.getAttribute("data-album-id");
+        const iframe = document.getElementById("contentIframe");
+        iframe.src = "<%=request.getContextPath()%>/user_music_content.do?id=" + albumId;
+        iframe.style.display = "block";
+      }
       
-        const selectedAlbumId = event.target.dataset.albumId;
+    function pauseContentAudioPlayer() {
+        const contentIframe = window.parent.document.getElementById("contentIframe");
+        if (contentIframe) {
+            const contentAudioPlayer = contentIframe.contentWindow.document.getElementById("audioPlayer");
+            if (contentAudioPlayer) {
+                contentAudioPlayer.pause();
+            }
+        }
+    }
+    
+    function playNextTrack() {
+        const audioPlayer = document.querySelector("#audioPlayer");
+        const albumImages = document.querySelectorAll(".album-image");
+        let currentIndex = -1;
 
-
-        $.ajax({
-          url: "<%=request.getContextPath()%>/user_music_content.do",
-          type: "GET",
-          data: { id: selectedAlbumId },
-          success: function (data) {
-
-            document.querySelector(".container").innerHTML = data;
-          },
-          error: function (error) {
-            console.error("Error fetching music content:", error);
-          },
+        albumImages.forEach((img, index) => {
+            const currentMP3Path = new URL(img.dataset.mp3, document.baseURI).href;
+            if (currentMP3Path === new URL(audioPlayer.querySelector("source").src, document.baseURI).href) {
+                currentIndex = index;
+            }
         });
-      });
+
+        if (currentIndex !== -1) {
+            const nextIndex = (currentIndex + 1) % albumImages.length;
+            const nextImage = albumImages[nextIndex];
+
+            const mp3Path = nextImage.dataset.mp3;
+            const albumTitle = nextImage.dataset.albumTitle;
+            const albumImage = nextImage.dataset.image;
+
+            audioPlayer.querySelector("source").src = mp3Path;
+            audioPlayer.load();
+            audioPlayer.play();
+
+            document.getElementById("albumTitle").textContent = albumTitle;
+            document.getElementById("albumImage").src = albumImage;
+        }
+    }
+
+    audioPlayer.addEventListener("ended", playNextTrack);
+
+    function playTrack(index) {
+        const img = document.querySelectorAll(".album-image")[index];
+        const mp3Path = img.dataset.mp3;
+        const albumTitle = img.dataset.albumTitle;
+        const albumImage = img.dataset.image;
+        audioPlayer.querySelector("source").src = mp3Path;
+        audioPlayer.load();
+        audioPlayer.play();
+
+        document.getElementById("albumTitle").textContent = albumTitle;
+        document.getElementById("albumImage").src = albumImage;
+    }
+
+    document.getElementById("previousButton").addEventListener("click", () => {
+        const albumImages = document.querySelectorAll(".album-image");
+        let currentIndex = -1;
+
+        albumImages.forEach((img, index) => {
+            const currentMP3Path = new URL(img.dataset.mp3, document.baseURI).href;
+            if (currentMP3Path === new URL(audioPlayer.querySelector("source").src, document.baseURI).href) {
+                currentIndex = index;
+            }
+        });
+
+        if (currentIndex !== -1) {
+            const prevIndex = (currentIndex - 1 + albumImages.length) % albumImages.length;
+            playTrack(prevIndex);
+        }
     });
+
+    document.getElementById("nextButton").addEventListener("click", () => {
+        const albumImages = document.querySelectorAll(".album-image");
+        let currentIndex = -1;
+
+        albumImages.forEach((img, index) => {
+            const currentMP3Path = new URL(img.dataset.mp3, document.baseURI).href;
+            if (currentMP3Path === new URL(audioPlayer.querySelector("source").src, document.baseURI).href) {
+                currentIndex = index;
+            }
+        });
+
+        if (currentIndex !== -1) {
+            const nextIndex = (currentIndex + 1) % albumImages.length;
+            playTrack(nextIndex);
+        }
+    });
+    
+
     </script>
-	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-	<script
-		src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-	<script
-		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
 </body>
+<script type="text/javascript">
+
+document.getElementById("closeIframeBtn").addEventListener("click", function () {
+    window.parent.document.getElementById("contentIframe").style.visibility = "hidden";
+});
+
+</script>
 </html>

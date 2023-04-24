@@ -28,6 +28,9 @@ public class MusicContentAction implements Action {
 		request.setAttribute("sessionId", sessionId);
 		request.setAttribute("musicCont", vo);
 		
+		// 조회수를 증가시켜 주는 메서드 호출.
+		dao.musicPlayCnt(album_id);
+		
 		ActionForward forward = new ActionForward();
 
 		forward.setRedirect(false);

@@ -1,96 +1,212 @@
-@charset "UTF-8";
+@charset "EUC-KR";
+	
+	body {
+	    background-color: #FFFFFF;
+	}
 	
 	header {
-		margin: 0px;
+	    font-family: fantasy;
+	    font-size: 22px;
 	}
-
+	
 	#top {
-		/* 메뉴바를 상단에 고정 */
-		position: fixed;
-		
-		/* 다른 것과 겹쳤을때 메뉴바가 제일 위로 오도록. */
-		z-index: 1;
-		
-		/* 메뉴바가 위쪽 공간이 떠있지 않도록 */
-		margin: -1%;
-		margin-top: -2.2%;
-		
-		padding-top: 2%;
-		padding-bottom: 10px;
-		
-/* 		background-color: #E6E7FB; */
-		background-color: #ffffff;
-		
-		/* 오른쪽 왼쪽 여백이 생기지 않도록 */
-		width: 100%;
+	    position: fixed;
+	    z-index: 1;
+	    width: 100%;
+	    height: 10%;
+	    background-color: #424242;
+	    text-align: center;
 	}
 	
-	.top a {
-		color: black;
+	.home {
+	    font-size: 30px;
 	}
 	
-	.top li a, .profile_inner li a {
-		/* 클릭 시에도 밑줄이 들어가지 않도록 */
-		text-decoration: none;
-	}
-	
-	.top .profile_inner li {
-	/* 프로필에 하위 메뉴들이 들어가도록 */
-		display: none;
-	}
-	
-	.top .profile_inner:hover li {
-	/* 프로필에 마우스 오버 시 하위메뉴가 나타나도록 */
-		display: block; 
+	.top ul {
+	  list-style: none;
+	  margin: 0;
+	  padding: 0;
+	  text-align: center;
 	}
 	
 	.top ul li {
-		/* 메뉴바 일렬로 정렬 */
-		display:inline-block;
-		float:none;
-		padding:0px;
+	  display: inline-block;
+	  margin: 0;
+	  padding: 0;
+	  margin-right: 5%;
 	}
 	
-	.home, .search, .pay {
-		margin-right: 4.5%;
+	.top ul li a {
+	  display: block;
+	  text-decoration: none;
+	  color: #FFFFFF;
+	  padding: 17% 0;
 	}
 	
-	.feed {
-		margin-right: 31%;
+	.top ul li a:hover {
+	  color: #FA0F97;
+	  background-color: #424242;
 	}
 	
-	.top {
-		font-size: 25px;
+	.settings-outline {
+	    font-size: 45px;
+	    vertical-align: middle;
 	}
 	
-	.home{
-		font-size: 35px;
-		font-weight: bold;
+	/* ��� �ٿ� �޴� ���� ��Ÿ�� */
+	.nickname {
+	  position: relative;
+	  z-index: 2;
 	}
 	
-	.profile_top {
-		position:absolute;
-		margin-top: 10px;
+	.profile_inner_1 {
+	  position: absolute;
+	  display: none;
+	  background-color: #f1f1f1;
+	  min-width: unset;
+	  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+	  z-index: 3;
+	  top: 107%;
+	  flex-direction: column;
+	  justify-content: flex-start;
+	  align-items: flex-start;
 	}
 	
-	.profile_inner li {
-		width: 175px;
-		font-size: 18px;
-		margin-top : 25%;
-		text-align: left;
+	.profile_inner_1 li {
+	  display: block;
+	  width: 100%;
 	}
 	
-	.search-txt {
-		border-radius: 0.8em;
-		width: 200px;
-		height: 30px;
+	.profile_inner_1 li a {
+	  display: block;
+	  text-decoration: none;
+	  color: #000;
+	  width: 100%; 
+	  padding: 12px 16px;
 	}
 	
-	.search-btn {
-		font-weight: bolder;
+	.profile_inner_1 li a:hover {
+	  background-color: #ddd;
 	}
 	
-/*  ***********  슬라이드 시작   ***********   */
+	.nickname:hover .profile_inner_1 {
+	  display: block;
+	}
+	
+	.nickname .profile_inner_1 {
+	    display: none;
+	}
+
+	.profile_inner_1 li {
+	    margin: 100%;
+	}
+
+	.profile_inner_1 li a {
+	    width: 100%;
+	    padding: 5px 10px;
+	}
+	
+	/* ��Ϲ��� �̸�Ƽ�� */
+	.settings-outline {
+	  font-size: 45px;
+	}
+	
+	.settings-link {
+	  position: relative;
+	  display: inline-block;
+	  margin-right: 5%;
+	  z-index: 4;
+	}
+	
+	.profile_inner_2 {
+	  position: absolute;
+	  display: none;
+	  background-color: #f1f1f1;
+	  min-width: unset;
+	  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+	  z-index: 5;
+	  top: 130%;
+	  right: 0;
+	}
+	
+	.profile_inner_2 li {
+	  display: block;
+	  white-space: nowrap;
+	  width: 100%;
+	}
+	
+	.profile_inner_2 li a {
+	  display: block;
+	  text-decoration: none;
+	  color: #000;
+	  width: 100%;
+	}
+	
+	.profile_inner_2 li a:hover {
+	  background-color: #ddd;
+	}
+	
+	.settings-link:hover .profile_inner_2 {
+	  display: block;
+	}
+	
+	.settings-link .profile_inner_2 {
+	  display: none;
+	}
+	
+	.settings-link:hover .profile_inner_2,
+	.settings-link .profile_inner_2:hover {
+	  display: block;
+	}
+	
+	.profile_inner_2 {
+	  display: flex;
+	  flex-direction: column;
+	  justify-content: flex-start;
+	  align-items: flex-start;
+	}
+	
+	.profile_inner_2 li {
+	  margin: 5px 0;
+	}
+	
+	.profile_inner_2 li a {
+	  width: auto;
+	  padding: 5px 10px;
+	}
+	
+	.settings {
+	  position: relative;
+	}
+	
+	.profile_inner_2 {
+	  position: absolute;
+	  display: none;
+	  background-color: #f1f1f1;
+	  min-width: unset;
+	  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+	  z-index: 6;
+	  top: 130%;
+	}
+	
+	.settings:hover .profile_inner_2,
+	.profile_inner_2:hover {
+	  display: block;
+	}
+	
+
+
+
+
+
+
+
+
+
+
+	
+
+/*  ***********  �����̵� ����   ***********   */
 	
 	* {box-sizing: border-box}
 	body {font-family: Verdana, sans-serif; margin:0}

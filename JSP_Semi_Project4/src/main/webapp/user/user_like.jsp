@@ -7,18 +7,6 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
-
-<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js" integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+" crossorigin="anonymous"></script>
-<style type="text/css">
-	
-	.pagination {
-		justify-content: center;
-	}
-</style>
 </head>
 <body>
 	
@@ -37,7 +25,7 @@
 			<th>올린 유저명</th>
 			<th>커버 이 미 지</th>
 			<th>좋와요 라벨</th>
-
+			
 		</tr>
 		<c:set var="list" value="${user_likelist }" />
 		<c:forEach items="${list }" var="dto">
@@ -52,7 +40,7 @@
 								<span>Play/Pause</span>
 							</button>
 						</section></td>
-					<td> <a href="<%=request.getContextPath() %>/user_music_content.do?id=${dto.getUser_id() }&page=${page }">${dto.getMusic_title() }</a></td>
+					<td>${dto.getMusic_title() }</td>
 					<td>${dto.getUser_id() }</td>
 					<td id="music">
 					<img src="<%=request.getContextPath() %>/fileUpload/${dto.getMusic_pic() }" style="width: 80px;">
@@ -65,46 +53,6 @@
 				
 			</c:forEach>
 	</table>
-	
-	
-			<%-- 페이징 처리 하나 만들어 놓고 연속으로 써먹기 --%>
-	
-	   <nav>
-	      <ul class="pagination">
-	         <li class="page-item">   <!-- 처음 페이지로 이동 -->
-	            <a class="page-link" href="like_list.do?page=1">First</a>
-	         </li>
-	         <li>     <!-- 현재 페이지의 이전 페이지로 이동 -->
-	            <a class="page-link" href="like_list.do?page=${page - 1 }">Previous</a>
-	         </li>
-	                                 <!-- 부트 스트랩 사용 -->
-	         <c:forEach begin="${startBlock }" end="${endBlock }" var="i">
-	            <c:if test="${i == page }">
-	               <li class="page-item active" aria-current="page">
-	                  <a class="page-link" href="like_list.do?page=${i }">${i }</a>
-	               </li>
-	            
-	            </c:if>
-	             <c:if test="${i != page }">
-	               <li class="page-item">
-	                  <a class="page-link" href="like_list.do?page=${i }">${i }</a>
-	               </li>
-	            
-	            </c:if>
-	         </c:forEach>
-	                         <!-- 페이지가 5이상인 경우 6이상은 사라지게 만듬. -->
-	         <c:if test="${endBlock < allPage }">
-	             <li class="page-item">
-	                  <a class="page-link" href="like_list.do?page=${page + 1 }">Next</a>
-	             </li>
-	             <li class="page-item">
-	                  <a class="page-link" href="like_list.do?page=${allPage }">End</a>
-	             </li>
-	             
-	         </c:if>
-	      </ul>
-	      
-	   </nav>
 	
 <%-- img alt="" src="<%=request.getContextPath() %>/upload/"
 	width="60" height="60"--%>

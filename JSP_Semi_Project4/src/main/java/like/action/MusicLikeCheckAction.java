@@ -1,4 +1,4 @@
-package actionlike;
+package like.action;
 
 import java.io.IOException;
 import java.io.PrintWriter;
