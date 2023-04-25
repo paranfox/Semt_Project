@@ -244,9 +244,8 @@ td {
 <script type="text/javascript">
 
 document.getElementById("closeIframeBtn").addEventListener("click", function () {
-    window.parent.document.getElementById("contentIframe").style.visibility = "hidden";
+    location.href = "main.jsp";
 });
-
 
 </script>
 </html>

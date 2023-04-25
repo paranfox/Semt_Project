@@ -56,6 +56,7 @@ public class UserFileAction implements Action {
 		);
 		HttpSession session = request.getSession();
 		String user_id = (String) session.getAttribute("sessionId");
+		String user_nickname = (String) session.getAttribute("sessionUserNickname");
 		String music_pic = multi.getFilesystemName("music_pic");
 		String music_title = multi.getParameter("music_title");
 		String music_contents = multi.getParameter("music_contents");
@@ -63,6 +64,7 @@ public class UserFileAction implements Action {
 		
 		vo.setMusic_mp3(music_mp3);
 		vo.setMusic_pic(music_pic);
+		vo.setUser_nickname(user_nickname);
 		vo.setUser_id(user_id);
 		vo.setMusic_title(music_title);
 		vo.setMusic_contents(music_contents);

@@ -217,6 +217,44 @@ public class LikeDAO {
 		return result;
 		
 	}  // likecheckprocess() 메서드 end
+	public List<MusicVO> getmusiclist(String id) {
+		List<MusicVO> list = new ArrayList<MusicVO>();
+
+		try {
+			connect();
+			MusicVO vo = new MusicVO();
+			sql =  "SELECT music_id, music_pic, music_mp3, music_title, music_contents, music_likecnt, music_playcnt, music_info.user_genre, music_info.user_id"
+					+ " FROM music_info "
+					+ " INNER JOIN user ON music_info.user_id = user.user_id "
+					+ " WHERE user.user_id = ?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, id);
+			rs = pstmt.executeQuery();
+			
+			
+		// 결과를 리스트로 저장
+		while (rs.next()) {
+			vo = new MusicVO();
+			vo.setMusic_lank(rs.getInt(1));
+			vo.setMusic_id(rs.getInt("music_id"));
+			vo.setMusic_pic(rs.getString("music_pic"));
+			vo.setMusic_mp3(rs.getString("music_mp3"));
+			vo.setMusic_title(rs.getString("music_title"));
+			vo.setMusic_contents(rs.getString("music_contents"));
+			vo.setMusic_likecnt(rs.getInt("music_likecnt"));
+			vo.setMusic_playcnt(rs.getInt("music_playcnt"));
+			vo.setUser_id(rs.getString("user_id"));
+			list.add(vo);
+		}
+	} catch (
+	SQLException e) {
+		e.printStackTrace();
+	} finally {
+		disconnect(rs, pstmt, con);
+	}
+	return list;
+	} // getmusiclist() 메서드 end
+	
 	
 
 }

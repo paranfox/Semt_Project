@@ -112,7 +112,7 @@ public class MusicDAO {
 			pstmt.setInt(6, 0);
 
 			pstmt.setString(7, vo.getUser_id());
-			
+
 			pstmt.setString(8, vo.getUser_nickname());
 
 			result = pstmt.executeUpdate();
@@ -156,6 +156,7 @@ public class MusicDAO {
 				vo.setMusic_contents(rs.getString("music_contents"));
 				vo.setMusic_likecnt(rs.getInt("music_likecnt"));
 				vo.setMusic_playcnt(rs.getInt("music_playcnt"));
+				vo.setUser_nickname(rs.getString("user_nickname"));
 				vo.setUser_id(rs.getString("user_id"));
 
 				list.add(vo);
@@ -782,38 +783,107 @@ public class MusicDAO {
 	}
 
 	public List<PlayedMusicVO> getPlayedMusicList(String sessionId) {
-	    connect();
-	    
-	    List<PlayedMusicVO> list = new ArrayList<>();
-	    
-	    try {
-	        String sql = "SELECT * FROM played_music pm JOIN music_info mi ON pm.music_id = mi.music_id WHERE pm.user_id = ?";
-	        pstmt = con.prepareStatement(sql);
-	        pstmt.setString(1, sessionId);
-	        rs = pstmt.executeQuery();
-	        
-	        while (rs.next()) {
-	            PlayedMusicVO vo = new PlayedMusicVO();
-	            vo.setPlay_id(rs.getInt("play_id"));
-	            vo.setUser_id(rs.getString("user_id"));
-	            vo.setMusic_id(rs.getInt("music_id"));
-	            vo.setPlay_time(rs.getTimestamp("play_time"));
-	            vo.setMusic_title(rs.getString("music_title"));
-	            vo.setMusic_pic(rs.getString("music_pic"));
-	            vo.setMusic_mp3(rs.getString("music_mp3"));
-	            vo.setMusic_contents(rs.getString("music_contents"));
-	            vo.setMusic_likecnt(rs.getInt("music_likecnt"));
-	            vo.setMusic_playcnt(rs.getInt("music_playcnt"));
-	            vo.setUser_nickname(rs.getString("user_nickname"));
-	            list.add(vo);
-	        }
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	    } finally {
-	        disconnect(rs, pstmt, con);
-	    }
-	    
-	    return list;
+		connect();
+
+		List<PlayedMusicVO> list = new ArrayList<>();
+
+		try {
+			String sql = "SELECT * FROM played_music pm JOIN music_info mi ON pm.music_id = mi.music_id WHERE pm.user_id = ?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, sessionId);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				PlayedMusicVO vo = new PlayedMusicVO();
+				vo.setPlay_id(rs.getInt("play_id"));
+				vo.setUser_id(rs.getString("user_id"));
+				vo.setMusic_id(rs.getInt("music_id"));
+				vo.setPlay_time(rs.getTimestamp("play_time"));
+				vo.setMusic_title(rs.getString("music_title"));
+				vo.setMusic_pic(rs.getString("music_pic"));
+				vo.setMusic_mp3(rs.getString("music_mp3"));
+				vo.setMusic_contents(rs.getString("music_contents"));
+				vo.setMusic_likecnt(rs.getInt("music_likecnt"));
+				vo.setMusic_playcnt(rs.getInt("music_playcnt"));
+				vo.setUser_nickname(rs.getString("user_nickname"));
+				list.add(vo);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			disconnect(rs, pstmt, con);
+		}
+
+		return list;
+	}
+
+	// user_id로 음악 리스트 가져오기
+	public List<MusicVO> getUserMusicList(String user_id) {
+
+		connect();
+
+		List<MusicVO> list = new ArrayList<MusicVO>();
+
+		try {
+
+			sql = "select * from music_info where user_id = ?";
+
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, user_id);
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+
+				MusicVO vo = new MusicVO();
+
+				vo.setMusic_id(rs.getInt("music_id"));
+				vo.setMusic_pic(rs.getString("music_pic"));
+				vo.setMusic_mp3(rs.getString("music_mp3"));
+				vo.setMusic_title(rs.getString("music_title"));
+				vo.setMusic_contents(rs.getString("music_contents"));
+				vo.setMusic_likecnt(rs.getInt("music_likecnt"));
+				vo.setMusic_playcnt(rs.getInt("music_playcnt"));
+				vo.setUser_nickname(rs.getString("user_nickname"));
+				vo.setUser_id(rs.getString("user_id"));
+
+				list.add(vo);
+
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			disconnect(rs, pstmt, con);
+		}
+		return list;
+	} // getMusicList() end
+
+	public int getUserTrackCount(String bbs_id) {
+
+		connect();
+
+		int result = 0;
+
+		try {
+			sql = "SELECT COUNT(user_id) FROM music_info WHERE user_id = ?";
+
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, bbs_id);
+
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+				result = rs.getInt(1);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			disconnect(rs, pstmt, con);
+		}
+
+		return result;
+
 	}
 
 }

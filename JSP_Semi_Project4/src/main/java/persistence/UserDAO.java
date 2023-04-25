@@ -490,6 +490,42 @@ public class UserDAO {
 		return result;
 		
 	}	// 유저 탈퇴 메서드 종료
-	
+	public List<MusicVO> getMusicPlayList(String user_id, String name) {
+		List<MusicVO> list = new ArrayList<MusicVO>();
+		connect();
+		MusicVO vo = new MusicVO();
+			try {
+				connect();
+
+				String sql = "select * from  music_info where music_id"
+						+ " in(select music_id from myplaylist where playlist_name = ?) and user_id = ?";
+
+				pstmt = con.prepareStatement(sql);
+
+				pstmt.setString(1, name);
+				pstmt.setString(2, user_id);
+
+				rs = pstmt.executeQuery(); // 쿼리 실행
+
+				while (rs.next()) {
+					vo = new MusicVO();
+					vo.setMusic_id(rs.getInt("music_id"));
+					vo.setMusic_pic(rs.getString("music_pic"));
+					vo.setMusic_mp3(rs.getString("music_mp3"));
+					vo.setMusic_title(rs.getString("music_title"));
+					vo.setMusic_contents(rs.getString("music_contents"));
+					vo.setMusic_likecnt(rs.getInt("music_likecnt"));
+					vo.setMusic_playcnt(rs.getInt("music_playcnt"));
+					vo.setUser_id(rs.getString("user_id"));
+					list.add(vo);
+				}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			disconnect(rs, pstmt, con);
+		}
+		return list;
+	}	// getMusicPlayList()메서드 end
 	
 }

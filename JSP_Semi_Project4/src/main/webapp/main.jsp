@@ -54,10 +54,13 @@
 						<a>${vo.getUser_nickname() }님 환영합니다</a>
 						<ul class="profile_inner_1">
 							<li><a href="musicBbs/uploadsample.jsp">PROFILE</a></li>
-							<li><a href="<%=request.getContextPath()%>/user_music_list.do">LIKES</a></li>
-							<li><a href="<%=request.getContextPath()%>/my_music_list.do?id=${vo.getUser_id() }">FOLLOWING</a></li>
-							<li><a href="<%=request.getContextPath()%>/like_list.do">WHO TO FOLLOWS</a></li>
+							
+							<%-- <li><a href="<%=request.getContextPath()%>/my_music_list.do?id=${vo.getUser_id() }">FOLLOWING</a></li> --%>
+							<li><a href="<%=request.getContextPath()%>/my_music_list.do?id=${vo.getUser_id() }">MY UPLOADED ALBUM</a></li>
+							<li><a href="<%=request.getContextPath()%>/like_list.do">LIKES PLAYLIST</a></li>
 							<li><a href="#" class="goToContentBtn" onclick="loadIframe(this);">SHOW ALL ALBUM</a></li>
+							<li><a href="<%=request.getContextPath()%>/user_music_list.do">SHOW ALL ALBUM</a></li>
+							<li><a href="<%=request.getContextPath()%>/user_myplaylist_show.do">MY<br>플레이리스트</a></li>
 							<%-- <li><a href="<%=request.getContextPath()%>/user_myplaylist_show.do">MY<br>플레이리스트</a></li> --%>
 							<!-- <li><a href="#" class="goToContentBtn" onclick="loadMframe(this);">PLAYED ALBUM HISTORY</a></li> -->
 							<li><a href="<%=request.getContextPath()%>/show_played_music.do?id=${vo.getUser_id() }">PLAYED ALBUM HISTORY</a></li>						
@@ -123,7 +126,7 @@
 	<br>
 	<br>
 	<br>
-
+<a href="<%=request.getContextPath() %>/music_list_sample.do">음악 리스트 로 가는 버튼 아직미완성</a>
 
 	<div class="music-player-container">
 		<jsp:include page="mp3Player.jsp" />

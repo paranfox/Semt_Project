@@ -10,8 +10,17 @@ public class MusicVO {
 	private int music_likecnt;
 	private int music_playcnt;
 	private String user_nickname;
+	private int music_lank;
 	
 	
+	public int getMusic_lank() {
+		return music_lank;
+	}
+
+	public void setMusic_lank(int music_lank) {
+		this.music_lank = music_lank;
+	}
+
 	public String getUser_nickname() {
 		return user_nickname;
 	}

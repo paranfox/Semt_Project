@@ -16,7 +16,7 @@
 		<c:forEach items="${list }" var="vo">
 			<p>
 				<a
-					href="<%=request.getContextPath()%>/my_playlist.do?name=${vo.getPlaylist_name() }">
+					href="<%=request.getContextPath()%>/user_playlist.do?name=${vo.getPlaylist_name() }">
 					${vo.getPlaylist_name() }</a>
 			</p>
 		</c:forEach>
