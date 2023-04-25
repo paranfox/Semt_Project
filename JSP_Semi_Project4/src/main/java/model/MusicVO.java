@@ -1,16 +1,15 @@
 package model;
 
 public class MusicVO {
-
-	int music_id;
-	String music_pic;
-	String music_mp3;
-	String music_title;
-	String music_contents;
-	int music_likecnt;
-	int music_playcnt;
-	String user_id;
-	String user_nickname;
+	private String user_id;
+	private int music_id;
+	private String music_pic;
+	private String music_mp3;
+	private String music_title;
+	private String music_contents;
+	private int music_likecnt;
+	private int music_playcnt;
+	private String user_nickname;
 	
 	
 	public String getUser_nickname() {

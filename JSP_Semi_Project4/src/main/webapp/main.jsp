@@ -39,15 +39,16 @@
 				<%-- 로그인되지 않았을 때 --%>
 				<c:if test="${empty vo }">
 					<li class="login"><a href="login/login.jsp">LOGIN</a></li>
-					<li class="account"><a>CREATE ACCOUNT</a></li>
+					<li class="account"><a href="register/RegisterChoice.jsp">CREATE ACCOUNT</a></li>
 					<li class="upload"><a href="musicBbs/uploadsample.jsp">UPLOAD</a></li>
 				</c:if>
 
 				<%-- 로그인되었을 때 --%>
 				<c:if test="${!empty vo }">
+				
 					<li class="upload"><a href="musicBbs/uploadsample.jsp">UPLOAD</a></li>
 					
-					
+					<iframe id="contentIframe" frameborder="0" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 100;"></iframe>
 					<iframe id="contentIframe" frameborder="0" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 100;"></iframe>
 					<li class="nickname">
 						<a>${vo.getUser_nickname() }님 환영합니다</a>
@@ -58,7 +59,8 @@
 							<li><a href="<%=request.getContextPath()%>/like_list.do">WHO TO FOLLOWS</a></li>
 							<li><a href="#" class="goToContentBtn" onclick="loadIframe(this);">SHOW ALL ALBUM</a></li>
 							<%-- <li><a href="<%=request.getContextPath()%>/user_myplaylist_show.do">MY<br>플레이리스트</a></li> --%>
-							<li><a href="#" class="goToContentBtn" onclick="loadMframe(this);">MY<br>PLAY LIST</a></li>
+							<!-- <li><a href="#" class="goToContentBtn" onclick="loadMframe(this);">PLAYED ALBUM HISTORY</a></li> -->
+							<li><a href="<%=request.getContextPath()%>/show_played_music.do?id=${vo.getUser_id() }">PLAYED ALBUM HISTORY</a></li>						
 						</ul>
 					</li>
 					<li class="settings">
@@ -72,7 +74,6 @@
 			</ul>
 		</div>
 	</header>
-
 	<br>
 	<br>
 	<br>
@@ -122,15 +123,11 @@
 	<br>
 	<br>
 	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	
-	
 
+
+	<div class="music-player-container">
+		<jsp:include page="mp3Player.jsp" />
+	</div>
 
 <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
 <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
@@ -147,7 +144,6 @@
 	function currentSlide(n) {
 		showSlides(slideIndex = n);
 	}
-
 	function showSlides(n) {
 		var i;
 		var slides = document.getElementsByClassName("mySlides");
@@ -199,13 +195,15 @@
 		}
 	   
 	   function loadMframe(link) {
-	       const iframe = document.getElementById("contentIframe");
-	       if (iframe.style.visibility === "hidden") {
-	           iframe.style.visibility = "visible";
-	       } else {
-	           iframe.src = "<%=request.getContextPath()%>/user_myplaylist_show.do";
-				iframe.style.display = "block";
-			}
+		   const iframe = document.getElementById("contentIframe");
+		   if (iframe.style.visibility === "hidden") {
+		       iframe.style.visibility = "visible";
+		   } else {
+		       const sessionId = '<%= session.getId() %>'; // 세션 아이디를 받아옵니다.
+		       iframe.src = "<%=request.getContextPath()%>/show_played_music.do?sessionId=" + sessionId;
+		       iframe.style.display = "block";
+		   }
 		}
+	   
 </script>
 </html>

@@ -95,7 +95,7 @@ public class MusicDAO {
 
 		try {
 
-			sql = "insert into music_info values(default,?,?,?,?,?,?,?) ";
+			sql = "insert into music_info values(default,?,?,?,?,?,?,?,?) ";
 
 			pstmt = con.prepareStatement(sql);
 
@@ -112,6 +112,8 @@ public class MusicDAO {
 			pstmt.setInt(6, 0);
 
 			pstmt.setString(7, vo.getUser_id());
+			
+			pstmt.setString(8, vo.getUser_nickname());
 
 			result = pstmt.executeUpdate();
 
@@ -777,6 +779,41 @@ public class MusicDAO {
 			}
 		}
 		return list;
+	}
+
+	public List<PlayedMusicVO> getPlayedMusicList(String sessionId) {
+	    connect();
+	    
+	    List<PlayedMusicVO> list = new ArrayList<>();
+	    
+	    try {
+	        String sql = "SELECT * FROM played_music pm JOIN music_info mi ON pm.music_id = mi.music_id WHERE pm.user_id = ?";
+	        pstmt = con.prepareStatement(sql);
+	        pstmt.setString(1, sessionId);
+	        rs = pstmt.executeQuery();
+	        
+	        while (rs.next()) {
+	            PlayedMusicVO vo = new PlayedMusicVO();
+	            vo.setPlay_id(rs.getInt("play_id"));
+	            vo.setUser_id(rs.getString("user_id"));
+	            vo.setMusic_id(rs.getInt("music_id"));
+	            vo.setPlay_time(rs.getTimestamp("play_time"));
+	            vo.setMusic_title(rs.getString("music_title"));
+	            vo.setMusic_pic(rs.getString("music_pic"));
+	            vo.setMusic_mp3(rs.getString("music_mp3"));
+	            vo.setMusic_contents(rs.getString("music_contents"));
+	            vo.setMusic_likecnt(rs.getInt("music_likecnt"));
+	            vo.setMusic_playcnt(rs.getInt("music_playcnt"));
+	            vo.setUser_nickname(rs.getString("user_nickname"));
+	            list.add(vo);
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    } finally {
+	        disconnect(rs, pstmt, con);
+	    }
+	    
+	    return list;
 	}
 
 }

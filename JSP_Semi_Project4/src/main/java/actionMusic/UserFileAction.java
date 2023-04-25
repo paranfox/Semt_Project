@@ -75,7 +75,7 @@ public class UserFileAction implements Action {
 		if (check > 0) {
 			out.println("<script>");
 			out.println("alert('[앨범 등록 성공]')");
-			out.println("location.href='user_music_list.do'");
+			out.println("location.href='main.jsp'");
 			out.println("</script>");
 		} else {
 			out.println("<script>");

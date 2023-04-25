@@ -43,13 +43,15 @@ td {
 }
 </style>
 <script
+
    src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+   
 </head>
 <body>
    <div class="container mt-5">
       <div class="text-center">
          <hr width="100%" color="tomato" align="center">
-         <h3>Album List</h3>
+         <h3>Played_Music_List</h3>
          <hr width="100%" color="tomato" align="center">
          <br> <input class="btn btn-info" type="button" value="메인 메뉴"
             id="closeIframeBtn">
@@ -242,7 +244,7 @@ td {
 <script type="text/javascript">
 
 document.getElementById("closeIframeBtn").addEventListener("click", function () {
-    window.parent.document.getElementById("contentIframe").style.visibility = "hidden";
+    location.href = "main.jsp";
 });
 
 </script>

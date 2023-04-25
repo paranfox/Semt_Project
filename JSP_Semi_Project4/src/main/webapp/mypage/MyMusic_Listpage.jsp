@@ -11,8 +11,6 @@
 </head>
 <body>
 	<h1>플레이 리스트</h1>
-
-
 	<c:set var="list" value="${myPlayList }" />
 	<c:if test="${!empty list }">
 		<c:forEach items="${list }" var="vo">
