@@ -56,7 +56,7 @@ public class UserFileAction implements Action {
 		);
 		HttpSession session = request.getSession();
 		String user_id = (String) session.getAttribute("sessionId");
-		String user_nickname = (String) session.getAttribute("sessionUserNickname");
+		String user_nickname = (String) session.getAttribute("sessionUserNickName");
 		String music_pic = multi.getFilesystemName("music_pic");
 		String music_title = multi.getParameter("music_title");
 		String music_contents = multi.getParameter("music_contents");

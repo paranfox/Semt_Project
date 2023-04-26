@@ -11,6 +11,54 @@
 <script
    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
 <head>
+<style>
+
+		.music-player-container {
+			position: fixed;
+			bottom: 0;
+			left: 0;
+			right: 0;
+		}
+		
+        .comment-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+        .comment-content {
+            margin-left: 45px;
+        }
+        .comment-divider {
+            margin: 15px 0;
+            border-bottom: 1px solid #ccc;
+        }
+        .user-nickname {
+           margin-right: 8px;
+        }
+        
+        .editBtn {
+           border: 0;
+           outline: none;
+           font-size: 5px;
+           margin: 5px;
+           background: black;
+           color: white;
+           padding: 5px;
+           cursor: pointer;
+           border-radius: 5px;
+        }
+       .deleteBtn {
+          border: 0;
+           outline: none;
+           font-size: 5px;
+           margin: 5px;
+           background: black;
+           color: white;
+           padding: 5px;
+           cursor: pointer;
+           border-radius: 5px;
+       }       
+</style>
 <meta charset="UTF-8">
 <title>ALBUM 상세페이지</title>
 <script
@@ -98,7 +146,9 @@ document.addEventListener("DOMContentLoaded", function () {
          </table>
          <br>
          
-         <jsp:include page="../mp3Player.jsp" />
+    <div class="music-player-container">
+		<jsp:include page="../mp3Player.jsp" />
+	</div>
 
          <c:if test="${!empty sessionId }">
             <div class="d-grid gap-2 d-md-flex justify-content-md-center">

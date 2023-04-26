@@ -29,15 +29,16 @@ public class LoginCheckAction implements Action {
 		String profile_pic = vo1.getUser_pic();
 		System.out.println("유저 사진  >>>>  " + profile_pic);
 		if (check == 1) {
+			String user_nickname = vo.getUser_nickname();
 			HttpSession session = request.getSession();
 			session.setAttribute("sessionId", id);
 			session.setAttribute("sessionUserVO", vo);
-			session.setAttribute("sessionUserNickName", vo.getUser_nickname());
+			session.setAttribute("sessionUserNickName", user_nickname);
 			session.setAttribute("profile_pic", profile_pic);
 			session.setMaxInactiveInterval(60*300) ;
 			out.println("<script>");
 			out.println("alert('로그인 성공')");
-			out.println("location.href='../main.jsp'");
+			out.println("location.href='main.jsp'");
 			out.println("</script>");
 
 //	    	forward.setRedirect(false);

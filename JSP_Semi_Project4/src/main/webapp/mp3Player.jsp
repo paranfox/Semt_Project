@@ -114,7 +114,7 @@ new MediaElementPlayer(
 			<h3 class="podcast__episode_title" id="albumTitle">[Click Play
 				Button]</h3>
 			<div class="podcast__meta">
-				<button id="previousButton">이전</button>
+				<button id="previousButton">Prev</button>
 				<audio id="audioPlayer" controls style="width: 50%;">
 					<source
 						src="fileUpload/LP1607110010_임샛별_On the hill (Organ ver.).mp3"
@@ -125,7 +125,7 @@ new MediaElementPlayer(
 						src="img/pic_1.png" alt="앨범 이미지가 표시됩니다." width="60" height="60"
 						class="rounded">
 				</a>
-				<button id="nextButton">다음</button>
+				<button id="nextButton">Next</button>
 			</div>
 		</div>
 	</div>
