@@ -6,97 +6,118 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>넣은 음원의 추가적인 정보 등록</title>
-<!-- Add Bootstrap CSS -->
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-<!-- Your custom CSS (if any) -->
-<link rel="stylesheet" href="css/upload1.css">
-</head>
+<title>UPLOAD MUSIC</title>
+<link rel="stylesheet" href="../css/main_top.css">
+<style type="text/css">
 
+		#top {
+			top:0;
+		}
+		
+		body {
+			margin-top: 15%;
+		}
+
+        .total {
+            margin-left: 35%;
+        }
+
+        h3{
+            width: 500px;
+            padding: 5px;
+            border: 2px solid #424242;
+            background-color: #424242;
+            color: white;
+            text-align: center;
+        }
+
+        .file{
+            display: flex;
+            flex-direction: column;
+        }
+
+		.music_file,  .music_name, .music_pic, .music_title, .music_contents {
+            display: flex;
+            margin-bottom: 3%;
+            width: 530px;
+            margin-left: 13%;
+        }
+
+        .music_name imput, .music_title, .music_contents {
+            width: 520px;
+
+        }
+
+        .music_contents {
+            align-items: center;
+        }
+        .music_submit {
+            width: 200px;
+        }
+
+        .btn-primary {
+            width: 500px;
+            padding: 5px;
+            border: 2px solid #424242;
+            background-color: #424242;
+            color: white;
+            font-size: medium;
+            font-weight: bolder;
+        }
+
+       .btn-primary:hover {
+            color: #FA0F97;
+        }
+
+</style>
+
+</head>
 <body>
 
 	<jsp:include page="../test_main_top.jsp" />
+ 
+    <div class="total">
+		<form action="<%=request.getContextPath()%>/user_file.do" method="post"
+			enctype="multipart/form-data">
+			<c:set value="${sessionUserVO }" var="vo" />
+			<input type="hidden" value="${vo.getUser_id() }">
+          
+            <div class="content">
+                <h3>Insert Music File</h3>
+                <div class="file">
 
-	<c:if test="${empty sessionId }">
-		<script type="text/javascript">
-				window.location.replace("<%=request.getContextPath() %>/login.do?loginType=upload");
-	  </script>
-	</c:if>
+                    <div class="music_name">
+                        <input type="text" name="music_id" placeholder="음원 이름" class="form-control_1">
+                    </div>
 
+                    <div class="music_title">
+                        <input type="text" name="music_title" placeholder="음원 제목" class="form-control_1">
+                    </div>
 
+                    <div class="music_contents">
+                        <textarea class="form-control" rows="7" cols="25" name="music_contents" placeholder="음원 설명"></textarea>
+                    </div>
+                         
 
-	<c:if test="${!empty sessionId }">
-	<div class="main_con"></div>
+                    <div class="music_pic">
+                        <div>앨범 사진</div>&nbsp;&nbsp;
+                        <div><input
+                                id="music_pic" type="file" class="form-control-file"
+                                name="music_pic"></div>
+                    </div>
+                    
+                    <div class="music_file">
+                        <div>앨범 음원</div>&nbsp;&nbsp;
+                        <div><input 
+                            id="file" type="file" name="music_mp3"></div>
+                    </div>
 
-	<div class="container text-center">
-		<hr class="w-50">
-		<h3>업로드 파일 폼 페이지</h3>
-		<hr class="w-50">
-		<br>
-	</div>
-	<%-- session ${sessionId } --%>
-	<form action="<%=request.getContextPath()%>/user_file.do" method="post"
-		enctype="multipart/form-data">
-		<input type="hidden" name="user_id" value=${sessionId }> <input
-			type="hidden" name="user_nickname" value=${sessionUserNickName }>
-		<c:set value="${sessionUserVO }" var="vo" />
-		<input type="hidden" value="${vo.getUser_id() }">
-		<div class="wrapper">
-			<div class="content">
-				<h3>Insert Music File</h3>
-				<div class="file">
-					<table class="table">
-						<tr>
-							<td>앨범 사진</td>
-							<td><label for="file">음원 파일</label> <input id="file"
-								type="file" class="form-control-file" name="music_mp3"></td>
-						</tr>
-
-						<tr>
-							<td>앨범 이름</td>
-							<td><input type="text" name="music_id" class="form-control">
-							</td>
-						</tr>
-
-						<tr>
-							<td>앨범 사진</td>
-							<td><label for="music_pic">앨범사진</label> <input
-								id="music_pic" type="file" class="form-control-file"
-								name="music_pic"></td>
-						</tr>
-
-						<tr>
-							<td>음원 제목</td>
-							<td><input type="text" name="music_title"	class="form-control" id="input_title"></td>
-						</tr>
-
-						<tr>
-							<td>음원 설명</td>
-							<td><textarea rows="7" cols="25" name="music_contents"
-									class="form-control"></textarea></td>
-						</tr>
-
-						<tr>
-							<td colspan="2" align="center"><input type="submit"
-								value="음원 등록" class="btn btn-primary"></td>
-						</tr>
-					</table>
-				</div>
-
-			</div>
-		</div>
-
-	</form>
-	</c:if>
-
-	<!-- Add Bootstrap and jQuery scripts -->
-	<script
-		src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-	<script
-		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-	<script
-		src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-		
-</body>
+                    <div colspan="2" align="center" class="music_submit">
+                        <input type="submit" value="음원 등록" class="btn btn-primary">
+                    </div>
+                </div>
+            </div>
+		</form>
+	</div>	
+ </body>
 </html>

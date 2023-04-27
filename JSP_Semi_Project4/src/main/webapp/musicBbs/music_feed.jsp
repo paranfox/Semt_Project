@@ -85,21 +85,20 @@ a {
 
 
 	<jsp:include page="../test_main_top.jsp" />
+	<br>
+	<br>
+	<br>
+	<br>
 
-	
-	
 	<div id="music_list_container">
-	
 		<c:if test="${empty sessionId }">
 			<script type="text/javascript">
 					window.location.replace("<%=request.getContextPath()%>/login.do?loginType=feed");
 			</script>
 		</c:if>
-		
 		<c:set var="list" value="${feedList }" />
 		<c:if test="${!empty list }">
 			<c:forEach items="${list }" var="vo">
-
 				<div class="music_content">
 					<div class="music_cover">
 						<img

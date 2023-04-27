@@ -42,9 +42,7 @@
 					<input type="password" name="user_pwd" class="pw" id="password_1">
 				</div>
 			</div>
-
 			<br> <br>
-
 			<div class="pw_check">
 				<strong class="td_1">PW 확인</strong>
 				<div class="td_2" colspan="2">

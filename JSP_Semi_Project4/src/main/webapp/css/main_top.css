@@ -1,166 +1,185 @@
 @charset "UTF-8";
-	body {
-		background-color: #FFFFFF;
-		margin: 0;
-	}
-	
-	header {
-		font-family: fantasy;
-		font-size: 22px;
-	}
-	
-	#top {
-		position: fixed;
-		z-index: 1;
-		width: 100%;
-		height: 10%;
-		background-color: #424242;
-		text-align: center;
-	}
-	
-	.home {
-		font-size: 30px;
-	}
-	
-	.top ul {
-		list-style: none;
-		margin: 0;
-		padding: 0;
-		text-align: center;
-	}
-	
-	.top ul li {
-		display: inline-block;
-		margin: 0;
-		padding: 0;
-		margin-right: 5%;
-	}
-	
-	.top ul li a {
-		display: block;
-		text-decoration: none;
-		color: #FFFFFF;
-		padding-top: 20px;
-	}
-	
-	.top ul li a:hover {
-		color: #FA0F97;
-		background-color: #424242;
-	}
-	
-	.settings-outline {
-		vertical-align: middle;
-	}
-	
-	/* 로그인 되었을 때 */
-	.nickname {
-		position: relative;
-		z-index: 2;
-	}
-	
-	.profile_inner_1 {
-		position: absolute;
-		display: none;
-		background-color: #424242;
-		box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
-		z-index: 3;
-		flex-direction: column;
-		justify-content: flex-start;
-		align-items: flex-start;
-		width: 100%; 
-		top: 100%;
+   body {
+      background-color: #FFFFFF;
+      margin: 0;
+   }
+   
+   header {
+      font-family: fantasy;
+      font-size: 22px;
+   }
+   
+   #top_main {
+      position: fixed;
+      z-index: 1;
+      width: 100%;
+      height: 10%;
+      background-color: #424242;
+      text-align: center;
+   }
+   
+   .home {
+      font-size: 30px;
+   }
+   
+   .top_main ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+   }
+   
+   .top_main ul li {
+      display: inline-block;
+      margin: 0;
+      padding: 0;
+      margin-right: 5%;
+   }
+   
+   .top_main ul li a {
+      display: block;
+      text-decoration: none;
+      color: #FFFFFF;
+      padding-top: 20px;
+   }
+   
+   .top_main ul li a:hover {
+      color: #FA0F97;
+      background-color: #424242;
+   }
+   
+   .settings-outline {
+      vertical-align: middle;
+   }
+   
+   /* 로그인 되었을 때 */
+   .nickname_main {
+      position: relative;
+      z-index: 2;
+   }
+   
+   .nick_cont {
+      padding-left: 10px;
+   }
+   .nick_cont img {
+   width: 40px;
+   height: 40px;
+   object-fit: cover;
+   border-radius: 50%;
+   margin-right: 10px;
+   /* box-shadow: inset 0 0 1px rgba(0, 0, 0, .1); */
+   }
+   
+   .profile_inner_1 {
+      position: absolute;
+      display: none;
+      background-color: #424242;
+      box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+      z-index: 3;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: flex-start;
+      width: 100%; 
+      top: 100%;
 }
-	
-	.profile_inner_1 li {
-		display: block;
-		width: 100%;
-		margin: 100%;
-	}
-	
-	.profile_inner_1 li a {
-		display: block;
-		text-decoration: none;
-		color: #000;
-		width: 100%;
-	}
-	
-	.profile_inner_1 li a:hover {
-		background-color: #424242;
-		width: 100%;
-	}
-	
-	.nickname:hover .profile_inner_1 {
-		display: block;
-		width: 100%;
-	}
-	
-	.nickname .profile_inner_1 {
-		display: none;
-	}
-	
-	.settings-outline {
-		font-size: 45px;
-	}
-	
-	.settings-link {
-		position: relative;
-		display: inline-block;
-		margin-right: 5%;
-		z-index: 4;
-	}
-	
-	.profile_inner_2 {
-		position: absolute;
-		flex-direction: column;
-		justify-content: flex-start;
-		align-items: flex-start;
-		position: absolute;
-		display: none;
-		background-color: #424242;
-		z-index: 6;
-		top: 95%; 
-		min-height: 180%;
-		min-width: 250%
-	}
-	
-	.profile_inner_2 li {
-		display: block;
-		white-space: nowrap;
-		width: 100%;
-	}
-	
-	.profile_inner_2 li a {
-		display: block;
-		text-decoration: none;
-		color: #000;
-		width: 100%;
-	}
-	
-	.profile_inner_2 li a:hover {
-		background-color: #424242;
-	}
-	
-	.settings-link:hover .profile_inner_2 {
-		display: block;
-	}
-	
-	.settings-link .profile_inner_2 {
-		display: none;
-	}
-	
-	.settings-link:hover .profile_inner_2, 
-	.settings-link .profile_inner_2:hover
-		{
-		display: block;
-	}
-	
-	.settings {
-		position: relative;
-		width: 60px;
-		height: 60px;
-	}
-	
-	.settings:hover .profile_inner_2, .profile_inner_2:hover {
-		display: block;
-	}
-
+   
+   .profile_inner_1 li {
+      display: block;
+      width: 100%;
+      margin: 100%;
+   }
+   
+   .profile_inner_1 li a {
+      display: block;
+      text-decoration: none;
+      color: #000;
+      width: 160px;
+   }
+   
+   .profile_inner_1 li a:hover {
+      background-color: #424242;
+      width: 160px;
+   }
+   
+   .nickname_main:hover .profile_inner_1 {
+      display: block;
+      width: 160px;
+   }
+   
+   .nickname_main .profile_inner_1 {
+      display: none;
+   }
+   
+   .settings-outline {
+      font-size: 35px;
+   }
+   
+   .settings-link {
+      position: relative;
+      display: inline-block;
+      margin-right: 5%;
+      z-index: 4;
+   }
+   
+   .profile_inner_2 {
+      position: absolute;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: flex-start;
+      position: absolute;
+      display: none;
+      background-color: #424242;
+      z-index: 6;
+      top: 95%; 
+      min-height: 180%;
+      min-width: 250%
+   }
+   
+   .top ul li a {
+  display: block;
+  text-decoration: none;
+  color: #FFFFFF;
+  padding-top: 20px;
+  padding-bottom: 0px; /* 추가 */
+}
+   
+   .profile_inner_2 li {
+      display: block;
+      white-space: nowrap;
+      width: 100%;
+   }
+   
+   .profile_inner_2 li a {
+      display: block;
+      text-decoration: none;
+      color: #000;
+      width: 100%;
+   }
+   
+   .profile_inner_2 li a:hover {
+      background-color: #424242;
+   }
+   
+   .settings-link:hover .profile_inner_2 {
+      display: block;
+   }
+   
+   .settings-link .profile_inner_2 {
+      display: none;
+   }
+   
+   .settings-link:hover .profile_inner_2, 
+   .settings-link .profile_inner_2:hover
+      {
+      display: block;
+   }
+   
+   .settings {
+      position: relative;
+      width: 60px;
+      height: 60px;
+   }
+   
+   .settings:hover .profile_inner_2, .profile_inner_2:hover {
+      display: block;
+   }

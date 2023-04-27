@@ -87,13 +87,17 @@ a {
    src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 <body>
+<jsp:include page="../test_main_top.jsp" />
+<br>
+<br>
+<br>
    <div class="container mt-5">
 		<div class="playlist-section mt-5">
-			<h4 class="text-center">나만의 플레이리스트</h4>
+			<h4 class="text-center"></h4>
 			<div class="text-center">
-				<input type="text" id="newPlaylistName" placeholder="플레이리스트 이름">
-				<button class="btn btn-primary" id="createPlaylistBtn">플레이리스트 생성</button>
-				<input class="btn btn-info" type="button" value="메인 메뉴" id="closeIframeBtn">
+				<input type="text" id="newPlaylistName" placeholder="Eenter Playlist name">
+				<font size=5> &nbsp;</font>
+				<button class="btn btn-secondary btn-sm"" id="createPlaylistBtn" style="background-color: #f50;">CREATE PLAYLISTS</button>
 			</div>
 			<div id="playlists" class="mt-3">
 				<!-- 플레이리스트가 동적으로 생성됩니다. -->
@@ -116,8 +120,7 @@ a {
                         onclick="pauseContentAudioPlayer();">
                   </div>
                   <div class="music_author">
-                     <a
-                        href="<%=request.getContextPath() %>/user_main.do?user_id=${vo.getUser_id() }">${vo.getUser_nickname() }</a>
+                     <a href="<%=request.getContextPath() %>/user_main.do?user_id=${vo.getUser_id() }">${vo.getUser_nickname() }</a>
                   </div>
                   &nbsp;
                   <div>-</div>
@@ -130,8 +133,8 @@ a {
                      <img src="img/105220.png"><span>&nbsp;${vo.getMusic_likecnt() }</span>
                   </div>
                   <div>
-                     <button class="btn btn-success addToPlaylistBtn"
-                        data-album-id="${vo.getMusic_id()}">PLUS</button>
+                     <font size=5> &nbsp; </font> <button class="btn btn-secondary btn-sm""
+                        data-album-id="${vo.getMusic_id()}" style="background-color: #f50;">PLUS</button>
                   </div>
                </div>
 
@@ -144,7 +147,11 @@ a {
 
       </div>
    </div>
-
+	<div align="center">
+	<br>
+	
+	<input class="btn btn-info" type="button" value="MAIN" id="closeIframeBtn" style="background-color: white;" >
+	</div>
    <div class="music-player-container">
       <jsp:include page="../mp3Player.jsp" />
    </div>
