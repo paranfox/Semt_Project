@@ -11,8 +11,73 @@
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
 	rel="stylesheet">
 <style type="text/css">
-td {
-	text-align: "center";
+a {
+	text-decoration: none;
+	color: black;
+}
+
+#music_list_container {
+	align-content: center;
+	width: 60%;
+	margin: 0 auto;
+}
+
+.music_content {
+	height: 45px;
+	display: flex;
+	align-items: center;
+	font-weight: 1000;
+	padding: 0 0 4px 0;
+	border-bottom: 1px solid rgb(214, 214, 214);
+}
+
+.music_content:hover {
+	background-color: rgb(235, 235, 235);
+}
+
+.music_content img {
+	margin-top: 10px;
+	width: 40px;
+	height: 40px;
+	padding: 5px;
+	object-fit: cover;
+}
+
+.music_title {
+	margin-right: auto;
+}
+
+.music_like {
+	margin-left: auto;
+	color: rgb(77, 76, 76);
+	font-size: .8em;
+}
+
+.music_count {
+	color: rgb(77, 76, 76);
+	font-size: .8em;
+}
+
+.music_like img {
+	width: 11px;
+	height: auto;
+	opacity: .4;
+	margin: 0;
+	padding: 0;
+}
+
+.music_count img {
+	width: 13px;
+	height: auto;
+	opacity: .4;
+	margin: 0;
+	padding: 0;
+}
+
+.music_count span {
+	width: 13px;
+	margin: 0;
+	padding: 0;
 }
 </style>
 </head>
@@ -21,64 +86,52 @@ td {
 
 	<jsp:include page="../test_main_top.jsp" />
 
-	<c:if test="${empty sessionId }">
-		<script type="text/javascript">
-				window.location.replace("<%=request.getContextPath()%>/login.do?loginType=feed");
-		</script>
-	</c:if>
+	
+	
+	<div id="music_list_container">
+	
+		<c:if test="${empty sessionId }">
+			<script type="text/javascript">
+					window.location.replace("<%=request.getContextPath()%>/login.do?loginType=feed");
+			</script>
+		</c:if>
+		
+		<c:set var="list" value="${feedList }" />
+		<c:if test="${!empty list }">
+			<c:forEach items="${list }" var="vo">
 
+				<div class="music_content">
+					<div class="music_cover">
+						<img
+							src="<%=request.getContextPath() %>/fileUpload/${vo.getMusic_pic() }"
+							data-mp3="<%=request.getContextPath() %>/fileUpload/${vo.getMusic_mp3() }"
+							data-album-title="${vo.getMusic_title() }"
+							data-image="<%=request.getContextPath() %>/fileUpload/${vo.getMusic_pic() }"
+							width="60" height="60" class="album-image rounded-circle">
+					</div>
+					<div class="music_author">
+						<a
+							href="<%=request.getContextPath() %>/user_main.do?user_id=${vo.getUser_id() }">${vo.getUser_nickname() }</a>
+					</div>
+					&nbsp;
+					<div>-</div>
+					&nbsp;
+					<div class="music_title">
+						<a href="<%=request.getContextPath() %>/user_music_content.do?id=${vo.getMusic_id() }" class="goToContentBtn" data-album-id="${vo.getMusic_id()}">${vo.getMusic_title() }</a>
+					</div>
+					<div class="music_count">
+						<img src="img/105220.png"><span>&nbsp;${vo.getMusic_likecnt() }</span>
+					</div>
+				</div>
 
-	<c:if test="${!empty sessionId }">
+			</c:forEach>
+		</c:if>
+		
+		<c:if test="${empty list }">
+				Seems a little quiet over here
+		</c:if>
+		
+	</div>
 
-		<div class="main_con"></div>
-
-		<div class="container mt-5">
-			<div class="text-center">
-				<hr class="w-75 bg-danger" align="center">
-				<h3>Music List</h3>
-				<hr class="w-75 bg-danger" align="center">
-				<br>
-				<!-- Add Bootstrap table classes -->
-				<table class="table table-bordered table-striped w-75 mx-auto">
-					<thead class="bg-warning">
-						<tr>
-							<th>음악커버</th>
-							<th>작성자</th>
-							<th>음악타이틀</th>
-							<th>좋아요 수</th>
-							<th>재생수</th>
-						</tr>
-					</thead>
-					<tbody>
-						<c:set var="feedList" value="${feedList }" />
-						<c:if test="${!empty feedList }">
-							<c:forEach items="${feedList }" var="vo">
-								<tr>
-									<td><img src="<%=request.getContextPath() %>/fileUpload/${vo.getMusic_pic() }" width="60" height="60"></td>
-									<td><a href="<%=request.getContextPath() %>/user_main.do?user_id=${vo.getUser_id() }">${vo.getUser_nickname() }</a></td>
-									<td><a href="<%=request.getContextPath() %>/user_music_content.do?id=${vo.getMusic_id() }">${vo.getMusic_title() }</a></td>
-									<td>${vo.getMusic_likecnt() }</td>
-									<td>${vo.getMusic_playcnt() }</td>
-							</c:forEach>
-						</c:if>
-						<c:if test="${empty feedList }">
-							<tr>
-								<td colspan="10" class="text-center">
-									<h3>앨범 리스트가 없습니다.</h3>
-								</td>
-							</tr>
-						</c:if>
-					</tbody>
-				</table>
-			</div>
-		</div>
-	</c:if>
-
-	<!-- Add Bootstrap JS and dependencies -->
-	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-	<script
-		src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-	<script
-		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
 </body>
 </html>

@@ -1,282 +1,224 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-   pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
-
-<script
-   src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-<script
-   src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
 <link
-   href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
-   rel="stylesheet">
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+	rel="stylesheet">
 <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
 <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
     
 <style>
-.music-player-container {
-   position: fixed;
-   bottom: 0;
-   left: 0;
-   right: 0;
-}
-
 #container {
-   align-content: center;
-   width: 70%;
-   margin: 0 auto;
-   position: relative;
+	align-content: center;
+	width: 70%;
+	margin: 0 auto;
+	position: relative;
 }
 
 #music_container {
-   background-color: rgb(226, 226, 226);
-   padding: 10px 5px 0px 5px;
-   height: 230px;
+	background-color: rgb(226, 226, 226);
+	padding: 10px 5px 0px 5px;
+	height: 230px;
 }
 
 #music_part1 {
-   padding: 0 10px;
-   width: 300px;
+	padding: 0 10px;
+	width: 300px;
 }
 
 #music_title {
-   font-size: 1.5em;
-   white-space: nowrap;
+	font-size: 1.5em;
+	white-space: nowrap;
 }
 
 #user_name {
-   font-size: 1.1em;
-   color: rgb(77, 76, 76);
-   white-space: nowrap;
+	font-size: 1.1em;
+	color: rgb(77, 76, 76);
+	white-space: nowrap;
 }
 
 #music_part1_icons {
-   position: relative;
-   font-size: 28px;
+	position: relative;
+	font-size: 28px;
 }
 
 #play_icon {
-   font-size: 60px;
+	font-size: 60px;
 }
 
 #music_cont {
-   display: flex;
+	display: flex;
 }
 
 #music_items {
-   width: 50%;
+	width: 50%;
 }
 
 #music_content {
-   width: 100%;
-   white-space: nowrap;
-   padding-left: 30px;
+	width: 100%;
+	white-space: nowrap;
+	padding-left: 30px;
 }
 
 #icon_cont {
-   padding-top: 100px;
-   display: flex;
+	padding-top: 100px;
+	display: flex;
 }
 
 #like_icon {
-   font-size: 30px;
-   padding-top: 25px;
-   padding-left: 15px;
+	font-size: 30px;
+	padding-top: 25px;
+	padding-left: 15px;
 }
 
 #like_count {
-   font-size: .86em;
-   padding: 4px 0 0 0;
-   padding-top: 32px;
+	font-size: .86em;
+	padding: 4px 0 0 0;
+	padding-top: 32px;
 }
 
 #music_con_container {
-   display: flex;
-   top: 170px;
-   padding: 10px;
+	display: flex;
+	top: 170px;
+	padding: 10px;
 }
 
 #music_cover {
-   height: 200px;
+	height: 200px;
 }
 
 #music_cover img {
-   width: 200px;
-   height: 200px;
+	width: 200px;
+	height: 200px;
 }
 
 #play_icon img {
-   width: 50px;
-   height: 50x;
+	width: 50px;
+	height: 50x;
 }
 
 #bbs_container {
-   display: flex;
-   padding: 30px 0 0 0;
+	display: flex;
+	padding: 30px 0 0 0;
 }
 
 #user_container {
-   width: 150px;
-   text-align: center;
-   padding-right: 15px;
+	width: 150px;
+	text-align: center;
+	padding-right: 15px;
 }
 
 #user_pic img {
-   object-fit: cover;
-   border-radius: 50%;
-   width: 140px;
-   height: 140px;
+	object-fit: cover;
+	border-radius: 50%;
+	width: 140px;
+	height: 140px;
 }
 
 .fol_count {
-   margin: 0px;
-   padding: 0px;
-   display: flex;
-   /* border: 1px solid; */
-   font-size: .8em;
+	margin: 0px;
+	padding: 0px;
+	display: flex;
+	/* border: 1px solid; */
+	font-size: .8em;
 }
 
 .fol_count img {
-   width: 12px;
-   height: 13px;
-   padding-left: 35px;
-   /* border: 1px solid; */
-   opacity: .5;
+	width: 12px;
+	height: 13px;
+	padding-left: 35px;
+	/* border: 1px solid; */
+	opacity: .5;
 }
 
 #comment_container {
-   width: 100%;
-   padding-left: 30px;
+	width: 100%;
+	padding-left: 30px;
 }
 
 /* search 검색창~ */
 #write_wrap {
-   display: flex;
-   width: 100%;
-   height: 50px;
+	display: flex;
+	width: 100%;
+	height: 50px;
 }
 
 #write_con_wrap {
-   height: 29px;
-   width: 100%;
-   /* border: #000000 1px solid; */
-   background-color: rgb(219, 219, 219);
-   display: flex;
+	height: 29px;
+	width: 100%;
+	/* border: #000000 1px solid; */
+	background-color: rgb(219, 219, 219);
+	display: flex;
 }
 
 #comment_write {
-   font-size: 1em;
-   width: 100%;
-   height: 27px;
-   border: 0px;
-   outline: invert;
-   outline-offset: -3px;
-   background-color: rgb(219, 219, 219);
-   padding-left: 10px;
+	font-size: 1em;
+	width: 100%;
+	height: 27px;
+	border: 0px;
+	outline: invert;
+	outline-offset: -3px;
+	background-color: rgb(219, 219, 219);
+	padding-left: 10px;
 }
 
 #comment_write p {
-   background-color: transparent;
-   right: 1;
+	background-color: transparent;
+	right: 1;
 }
 
 #enter {
-   font-size: 1.1em;
-   cursor: pointer;
-   padding: 5px;
-   background-color: transparent;
+	font-size: 1.1em;
+	cursor: pointer;
+	padding: 5px;
+	background-color: transparent;
 }
 
 .visitor_pic img {
-   object-fit: cover;
-   border-radius: 50%;
-   width: 40px;
-   height: 40px;
+	object-fit: cover;
+	border-radius: 50%;
+	width: 40px;
+	height: 40px;
 }
 
 .comment_list {
-   display: inline-block;
-   width: 100%;
-   border-bottom: 1px solid rgb(214, 214, 214);
+	display: inline-block;
+	width: 100%;
+	border-bottom: 1px solid rgb(214, 214, 214);
 }
 
 .comment_list:hover {
-   background-color: rgb(235, 235, 235);
+	background-color: rgb(235, 235, 235);
 }
 
 .visitor_pic {
-   float: left;
+	float: left;
 }
 
 .visit_1 {
-   float: left;
+	float: left;
 }
 
 .visitor_nick {
-   color: rgb(137, 137, 137);;
+	color: rgb(137, 137, 137);;
 }
 
 .visit_2 {
-   float: right;
-   color: rgb(137, 137, 137);;
+	float: right;
+	color: rgb(137, 137, 137);;
 }
 
 .comment_btn {
-   display: flex;
+	display: flex;
 }
-
-.music-player-container {
-   position: fixed;
-   bottom: 0;
-   left: 0;
-   right: 0;
-}
-
- .comment-header {
-     display: flex;
-     align-items: center;
-     margin-bottom: 5px;
- }
- .comment-content {
-     margin-left: 45px;
- }
- .comment-divider {
-     margin: 15px 0;
-     border-bottom: 1px solid #ccc;
- }
- .user-nickname {
-    margin-right: 8px;
- }
- 
- .editBtn {
-    border: 0;
-    outline: none;
-    font-size: 5px;
-    margin: 5px;
-    background: black;
-    color: white;
-    padding: 5px;
-    cursor: pointer;
-    border-radius: 5px;
- }
-.deleteBtn {
-   border: 0;
-    outline: none;
-    font-size: 5px;
-    margin: 5px;
-    background: black;
-    color: white;
-    padding: 5px;
-    cursor: pointer;
-    border-radius: 5px;
-}   
 </style>
 <head>
 <meta charset="UTF-8">
 <title>ALBUM 상세페이지</title>
 <script
-   src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script type="text/javascript">
 const audioPlayer = document.querySelector("#audioPlayer");
 
@@ -303,12 +245,12 @@ document.addEventListener("DOMContentLoaded", function () {
 </script>
 </head>
 <body>
-<c:set value="${sessionId }" var="sessionId" />
-   <div id="container">
+	<div id="container">
+
         <div id="music_container">
-          <c:set var="vo" value="${musicCont }" />
             <div id="music_con_container">
-                <div id="music_cover"><img src="<%=request.getContextPath() %>/fileUpload/${vo.getMusic_pic() }"></div>
+                <div id="music_cover"><img
+                    src="<%=request.getContextPath() %>/fileUpload/${vo.getMusic_pic() }"></div>
                 <div id="music_part">
                     <div id="contents">
                         <div id="music_cont">
@@ -322,16 +264,16 @@ document.addEventListener("DOMContentLoaded", function () {
                             
                             <div id="play_icon" 
                                 data-mp3="<%=request.getContextPath() %>/fileUpload/${vo.getMusic_mp3() }"
-                        data-album-title="${vo.getMusic_title() }"
-                        data-image="<%=request.getContextPath() %>/fileUpload/${vo.getMusic_pic() }">
+								data-album-title="${vo.getMusic_title() }"
+								data-image="<%=request.getContextPath() %>/fileUpload/${vo.getMusic_pic() }">
                                 <ion-icon name="play-circle-outline"></ion-icon>
                             </div>
                             <div id="like_icon"><ion-icon name="heart-circle-outline"></ion-icon></div>
-   
+
                             <c:if test="${!empty sessionId && sessionId == vo.getUser_id() }">
                                     <input type="button" value="글수정" onclick="location.href='upload_modify.do?uno=${vo.getMusic_id() }'">
                                     <input type="button" value="글삭제" onclick="if(confirm('게시글을 정말 삭제하시겠습니까?')) { location.href='upload_delete.do?id=${vo.getMusic_id() }' }else { return; }">
-                                      
+                                    <input type="button" value="전체목록" id="closeContentBtn">
                                 </div>
                             </c:if>
 
@@ -342,44 +284,37 @@ document.addEventListener("DOMContentLoaded", function () {
             </div>
         </div>
         
-      <input class="btn btn-info" type="button" value="전체목록" id="closeIframeBtn">
+
         <div id="bbs_container">
             <div id="user_container">
                 <div id="user_pic"><img src="images.jpg" alt=""></div>
                 <div id="user_nickname">user nickname</div>
                 <div id="user_info">
-                    <div io_top">
-                        <div class="fod="user_infl_count"><img src="followers-icon-png-1.jpg"> <span>122 follower</span></div>
+                    <div id="user_info_top">
+                        <div class="fol_count"><img src="followers-icon-png-1.jpg"> <span>122 follower</span></div>
                         <div id="followBtn"><button>FOLLOW</button></div>
                     </div>
                 </div>
             </div>
             
-   <div id="commentForm" class="my-4">
-      <h3 id="formTitle">댓글 작성</h3>
-      <textarea id="commentContent" class="form-control" rows="2" cols="10"></textarea>
-      <input type="hidden" id="commentId" value="">
-      <button id="submitComment" class="btn btn-success mt-2">댓글 작성</button>
-   </div>
-   <div id="commentList">
-      <h3>댓글 목록</h3>
-      <ul id="commentListContainer" class="list-unstyled">
-      </ul>
-   </div>    
-
+            <div id="comment_container">
+                <div id="write_wrap">
+                    <div id="write_con_wrap">
+                        <input id="commentContent" type="text" placeholder="write a comment">
+                        <div id="submitComment">
+                            <ion-icon name="return-down-back-sharp"></ion-icon></p>
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="comment_list">
+                    <ul id="commentListContainer"></ul>
+                </div>
             </div>
         </div>
-        
-    <div class="music-player-container">
-      <jsp:include page="../mp3Player.jsp" />
-   </div>
 </body>
 <script>
 $(document).ready(function() {
-
-   document.getElementById("closeIframeBtn").addEventListener("click", function () {
-        window.parent.document.getElementById("contentIframe").style.display = "none";
-      });
    
 $('#likeButton').click(function() {
     $.ajax({
@@ -422,7 +357,7 @@ function getLikeStatus() {
                 $('#dislikeButton').removeClass('btn-success');
             }
 
-            $('#likeCount').text(response.like_count);
+            $('#likeCount').text(response.like_count); // 좋아요 수 업데이트
             $('#dislikeCount').text(response.dislike_count);
         }
     });
@@ -574,6 +509,10 @@ function getLikeStatus() {
             });
         }
         loadComments();
+        
+        $("#closeContentBtn").on("click", function() {
+            $("#contentContainer").hide();
+        });
         
         function submitComment() {
             let content = $('#commentContent').val();

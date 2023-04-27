@@ -29,7 +29,7 @@ public class EmailHelper {
 
 		String host = "smtp.naver.com";
 		String user = "cdecde2004@naver.com"; // 자신의 네이버 계정
-		String password = "Almond!213";// 자신의 네이버 패스워드
+		String password = "Almond!2134";// 자신의 네이버 패스워드
 		String AuthenticationKey = "";
 		// String to_email = "rbgks2222@naver.com";
 
@@ -88,7 +88,6 @@ public class EmailHelper {
 
 		}
 		return AuthenticationKey;
-	}	// sendCode end
-	
+	} // sendCode end
 
 }

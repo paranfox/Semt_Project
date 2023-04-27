@@ -24,7 +24,7 @@ public class ForgetPwdChangeAction implements Action {
 		if(check > 0) {
 			out.println("<script>");
 			out.println("alert('비밀번호가 변경되었습니다. 변경된 비밀번호로 로그인 하세요.')");
-			out.println("location.href='../login/login.jsp'");
+			out.println("location.href='main.jsp'");
 			out.println("</script>");
 			
 		} else {

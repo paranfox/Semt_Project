@@ -22,7 +22,7 @@ td {
 	<jsp:include page="../test_main_top.jsp" />
 
 	<div class="main_con"></div>
-	
+
 	<div class="container mt-5">
 		<div class="text-center">
 			<hr class="w-75 bg-danger" align="center">
@@ -136,9 +136,9 @@ td {
 					// let check = res;
 					// alert(check);
 					if (res == 0) {
-						button.value = "follow+";
+						button.value = "FOLLOW+";
 					} else if (res == 1) {
-						button.value = "following!";
+						button.value = "FOLLOWING!";
 					}
 				},
 				error : function() {

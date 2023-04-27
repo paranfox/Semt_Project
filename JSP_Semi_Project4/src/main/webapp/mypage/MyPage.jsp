@@ -1,4 +1,3 @@
-<%@page import="model.UserVO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
@@ -12,6 +11,10 @@
 <body>
 
 
+	<jsp:include page="../test_main_top.jsp" />
+
+	<div class="main_con"></div>
+	
 	<table border="2" cellspacing="0" width="500" align="center"> 
 	 
 		<c:set var="vo" value="${vo }" />                   

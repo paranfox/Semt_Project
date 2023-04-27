@@ -527,5 +527,32 @@ public class UserDAO {
 		}
 		return list;
 	}	// getMusicPlayList()메서드 end
+
+	public int checkEmailExist(String email) {
+		int result = 0;
+
+		connect();
+
+		try {
+			sql = "SELECT * FROM USER WHERE USER_EMAIL = ?";
+
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, email);
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+				// 등록된 이메일인 경우
+				result = 1;
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			disconnect(rs, pstmt, con);
+		}
+
+		return result;
+
+	}
 	
 }

@@ -7,7 +7,7 @@
 		<div class="top">
 			<ul>
 				<li class="home"><a href="main.do">4undCLOUD</a></li>
-				<li class="feed"><a href="http://www._____.com/About">FEED</a></li>
+				<li class="feed"><a href="music_feed.do">FEED</a></li>
 				<li class="library"><a href="best_like_list.do">LIBRARY</a></li>
 
 				<li class="search_top">
@@ -28,7 +28,7 @@
 
 				<%-- 로그인되지 않았을 때 --%>
 				<c:if test="${empty vo }">
-					<li class="login"><a href="login.do">LOGIN</a></li>
+					<li class="sign_in"><a href="<%=request.getContextPath() %>/login.do?loginType=normal">LOG IN</a></li>
 					<li class="account"><a href="register/RegisterChoice.jsp">CREATE ACCOUNT</a></li>
 					<li class="upload"><a href="musicBbs/uploadsample.jsp">UPLOAD</a></li>
 				</c:if>
@@ -48,8 +48,8 @@
 							<%-- <li><a href="<%=request.getContextPath()%>/my_music_list.do?id=${vo.getUser_id() }">FOLLOWING</a></li> --%>
 							<li><a href="<%=request.getContextPath()%>/my_music_list.do?id=${vo.getUser_id() }">MY UPLOADED ALBUM</a></li>
 							<li><a href="<%=request.getContextPath()%>/like_list.do">LIKES PLAYLIST</a></li>
-							<li><a href="#" class="goToContentBtn" onclick="loadIframe(this);">SHOW ALL ALBUM</a></li>
-							<li><a href="<%=request.getContextPath()%>/user_music_list.do">SHOW ALL ALBUM</a></li>
+							<li><a href="#" class="goToContentBtn" onclick="loadIframe(this);">SHOW ALL ALBUM 1</a></li>
+							<li><a href="<%=request.getContextPath()%>/user_music_list.do" class="user_music_list">앨범리스트</a></li>
 							<%-- <li><a href="<%=request.getContextPath()%>/user_myplaylist_show.do">MY<br>플레이리스트</a></li> --%>
 							<li><a href="<%=request.getContextPath()%>/my_play_list.do?id=${vo.getUser_id() }">MY PLAYLIST</a></li> 
 							<!-- <li><a href="#" class="goToContentBtn" onclick="loadMframe(this);">PLAYED ALBUM HISTORY</a></li> -->

@@ -9,6 +9,11 @@
 <title>Insert title here</title>
 
 <style>
+a {
+	text-decoration: none;
+	color: black;
+}
+
 #content_container {
 	margin: 0px 50px;
 	margin-top: 100px;
@@ -20,22 +25,58 @@
 	/* border: 1px solid; */
 }
 
-.tab_con {
+.tab_con_likes {
 	padding: 10px 0;
+	font-size: 1.08em;
 	flex-grow: 1;
 	text-align: center;
+	font-weight: bold;
 	width: 100%;
 	height: 100%;
-	border-bottom: 1px solid rgb(214, 214, 214);
-	/* background-color: grey; */
+	color: black;
+	border-bottom: 3px solid rgb(214, 214, 214);
+}
+
+.tab_con_following {
+	padding: 10px 0;
+	font-size: 1.08em;
+	flex-grow: 1;
+	text-align: center;
+	font-weight: bold;
+	width: 100%;
+	height: 100%;
+	color: black;
+	border-bottom: 3px solid rgb(214, 214, 214);
+}
+
+.tab_con_follower {
+	padding: 10px 0;
+	font-size: 1.08em;
+	flex-grow: 1;
+	text-align: center;
+	font-weight: bold;
+	width: 100%;
+	height: 100%;
+	color: #FA0F97;
+	border-bottom: 3px solid #FA0F97;
 }
 
 .tab_con.active {
 	color: red;
 }
 
-.tab_con:hover {
-	border-bottom: 1px solid rgb(0, 0, 0);
+.tab_con_likes:hover {
+	border-bottom: 3px solid black;
+	cursor: pointer;
+}
+
+.tab_con_following:hover {
+	border-bottom: 3px solid black;
+	cursor: pointer;
+}
+
+.tab_con_follower:hover {
+	border-bottom: 3px solid #FA0F97;
 	cursor: pointer;
 }
 
@@ -46,6 +87,11 @@
 	flex-wrap: wrap;
 	justify-content: left;
 	/* border: 1px brown solid; */
+}
+
+#followed_container span {
+	font-size: 1.05em;
+	font-weight: 700;
 }
 
 .fol_container {
@@ -75,6 +121,7 @@
 	display: flex;
 	/* border: 1px solid; */
 	font-size: .8em;
+	color: rgb(214, 214, 214);
 }
 
 .fol_count img {
@@ -101,7 +148,7 @@
 	display: flex;
 }
 
-#followd_container img {
+#followed_container img {
 	width: 120px;
 	height: 120px;
 	object-fit: cover;
@@ -129,16 +176,26 @@
 
 	<div id="content_container">
 
-		<div id="followd_container">
-			<img src="NationalGeographic_2572187_square.jpg"> 
+		<div id="followed_container">
+			<img
+				src="<%=request.getContextPath() %>/fileUpload/${bvo.getUser_pic() }">
 			<span>FOLLOWERS OF ${bvo.getUser_nickname() }</span>
 		</div>
 
 
 		<div id="tab_container">
-			<div class="tab_con">LIKES</div>
-			<div class="tab_con">FOLLOWING</div>
-			<div class="tab_con">HISTORY</div>
+			<div class="tab_con_likes">
+				<a
+					href="<%=request.getContextPath() %>/user_likes_list.do?user_id=${bvo.getUser_id() }">LIKES</a>
+			</div>
+			<div class="tab_con_following">
+				<a
+					href="<%=request.getContextPath() %>/user_following_list.do?user_id=${bvo.getUser_id() }">FOLLOWING</a>
+			</div>
+			<div class="tab_con_follower">
+				<a
+					href="<%=request.getContextPath() %>/user_follower_list.do?user_id=${bvo.getUser_id() }">FOLLOWERS</a>
+			</div>
 		</div>
 
 
@@ -146,40 +203,57 @@
 
 		<div id="followers_container">
 			<c:if test="${!empty followerList }">
-			
+
 				<c:forEach items="${followerList }" var="vo" varStatus="loop">
 					<c:if test="${vo.getFollower_id() != sessionId }">
-					
-					<div id="fol_container_${loop.index}" class="fol_container" onmouseover="followcheck(${vo.getFollower_id() }, ${loop.index})" onmouseout="hidebutton(${loop.index})">
-						<div class="fol_img"><img src="<%=request.getContextPath() %>/fileUpload/${vo.getUser_pic() }"></div>
-						<div class="fol_nickname"><a href="<%=request.getContextPath() %>/user_main.do?user_id=${vo.getFollower_id() }">${vo.getUser_nickname() }</a></div>
-						<div class="fol_count" id="followers_count">
-							<a href="<%=request.getContextPath() %>/user_main.do?user_id=${vo.getFollower_id() }">
-							<img src="<%=request.getContextPath() %>/fileUpload/group.png">
-							</a>
-							<a href="<%=request.getContextPath() %>/user_follower_list.do?user_id=${vo.getFollower_id() }">
-							<span id="fol_count_${loop.index}">${vo.getFollowers_count() } FOLLOWER</span>
-							</a>
+
+						<div id="fol_container_${loop.index}" class="fol_container"
+							onmouseover="followcheck('${vo.getFollower_id() }', ${loop.index})"
+							onmouseout="hidebutton(${loop.index})">
+							<div class="fol_img">
+								<img
+									src="<%=request.getContextPath() %>/fileUpload/${vo.getUser_pic() }">
+							</div>
+							<div class="fol_nickname">
+								<a
+									href="<%=request.getContextPath() %>/user_main.do?user_id=${vo.getFollower_id() }">${vo.getUser_nickname() }</a>
+							</div>
+							<div class="fol_count" id="followers_count">
+								<a
+									href="<%=request.getContextPath() %>/user_main.do?user_id=${vo.getFollower_id() }">
+									<img src="<%=request.getContextPath()%>/fileUpload/group.png">
+								</a> <a
+									href="<%=request.getContextPath() %>/user_follower_list.do?user_id=${vo.getFollower_id() }">
+									<span id="fol_count_${loop.index}">${vo.getFollowers_count() }
+										FOLLOWER</span>
+								</a>
+							</div>
+							<div class="fol_btn">
+								<input type="button" class="follow_btn_check"
+									id="follow_btn_${loop.index}"
+									onclick="followUpDown('${vo.getFollower_id() }', ${loop.index})"
+									value="FOLLOW+">
+							</div>
 						</div>
-						<div class="fol_btn">
-							<input type="button" class="follow_btn_check" id="follow_btn_${loop.index}"
-						 	onclick="followUpDown(${vo.getFollower_id() }, ${loop.index})" 
-						 	value="FOLLOW+">
-						</div>
-					</div>
-					
+
 					</c:if>
 				</c:forEach>
 			</c:if>
+
+			<c:if test="${empty followerList }">
+				<div>No one is following you yet.</div>
+			</c:if>
 		</div>
-		
-		
+
+
 	</div>
-	
-<script type="text/javascript">
+
+	<script type="text/javascript">	
+
+
 function hidebutton(index) {
 	
-	button = document.getElementById("follow_btn_"+index);
+	let button = document.getElementById("follow_btn_"+index);
 	button.style.display = 'none';
 	
 }
@@ -187,7 +261,7 @@ function hidebutton(index) {
 function followcheck(user_id, index) {
 	
 	//alert(user_id);
-	button = document.getElementById("follow_btn_"+index);
+	let button = document.getElementById("follow_btn_"+index);
 	button.style.display = 'block';
 	
 	$.ajax({
@@ -217,7 +291,7 @@ function followcheck(user_id, index) {
 // 팔로우 버튼 눌러서 팔로우, 팔로우 취소하기
 function followUpDown(user_id, index) {
 	
-	button = document.getElementById("follow_btn_"+index);
+	let button = document.getElementById("follow_btn_"+index);
 
 	$.ajax({
 		// 팔로우여부에 따라 버튼 상태 + 팔로우 상태 바꾸기

@@ -6,23 +6,212 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<!-- Add Bootstrap CSS -->
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
-	rel="stylesheet">
-<style type="text/css">
-td {
-	text-align: "center";
+
+<script type="module"
+	src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule
+	src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document</title>
+<style>
+#container {
+	margin-top: 400px;
+	align-content: center;
+	width: 70%;
+	margin: 0 auto;
+	position: relative;
+	min-width: 700px;
+}
+
+#user_container {
+	background-color: rgb(226, 226, 226);
+	padding: 10px 5px 0px 5px;
+	height: 230px;
+	width: 100%;
+	display: flex;
+}
+
+#user_con {
+	display: flex;
+	WIDTH: 100%;
+	JUSTIFY-CONTENT: space-between;
+}
+
+#user_nickname {
+	font-size: 1.6em;
+}
+
+#fol_part {
+	padding: 0 0 0 0;
+}
+
+#mypageBtn {
+	float: left;
+	margin-top: 160px;
+}
+
+#uploadBtn {
+	float: left;
+	margin-top: 160px;
+}
+
+#follow_table {
+	margin-top: 170px;
+	text-align: center;
+	font-size: .9em;
+	height: 10px;
+	width: 300px;
+	/* border: 1px black solid; */
+	float: right;
+}
+
+#music_cover {
+	height: 200px;
+}
+
+#user_cover img {
+	width: 200x;
+	height: 200px;
+	object-fit: cover;
+	border-radius: 50%;
+	box-shadow: inset 0 0 1px rgba(0, 0, 0, .1);
+}
+
+/* music list */
+.music_content {
+	height: 45px;
+	display: flex;
+	align-items: center;
+	font-weight: 1000;
+	padding: 0 0 4px 0;
+	border-bottom: 1px solid rgb(214, 214, 214);
+}
+
+.music_content:hover {
+	background-color: rgb(235, 235, 235);
+}
+
+.music_content img {
+	margin-top: 10px;
+	width: 40px;
+	height: 40px;
+	padding: 5px;
+	object-fit: cover;
+}
+
+.music_title {
+	margin-right: auto;
+}
+
+.music_like {
+	margin-left: auto;
+	color: rgb(77, 76, 76);
+	font-size: .8em;
+}
+
+.music_count {
+	color: rgb(77, 76, 76);
+	font-size: .8em;
+}
+
+.music_like img {
+	width: 11px;
+	height: auto;
+	opacity: .4;
+	margin: 0;
+	padding: 0;
+}
+
+.music_count img {
+	width: 13px;
+	height: auto;
+	opacity: .4;
+	margin: 0;
+	padding: 0;
+}
+
+.music_count span {
+	width: 13px;
+	margin: 0;
+	padding: 0;
 }
 </style>
+
 </head>
 <body>
 
 
 	<jsp:include page="../test_main_top.jsp" />
 
+
+	<div id="container">
+		<c:set var="uservo" value="${userVO }" />
+
+		<div id="user_container">
+			<div id="user_cover">
+				<img
+					src="<%=request.getContextPath() %>/fileUpload/${uservo.getUser_pic() }">
+			</div>
+			<div id="user_con">
+				<div id="fol_part">
+					<div id="user_nickname">${uservo.getUser_nickname() }</div>
+					<input id="mypageBtn" type="button"
+						onclick="location.href='<%=request.getContextPath()%>/modify.do'"
+						value="MYPAGE"> <input id="uploadBtn" type="button"
+						onclick="location.href='<%=request.getContextPath()%>/upload_music.do'"
+						value="UPLOAD">
+				</div>
+				<div id="table_part">
+					<table id="follow_table">
+						<tr>
+							<td>FOLLOWERS</td>
+							<td>FOLLOWING</td>
+							<td>TRACKS</td>
+						</tr>
+						<tr>
+							<td><a
+								href="<%=request.getContextPath() %>/user_follower_list.do?user_id=${uservo.getUser_id() }">${followersCount }
+							</a></td>
+							<td><a
+								href="<%=request.getContextPath() %>/user_following_list.do?user_id=${uservo.getUser_id() }">${followingCount }
+							</a></td>
+							<td><a href="#">${userTrackCount } </a></td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</div>
+
+		<div id="music_list_container">
+			<div class="music_content">
+				<div class="music_cover">
+					<img src="images.jpg" alt="">
+				</div>
+				<div class="text_cont"></div>
+				<div class="music_author">작성자</div>
+				&nbsp;
+				<div>-</div>
+				&nbsp;
+				<div class="music_title">음악 제목</div>
+				<div class="music_count">
+					<img src="play_icon_134504.png"><span>&nbsp;777</span>
+				</div>
+			</div>
+		</div>
+
+
+	</div>
+
+
+
+
+
+
+
 	<div class="main_con"></div>
-	
+
 	<div class="container mt-5">
 		<div class="text-center">
 			<hr class="w-75 bg-danger" align="center">
@@ -36,7 +225,7 @@ td {
 				<tr>
 					<th>pic</th>
 					<td><img
-						src="<%=request.getContextPath() %>/fileUpload/${uservo.getUser_pic() }"
+						src="<%=request.getContextPath() %>/	fileUpload/${uservo.getUser_pic() }"
 						width="60" height="60"></td>
 				</tr>
 				<tr>
@@ -60,10 +249,11 @@ td {
 					<td><a href="#">${userTrackCount } </a></td>
 				</tr>
 				<tr>
-					<td>
-						<input type="button" onclick="location.href='<%=request.getContextPath() %>/modify.do'" value="MYPAGE">
-						<input type="button" onclick="location.href='<%=request.getContextPath() %>/upload_music.do'" value="UPLOAD">
-					</td>
+					<td><input type="button"
+						onclick="location.href='<%=request.getContextPath()%>/modify.do'"
+						value="MYPAGE"> <input type="button"
+						onclick="location.href='<%=request.getContextPath()%>/upload_music.do'"
+						value="UPLOAD"></td>
 				</tr>
 			</table>
 

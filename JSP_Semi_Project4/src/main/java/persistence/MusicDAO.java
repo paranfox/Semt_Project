@@ -886,4 +886,45 @@ public class MusicDAO {
 
 	}
 
+	public List<MusicVO> getFeedList(String sessionId) {
+
+		connect();
+
+		System.out.println("dao session id > " + sessionId);
+
+		List<MusicVO> list = new ArrayList<MusicVO>();
+
+		try {
+			sql = "SELECT * FROM music_info LEFT JOIN follows on music_info.user_id = follows.followed_id WHERE follows.follower_id = ? ORDER BY music_info.music_id desc";
+
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, sessionId);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+
+				MusicVO vo = new MusicVO();
+
+				vo.setMusic_id(rs.getInt("music_id"));
+				vo.setMusic_pic(rs.getString("music_pic"));
+				vo.setMusic_mp3(rs.getString("music_mp3"));
+				vo.setMusic_title(rs.getString("music_title"));
+				vo.setMusic_contents(rs.getString("music_contents"));
+				vo.setMusic_likecnt(rs.getInt("music_likecnt"));
+				vo.setMusic_playcnt(rs.getInt("music_playcnt"));
+				vo.setUser_nickname(rs.getString("user_nickname"));
+				vo.setUser_id(rs.getString("user_id"));
+
+				list.add(vo);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			disconnect(rs, pstmt, con);
+		}
+
+		return list;
+	}
+
 }
